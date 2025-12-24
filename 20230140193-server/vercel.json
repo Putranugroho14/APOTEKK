@@ -5,7 +5,7 @@
       "src": "server.js",
       "use": "@vercel/node",
       "config": { 
-        "includeFiles": ["node_modules/mysql2/**"] 
+        "includeFiles": ["node_modules/mysql2/**"]
       }
     }
   ],
@@ -14,5 +14,8 @@
       "src": "/(.*)",
       "dest": "server.js"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
