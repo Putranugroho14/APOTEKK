@@ -1,24 +1,25 @@
 const express = require("express");
 const cors = require("cors");
-const app = express();
 const morgan = require("morgan");
-const fs = require('fs');
-const path = require('path'); // Tambahkan path
+const path = require("path");
+const fs = require("fs");
 
 // Impor router
 const obatRoutes = require("./routes/obat");
 const authRoutes = require("./routes/auth");
 const resepRoutes = require("./routes/resep");
 
+const app = express();
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-// Perbaikan untuk Vercel: Gunakan folder /tmp untuk folder sementara jika perlu
-// Namun untuk statis file, sebaiknya folder uploads sudah ada di repo
-const uploadDir = './uploads/resep';
-if (!fs.existsSync(uploadDir)){
+// Penanganan folder uploads untuk Vercel (Serverless bersifat Read-Only)
+// Kita gunakan folder /tmp sebagai fallback untuk mencegah error sistem
+const uploadDir = path.join(process.cwd(), 'uploads', 'resep');
+if (!fs.existsSync(uploadDir) && process.env.NODE_ENV !== 'production') {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
@@ -30,15 +31,29 @@ app.use("/api/obat", obatRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/resep", resepRoutes);
 
-// Tambahkan route testing untuk cek apakah server hidup
+// Route testing untuk cek status server
 app.get("/", (req, res) => {
-  res.send("Server Apotek Online Berjalan!");
+  res.status(200).json({
+    status: "Success",
+    message: "Server Apotek Online Berjalan!",
+    environment: process.env.NODE_ENV || "development"
+  });
 });
 
-// PERBAIKAN PORT UNTUK VERCEL/CLOUD
-const PORT = process.env.PORT || 3001; 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Penanganan Error 404
+app.use((req, res) => {
+  res.status(404).json({ message: "Endpoint tidak ditemukan" });
 });
 
-module.exports = app; // Tambahkan ini untuk Vercel
+// Konfigurasi Port
+const PORT = process.env.PORT || 3001;
+
+// Hanya jalankan app.listen jika tidak sedang di lingkungan Vercel
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running locally on port ${PORT}`);
+  });
+}
+
+// Ekspor app untuk digunakan oleh runtime Vercel
+module.exports = app;
