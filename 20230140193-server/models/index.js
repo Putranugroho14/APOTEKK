@@ -1,27 +1,23 @@
 'use strict';
-
 const Sequelize = require('sequelize');
 const process = require('process');
 
 const db = {};
 
-// Inisialisasi Sequelize dengan DATABASE_URL
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'mysql',
-  dialectModule: require('mysql2'), // Memastikan mysql2 terpakai
+  dialectModule: require('mysql2'),
   dialectOptions: {
     ssl: {
-      rejectUnauthorized: true, // Wajib untuk TiDB Cloud
+      rejectUnauthorized: true,
     }
   },
   logging: false,
 });
 
-// Import model secara manual (Eksplisit)
-// Pastikan path './obat' sesuai dengan lokasi file obat.js Anda
+// IMPORT MANUAL: Pastikan file 'obat.js' ada di folder yang sama
 db.obat = require('./obat')(sequelize, Sequelize.DataTypes);
 
-// Jalankan asosiasi jika ada
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
