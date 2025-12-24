@@ -1,41 +1,27 @@
 'use strict';
-const { Model } = require('sequelize');
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Resep extends Model {
+  class resep extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      // Tidak ada relasi wajib untuk saat ini
+      // define association here
     }
   }
-
-  Resep.init({
-    nama_lengkap: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    nomor_wa: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    foto_resep: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    keterangan: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-    status: {
-      type: DataTypes.ENUM('pending', 'diproses', 'selesai'),
-      defaultValue: 'pending',
-    }
+  resep.init({
+    nama_lengkap: DataTypes.STRING,
+    nomor_wa: DataTypes.STRING,
+    foto_resep: DataTypes.STRING,
+    keterangan: DataTypes.TEXT,
+    status: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Resep',
-    tableName: 'reseps',
-    underscored: true, // Menggunakan created_at & updated_at
-    timestamps: true,
+    modelName: 'resep',
   });
-
-  return Resep;
+  return resep;
 };

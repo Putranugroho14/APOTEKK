@@ -1,56 +1,30 @@
 'use strict';
-const { Model } = require('sequelize');
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Obat extends Model {
+  class obat extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      Obat.belongsTo(models.User, {
-        foreignKey: 'authorId',
-        as: 'Admin', // Mengubah alias dari Author ke Admin (opsional)
-        onDelete: 'SET NULL',
-      });
+      // define association here
     }
   }
-
-  Obat.init({
-    nama_obat: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    deskripsi: {
-      type: DataTypes.TEXT,
-      allowNull: false,
-    },
-    stok: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-    harga: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
-    gambar_url: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-    },
-    kategori: {
-      type: DataTypes.STRING(100),
-      allowNull: true,
-    },
-    authorId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    is_published: { 
-      type: DataTypes.BOOLEAN, 
-      defaultValue: false 
-    }
+  obat.init({
+    nama_obat: DataTypes.STRING,
+    deskripsi: DataTypes.TEXT,
+    stok: DataTypes.INTEGER,
+    harga: DataTypes.DECIMAL,
+    gambar_url: DataTypes.STRING,
+    kategori: DataTypes.STRING,
+    authorId: DataTypes.INTEGER,
+    is_published: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'Obat',
-    tableName: 'obat',
-    freezeTableName: true,
+    modelName: 'obat',
   });
-
-  return Obat;
+  return obat;
 };
