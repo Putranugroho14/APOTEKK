@@ -11,13 +11,30 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  // Untuk production, parse DATABASE_URL secara manual
+  const dbUrl = process.env[config.use_env_variable];
+  
+  sequelize = new Sequelize(dbUrl, {
+    dialect: 'mysql',
+    dialectModule: require('mysql2'), // ← TAMBAHKAN INI
+    dialectOptions: config.dialectOptions || {},
+    logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(config.database, config.username, config.password, {
+    ...config,
+    dialectModule: require('mysql2') // ← TAMBAHKAN INI JUGA
+  });
 }
 
-fs
-  .readdirSync(__dirname)
+// ... sisa code sama
+fs.readdirSync(__dirname)
   .filter(file => {
     return (
       file.indexOf('.') !== 0 &&
