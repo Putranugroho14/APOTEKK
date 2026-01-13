@@ -39,7 +39,10 @@ const ResepReport = () => {
     const fetchReseps = async () => {
         setLoading(true);
         try {
-            const res = await axios.get(`${API_BASE_URL}/api/resep/report`);
+            const token = localStorage.getItem('token');
+            const res = await axios.get(`${API_BASE_URL}/api/resep/report`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             setReseps(res.data.data);
             setFilteredReseps(res.data.data);
         } catch (err) {

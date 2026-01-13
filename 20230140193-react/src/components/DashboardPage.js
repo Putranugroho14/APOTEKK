@@ -40,9 +40,11 @@ const DashboardPage = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
+      const token = localStorage.getItem('token');
+      const headers = { Authorization: `Bearer ${token}` };
       const [resResep, resObat] = await Promise.all([
-        axios.get(API_URL_RESEP),
-        axios.get(API_URL_OBAT)
+        axios.get(API_URL_RESEP, { headers }),
+        axios.get(API_URL_OBAT, { headers })
       ]);
 
       const reseps = resResep.data.data;

@@ -58,7 +58,10 @@ const ObatPage = () => {
     const fetchObats = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(API_URL);
+            const token = getToken();
+            const response = await axios.get(API_URL, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             setObats(response.data.data || []);
             setFilteredObats(response.data.data || []);
         } catch (err) { console.error(err); }
@@ -294,7 +297,7 @@ const ObatPage = () => {
                                     <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Harga (IDR)</label>
                                     <input
                                         type="number" required value={formData.harga}
-                                        onChange={e => setFormData({ ...formData, harga: parseInt(e.target.value) })}
+                                        onChange={e => setFormData({ ...formData, harga: parseInt(e.target.value) || 0 })}
                                         className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
                                     />
                                 </div>
@@ -304,7 +307,7 @@ const ObatPage = () => {
                                     <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Stok Tersedia</label>
                                     <input
                                         type="number" required value={formData.stok}
-                                        onChange={e => setFormData({ ...formData, stok: parseInt(e.target.value) })}
+                                        onChange={e => setFormData({ ...formData, stok: parseInt(e.target.value) || 0 })}
                                         className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
                                     />
                                 </div>

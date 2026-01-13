@@ -39,11 +39,24 @@ app.use("/api/auth", authRoutes);
 app.use("/api/resep", resepRoutes);
 
 // Route testing untuk cek status server
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  let dbStatus = "Unknown";
+  let dbError = null;
+
+  try {
+    await db.sequelize.authenticate();
+    dbStatus = "Connected";
+  } catch (err) {
+    dbStatus = "Failed";
+    dbError = err.message;
+  }
+
   res.status(200).json({
     status: "Success",
     message: "Server Apotek Online Berjalan!",
-    environment: process.env.NODE_ENV || "development"
+    environment: process.env.NODE_ENV || "development",
+    database: dbStatus,
+    database_error: dbError
   });
 });
 
