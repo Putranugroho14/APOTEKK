@@ -6,8 +6,9 @@ import DashboardPage from "./components/DashboardPage";
 import ObatPage from "./components/ObatPage";
 import PublicPage from "./components/PublicPage";
 import UnggahResep from "./components/UnggahResep";
-import ResepReport from "./admin/ResepReport"; 
+import ResepReport from "./admin/ResepReport";
 import KatalogObatPage from "./pages/KatalogObatPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -16,18 +17,20 @@ function App() {
         {/* --- HALAMAN PUBLIK (USER) --- */}
         <Route path="/" element={<PublicPage />} />
         <Route path="/unggah-resep" element={<UnggahResep />} />
-        
+
         {/* Pastikan path ini sesuai dengan "to='/semua-obat'" di PublicPage */}
         <Route path="/semua-obat" element={<KatalogObatPage />} />
 
         {/* --- AUTHENTICATION --- */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        
+
         {/* --- ADMIN ROUTES (DILINDUNGI) --- */}
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/obat" element={<ObatPage/>} />
-        <Route path="/admin/resep" element={<ResepReport />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/obat" element={<ObatPage />} />
+          <Route path="/admin/resep" element={<ResepReport />} />
+        </Route>
       </Routes>
     </Router>
   );

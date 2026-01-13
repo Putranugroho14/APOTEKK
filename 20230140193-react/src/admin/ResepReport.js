@@ -1,248 +1,250 @@
+// src/admin/ResepReport.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Clock, CheckCircle, MessageCircle, ExternalLink, Trash2, ArrowLeft, Package, Calendar } from 'lucide-react';
+import {
+    Clock, CheckCircle, MessageCircle, ExternalLink, Trash2,
+    ArrowLeft, Package, Calendar, LayoutDashboard, FileText,
+    LogOut, Search, RefreshCw, ChevronRight, Eye, User
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import API_BASE_URL from '../config';
+import Particles from '../components/Particles';
+
+const LOGO_URL = "/logo-apotek.jpeg";
 
 const ResepReport = () => {
     const [reseps, setReseps] = useState([]);
+    const [filteredReseps, setFilteredReseps] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
     const navigate = useNavigate();
 
-    // Fungsi Helper format tanggal yang lebih bagus
-    const formatDateTime = (dateString) => {
-        if (!dateString) return { date: "Tanggal Kosong", time: "", day: "" };
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) return { date: "Format Salah", time: "", day: "" };
-
-        // Format tanggal: 24 Desember 2025
-        const formattedDate = new Intl.DateTimeFormat('id-ID', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        }).format(date);
-
-        // Format waktu: 12:42 WIB
-        const formattedTime = new Intl.DateTimeFormat('id-ID', {
-            hour: '2-digit',
-            minute: '2-digit',
-            timeZoneName: 'short'
-        }).format(date).replace('GMT+7', 'WIB');
-
-        // Format hari: Selasa
-        const formattedDay = new Intl.DateTimeFormat('id-ID', {
-            weekday: 'long'
-        }).format(date);
-
-        return {
-            date: formattedDate,
-            time: formattedTime,
-            day: formattedDay
-        };
+    const decodeToken = (token) => {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            return JSON.parse(atob(base64));
+        } catch (e) { return null; }
     };
 
-    // Fungsi untuk menghitung berapa lama dari sekarang
-    const getTimeAgo = (dateString) => {
-        if (!dateString) return "";
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffMs = now - date;
-        const diffMins = Math.floor(diffMs / 60000);
-        const diffHours = Math.floor(diffMs / 3600000);
-        const diffDays = Math.floor(diffMs / 86400000);
-
-        if (diffMins < 1) return "Baru saja";
-        if (diffMins < 60) return `${diffMins} menit lalu`;
-        if (diffHours < 24) return `${diffHours} jam lalu`;
-        if (diffDays < 7) return `${diffDays} hari lalu`;
-        return "";
-    };
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) return navigate('/login');
+        const decoded = decodeToken(token);
+        if (decoded) setAdminData({ nama: decoded.nama, username: decoded.username });
+        fetchReseps();
+    }, [navigate]);
 
     const fetchReseps = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:3001/api/resep/report');
-            console.log("Data dari backend:", res.data.data);
+            const res = await axios.get(`${API_BASE_URL}/api/resep/report`);
             setReseps(res.data.data);
+            setFilteredReseps(res.data.data);
         } catch (err) {
-            console.error("Gagal memuat data", err);
+            console.error(err);
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => { fetchReseps(); }, []);
+    useEffect(() => {
+        const filtered = reseps.filter(r =>
+            r.nama_lengkap.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            r.nomor_wa.includes(searchQuery)
+        );
+        setFilteredReseps(filtered);
+    }, [searchQuery, reseps]);
 
     const handleUpdateStatus = async (id, status) => {
         try {
-            await axios.patch(`http://localhost:3001/api/resep/status/${id}`, { status });
+            await axios.patch(`${API_BASE_URL}/api/resep/status/${id}`, { status });
             fetchReseps();
-        } catch (err) {
-            alert("Gagal memperbarui status");
-        }
+        } catch (err) { alert("Gagal memperbarui status"); }
     };
 
     const handleDelete = async (id) => {
-        if(window.confirm("Hapus data resep ini secara permanen?")) {
+        if (window.confirm("Hapus data resep ini?")) {
             try {
-                await axios.delete(`http://localhost:3001/api/resep/${id}`);
+                await axios.delete(`${API_BASE_URL}/api/resep/${id}`);
                 fetchReseps();
-            } catch (err) { 
-                alert("Gagal menghapus data"); 
-            }
+            } catch (err) { alert("Gagal menghapus data"); }
         }
     };
 
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-cyan-50">
-            <nav className="bg-gradient-to-r from-cyan-600 to-cyan-500 text-white shadow-xl p-5">
-                <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <div className="flex items-center gap-4">
-                        <button onClick={() => navigate('/dashboard')} className="p-2 hover:bg-white/20 rounded-xl transition">
-                            <ArrowLeft size={24} />
-                        </button>
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-lime-500 rounded-xl flex items-center justify-center shadow-lg">
-                                <Package size={20} className="text-white" />
-                            </div>
-                            <div>
-                                <h1 className="text-xl font-black tracking-tight">KELOLA RESEP</h1>
-                                <p className="text-xs text-cyan-100">Manajemen Resep Pasien</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-lime-500 text-white px-5 py-2 rounded-full font-black text-sm shadow-lg">
-                        Total: {reseps.length} Resep
-                    </div>
-                </div>
-            </nav>
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
 
-            <div className="max-w-7xl mx-auto p-6 sm:p-8">
-                <div className="bg-white rounded-3xl border-2 border-cyan-200 shadow-2xl overflow-hidden">
-                    {loading ? (
-                        <div className="p-20 text-center">
-                            <div className="animate-spin w-16 h-16 border-4 border-cyan-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-                            <p className="text-cyan-900 font-bold">Memuat data...</p>
-                        </div>
-                    ) : reseps.length === 0 ? (
-                        <div className="p-20 text-center">
-                            <Package size={80} className="text-slate-300 mx-auto mb-4" />
-                            <p className="text-slate-400 font-bold text-lg">Belum ada resep</p>
-                        </div>
-                    ) : (
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="bg-gradient-to-r from-cyan-700 to-cyan-600 text-white">
-                                        <th className="p-6 text-xs font-black uppercase tracking-wider">Waktu Masuk</th>
-                                        <th className="p-6 text-xs font-black uppercase tracking-wider">Pasien</th>
-                                        <th className="p-6 text-xs font-black uppercase tracking-wider">Keterangan</th>
-                                        <th className="p-6 text-xs font-black uppercase tracking-wider">Foto Resep</th>
-                                        <th className="p-6 text-xs font-black uppercase tracking-wider">Status</th>
-                                        <th className="p-6 text-xs font-black uppercase tracking-wider text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100">
-                                    {reseps.map(r => {
-                                        const dateTime = formatDateTime(r.createdAt);
-                                        const timeAgo = getTimeAgo(r.createdAt);
-                                        
-                                        return (
-                                            <tr key={r.id} className="hover:bg-cyan-50/50 transition-all">
-                                                <td className="p-6">
-                                                    <div className="flex items-start gap-3">
-                                                        <div className="p-2.5 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl text-white shadow-lg">
-                                                            <Calendar size={20} />
-                                                        </div>
-                                                        <div className="flex-1">
-                                                            {/* Hari */}
-                                                            <p className="text-[11px] font-bold text-cyan-600 uppercase tracking-wider mb-0.5">
-                                                                {dateTime.day}
-                                                            </p>
-                                                            {/* Tanggal */}
-                                                            <p className="font-black text-cyan-900 text-[15px] leading-tight mb-1">
-                                                                {dateTime.date}
-                                                            </p>
-                                                            {/* Waktu */}
-                                                            <div className="flex items-center gap-1.5 mb-1">
-                                                                <Clock size={13} className="text-slate-400" />
-                                                                <p className="text-[13px] font-bold text-slate-600">
-                                                                    {dateTime.time}
-                                                                </p>
-                                                            </div>
-                                                            {/* Berapa lama */}
-                                                            {timeAgo && (
-                                                                <p className="text-[10px] text-lime-600 font-black uppercase tracking-widest bg-lime-50 px-2 py-0.5 rounded-full inline-block">
-                                                                    {timeAgo}
-                                                                </p>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td className="p-6">
-                                                    <p className="font-black text-cyan-900 text-base mb-1">{r.nama_lengkap}</p>
-                                                    <div className="flex items-center gap-2 text-xs font-bold text-lime-700">
-                                                        <MessageCircle size={14} /> {r.nomor_wa}
-                                                    </div>
-                                                </td>
-                                                <td className="p-6">
-                                                    <p className="text-sm text-slate-600 italic line-clamp-2 max-w-xs">
-                                                        {r.keterangan || "Tidak ada keterangan"}
-                                                    </p>
-                                                </td>
-                                                <td className="p-6">
-                                                    <a 
-                                                        href={`http://localhost:3001/uploads/resep/${r.foto_resep}`} 
-                                                        target="_blank" rel="noreferrer" 
-                                                        className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-100 text-cyan-700 rounded-xl text-xs font-bold hover:bg-cyan-600 hover:text-white transition-all shadow-sm"
-                                                    >
-                                                        <ExternalLink size={16} /> Lihat Dokumen
-                                                    </a>
-                                                </td>
-                                                <td className="p-6">
-                                                    <span className={`px-4 py-2 rounded-full text-xs font-black uppercase tracking-wide border-2 ${
-                                                        r.status === 'selesai' ? 'bg-lime-100 text-lime-700 border-lime-300' : 
-                                                        r.status === 'diproses' ? 'bg-amber-100 text-amber-700 border-amber-300' : 
-                                                        'bg-slate-100 text-slate-600 border-slate-300'
-                                                    }`}>
-                                                        {r.status === 'selesai' ? '✓ Selesai' : r.status === 'diproses' ? '⏳ Diproses' : '⏸ Pending'}
-                                                    </span>
-                                                </td>
-                                                <td className="p-6">
-                                                    <div className="flex justify-center gap-2">
-                                                        <button 
-                                                            onClick={() => handleUpdateStatus(r.id, 'selesai')} 
-                                                            className="p-3 bg-lime-500 text-white rounded-xl hover:bg-lime-600 transition-transform hover:scale-110 shadow-lg"
-                                                            title="Tandai Selesai"
-                                                        >
-                                                            <CheckCircle size={18} />
-                                                        </button>
-                                                        <a 
-                                                            href={`https://wa.me/${r.nomor_wa.replace(/^0/, '62')}`} 
-                                                            target="_blank" 
-                                                            rel="noreferrer" 
-                                                            className="p-3 bg-cyan-500 text-white rounded-xl hover:bg-cyan-600 transition-transform hover:scale-110 shadow-lg"
-                                                            title="Chat WhatsApp"
-                                                        >
-                                                            <MessageCircle size={18} />
-                                                        </a>
-                                                        <button 
-                                                            onClick={() => handleDelete(r.id)} 
-                                                            className="p-3 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-transform hover:scale-110 shadow-lg"
-                                                            title="Hapus"
-                                                        >
-                                                            <Trash2 size={18} />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+    const SidebarItem = ({ icon: Icon, label, path, active }) => (
+        <button
+            onClick={() => path && navigate(path)}
+            className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group
+            ${active ? 'premium-gradient text-white shadow-lg shadow-cyan-200' : 'text-slate-500 hover:bg-slate-50 hover:text-cyan-600'}`}
+        >
+            <Icon size={20} className={active ? 'text-white' : 'group-hover:scale-110 transition-transform'} />
+            <span className="font-bold text-sm tracking-wide">{label}</span>
+        </button>
+    );
+
+    return (
+        <div className="flex min-h-screen bg-mesh font-sans text-white relative overflow-hidden">
+            {/* BACKGROUND DECORATIONS */}
+            <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none"></div>
+            <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] left-[10%] w-[50%] h-[50%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '-3s' }}></div>
+
+            <Particles count={70} opacity={0.3} speed={0.4} />
+            {/* SIDEBAR */}
+            <aside className="w-80 bg-slate-900/60 backdrop-blur-xl border-r border-white/5 flex flex-col p-6 sticky top-0 h-screen z-50">
+                <div className="flex items-center gap-4 mb-12 px-2">
+                    <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
+                        <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
+                            onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
+                    </div>
+                    <div>
+                        <h1 className="text-xl font-black tracking-tight leading-none text-white">APOTEK <br /><span className="text-cyan-400">HADINATA</span></h1>
+                        <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mt-1">Admin Panel</p>
+                    </div>
                 </div>
-            </div>
+
+                <div className="space-y-2 flex-1">
+                    <SidebarItem icon={LayoutDashboard} label="Dashboard" path="/dashboard" />
+                    <SidebarItem icon={Package} label="Kelola Obat" path="/obat" />
+                    <SidebarItem icon={FileText} label="Laporan Resep" active />
+                </div>
+
+                <div className="mt-auto pt-6 border-t border-white/5 relative z-10">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center justify-center gap-3 py-4 text-red-400 font-black text-xs uppercase tracking-widest bg-white/5 rounded-2xl hover:bg-red-500/20 transition-colors"
+                    >
+                        <LogOut size={16} /> Sign Out
+                    </button>
+                </div>
+            </aside>
+
+            {/* MAIN CONTENT */}
+            <main className="flex-1 p-8 md:p-12 overflow-y-auto relative z-10">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+                    <div>
+                        <h2 className="text-4xl font-black tracking-tight text-white mb-2 underline decoration-cyan-500/30">Laporan <span className="text-cyan-400">Resep Digital</span></h2>
+                        <p className="text-slate-400 font-medium italic">Validasi dan tindak lanjuti resep yang dikirim oleh pasien.</p>
+                    </div>
+                    <div className="glass-card-dark px-8 py-5 border border-white/10 rounded-[24px] shadow-2xl">
+                        <p className="text-[10px] uppercase font-black text-slate-500 tracking-[0.3em] mb-1">Total Antrean</p>
+                        <p className="text-3xl font-black text-white tracking-widest leading-none">{reseps.length}</p>
+                    </div>
+                </div>
+
+                {/* Filters */}
+                <div className="glass-card-dark p-6 rounded-[40px] border border-white/5 mb-10 shadow-2xl flex flex-col md:flex-row gap-6">
+                    <div className="flex-1 relative">
+                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Cari nama pasien atau WhatsApp..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-14 pr-8 py-5 bg-white/5 border border-white/10 rounded-[30px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all text-sm font-bold text-white placeholder-slate-600 shadow-inner"
+                        />
+                    </div>
+                    <button onClick={() => setSearchQuery("")} className="w-16 h-16 bg-white/5 border border-white/10 rounded-[30px] flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
+                        <RefreshCw size={22} />
+                    </button>
+                </div>
+
+                {/* Table Layout */}
+                <div className="glass-card-dark rounded-[40px] border border-white/5 shadow-2xl overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-white/5">
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Waktu & Tanggal</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Informasi Pasien</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Dokumen</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Status</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center">Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                                {loading ? (
+                                    [1, 2, 3].map(i => <tr key={i}><td colSpan="5" className="p-8"><div className="h-8 bg-slate-50 rounded-xl animate-pulse"></div></td></tr>)
+                                ) : filteredReseps.length === 0 ? (
+                                    <tr><td colSpan="5" className="p-20 text-center text-slate-400 italic">Tidak ada data resep ditemukan.</td></tr>
+                                ) : (
+                                    filteredReseps.map(r => (
+                                        <tr key={r.id} className="hover:bg-white/5 transition-all duration-300 group">
+                                            <td className="p-8">
+                                                <div className="flex items-center gap-5">
+                                                    <div className="w-12 h-12 bg-white/5 border border-white/10 text-cyan-400 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all">
+                                                        <Calendar size={20} />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-black text-white tracking-tight">{new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</p>
+                                                        <p className="text-[10px] font-black text-slate-500 flex items-center gap-1 uppercase tracking-widest"><Clock size={10} /> {new Date(r.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="p-8">
+                                                <div className="flex flex-col">
+                                                    <p className="text-base font-black text-white mb-1 tracking-tight">{r.nama_lengkap}</p>
+                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-lime-400 tracking-wider">
+                                                        <div className="w-2 h-2 bg-lime-400 rounded-full animate-pulse"></div> {r.nomor_wa}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="p-8">
+                                                <a
+                                                    href={`${API_BASE_URL}/uploads/resep/${r.foto_resep}`}
+                                                    target="_blank" rel="noreferrer"
+                                                    className="inline-flex items-center gap-3 text-xs font-black text-cyan-400 hover:text-white transition-all group/link"
+                                                >
+                                                    <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center group-hover/link:bg-white/10 transition-all">
+                                                        <Eye size={16} />
+                                                    </div>
+                                                    <span className="underline underline-offset-8 decoration-cyan-400/30">Detail Foto</span>
+                                                </a>
+                                            </td>
+                                            <td className="p-8">
+                                                <span className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border
+                                                    ${r.status === 'selesai' ? 'bg-lime-500/10 text-lime-400 border-lime-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
+                                                    {r.status === 'selesai' ? '✓ Selesai' : '⏳ Menunggu'}
+                                                </span>
+                                            </td>
+                                            <td className="p-8">
+                                                <div className="flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0">
+                                                    <button
+                                                        onClick={() => handleUpdateStatus(r.id, 'selesai')}
+                                                        className="w-12 h-12 bg-lime-500/10 text-lime-400 hover:bg-lime-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-lime-500/20"
+                                                        title="Selesaikan"
+                                                    >
+                                                        <CheckCircle size={20} />
+                                                    </button>
+                                                    <a
+                                                        href={`https://wa.me/${r.nomor_wa.replace(/^0/, '62')}`} target="_blank" rel="noreferrer"
+                                                        className="w-12 h-12 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-cyan-500/20"
+                                                    >
+                                                        <MessageCircle size={20} />
+                                                    </a>
+                                                    <button
+                                                        onClick={() => handleDelete(r.id)}
+                                                        className="w-12 h-12 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-red-500/20"
+                                                    >
+                                                        <Trash2 size={20} />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
         </div>
     );
 };

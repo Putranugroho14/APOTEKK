@@ -2,124 +2,150 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
+import { Lock, User, ShieldCheck, ArrowRight, Loader2, Sparkles, Eye, EyeOff } from "lucide-react";
+import Particles from "./Particles";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const LOGO_URL = "/logo-apotek.jpeg";
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3001/api/auth/login", {
-        username: username,
-        password: password,
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+        username,
+        password,
       });
 
-      const token = response.data.token;
+      const { token } = response.data;
       localStorage.setItem("token", token);
-
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response ? err.response.data.message : "Login gagal");
+      const errorMessage = err.response
+        ? err.response.data.message || "Login gagal."
+        : "Gagal terhubung ke server.";
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 via-cyan-100 to-lime-50 text-gray-800 relative overflow-hidden">
-      {/* Glow background */}
-      <div className="absolute inset-0">
-        <div className="absolute w-[400px] h-[400px] bg-cyan-500/15 blur-[150px] rounded-full top-[-80px] left-[-100px] transform rotate-45"></div>
-        <div className="absolute w-[350px] h-[350px] bg-lime-500/15 blur-[130px] rounded-full bottom-[-90px] right-[-110px]"></div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-mesh relative overflow-hidden font-sans">
+      <Particles count={80} opacity={0.5} />
 
-      {/* Kotak Login */}
-      <div className='relative z-10 w-full max-w-md p-8 bg-white/95 border border-cyan-200 rounded-3xl shadow-[0_4px_15px_rgba(6,182,212,0.3)] hover:shadow-[0_6px_25px_rgba(6,182,212,0.4)] transition-all duration-300 backdrop-blur-sm'>
-        
-        {/* Logo + Heading */}
-        <div className="flex flex-col items-center mb-8">
-          <div className="bg-white p-3 rounded-2xl shadow-lg mb-4 border-2 border-cyan-100">
-            <img
-              src={LOGO_URL}
-              alt="Logo Apotek Hadinata"
-              className="h-16 w-auto object-contain"
-              onError={(e) => {
-                e.target.style.display = 'none';
-              }}
-            />
+      {/* Decorative High-End Orbs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '-4s' }}></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-dot-pattern opacity-10 pointer-events-none"></div>
+
+      {/* Main Container */}
+      <div className="relative z-10 w-full max-w-lg p-6 animate-fade-in">
+        <div className="glass-card-dark p-10 md:p-16 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] border border-white/10">
+
+          {/* Header Section */}
+          <div className="text-center mb-12">
+            <div className="inline-block p-4 bg-white rounded-[28px] shadow-xl mb-8 border border-white hover-lift">
+              <img
+                src={LOGO_URL}
+                alt="Logo Apotek"
+                className="h-14 w-auto object-contain"
+                onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"}
+              />
+            </div>
+            <h2 className="text-4xl font-black text-white tracking-tighter mb-4">Admin <span className="text-cyan-400">Portal</span></h2>
+            <p className="text-slate-400 font-medium tracking-wide">Silakan masuk untuk mengelola apotek.</p>
           </div>
-          <h2 className="text-4xl font-black text-center text-cyan-700">
-            APOTEK <span className="text-lime-600">HADINATA</span>
-          </h2>
-          <p className="text-sm text-slate-600 mt-2">Admin Login System</p>
+
+          <form onSubmit={handleLogin} className="space-y-8">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] ml-2">Username</label>
+              <div className="group relative">
+                <User className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-cyan-400 transition-colors" size={20} />
+                <input
+                  type="text" required
+                  value={username} onChange={(e) => setUsername(e.target.value)}
+                  className="w-full pl-16 pr-8 py-5 bg-white/5 border border-white/10 rounded-2xl outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all font-bold text-sm text-white placeholder:text-slate-600"
+                  placeholder="Masukkan username"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] ml-2">Password</label>
+              <div className="group relative">
+                <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-cyan-400 transition-colors" size={20} />
+                <input
+                  type={showPassword ? "text" : "password"} required
+                  value={password} onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-16 pr-14 py-5 bg-white/5 border border-white/10 rounded-2xl outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all font-bold text-sm text-white placeholder:text-slate-600"
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button" onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-500 hover:text-cyan-400 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {error && (
+              <div className="p-5 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-4 animate-shake">
+                <div className="w-10 h-10 bg-red-500 text-white rounded-xl flex items-center justify-center shrink-0">
+                  <ShieldCheck size={20} />
+                </div>
+                <p className="text-red-700 text-xs font-black uppercase tracking-wider leading-relaxed">{error}</p>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-6 premium-gradient text-white font-black rounded-[24px] shadow-2xl shadow-cyan-900/10 hover:shadow-cyan-200 transition-all flex items-center justify-center gap-4 disabled:opacity-70 uppercase tracking-[0.3em] text-[11px]"
+            >
+              {isLoading ? (
+                <Loader2 className="animate-spin" size={24} />
+              ) : (
+                <>
+                  <span>Masuk Ke Dashboard</span>
+                  <ArrowRight size={20} />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-12 pt-10 border-t border-slate-100 flex flex-col items-center gap-4">
+            <button onClick={() => navigate('/register')} className="text-xs font-black text-slate-400 hover:text-cyan-600 uppercase tracking-widest transition-colors flex items-center gap-2">
+              <Sparkles size={14} className="text-lime-500" /> Daftar Akun Admin Baru
+            </button>
+            <button onClick={() => navigate('/')} className="text-[10px] font-black text-slate-300 hover:text-slate-900 uppercase tracking-[0.2em] transition-colors">
+              ← Kembali Ke Halaman Publik
+            </button>
+          </div>
         </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Username */}
-          <div>
-            <label className="block text-sm font-bold text-cyan-900 mb-2 uppercase">
-              Username
-            </label>
-            <input
-              type="text"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 text-gray-800 border-2 border-cyan-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100 transition placeholder-gray-400 outline-none"
-              placeholder="Masukkan username"
-            />
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-bold text-cyan-900 mb-2 uppercase">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 text-gray-800 border-2 border-cyan-200 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100 transition placeholder-gray-400 outline-none"
-              placeholder="Masukkan password"
-            />
-          </div>
-
-          {/* Button Login */}
-          <button
-            type="submit"
-            className="w-full py-3.5 bg-gradient-to-r from-cyan-600 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:from-cyan-700 hover:to-cyan-600 hover:scale-[1.02] transition transform duration-200 flex items-center justify-center space-x-2"
-          >
-            <span className="text-xl">🔐</span>
-            <span>Masuk Sistem</span>
-          </button>
-        </form>
-
-        {error && (
-          <div className="mt-4 p-3 bg-red-50 border-l-4 border-red-500 rounded-lg">
-            <p className="text-red-600 text-sm font-semibold">{error}</p>
-          </div>
-        )}
-
-        <p className="text-sm text-gray-500 mt-6 text-center">
-          Belum punya akun?{" "}
-          <span
-            onClick={() => navigate("/register")}
-            className="text-cyan-600 hover:text-cyan-700 hover:underline cursor-pointer font-bold"
-          >
-            Daftar di sini
-          </span>
-        </p>
-
-        <p className="text-xs text-gray-400 mt-4 text-center border-t border-slate-200 pt-4">
-          Apotek Hadinata Admin System V1.0
-        </p>
       </div>
+
+      <style jsx>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
+        }
+        .animate-shake {
+          animation: shake 0.4s ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }

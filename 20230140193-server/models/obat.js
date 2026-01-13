@@ -3,17 +3,17 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class obat extends Model {
+  class Obat extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Obat.belongsTo(models.User, { foreignKey: 'authorId', as: 'Admin' });
     }
   }
-  obat.init({
+  Obat.init({
     nama_obat: DataTypes.STRING,
     deskripsi: DataTypes.TEXT,
     stok: DataTypes.INTEGER,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     is_published: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'obat',
+    modelName: 'Obat',
   });
-  return obat;
+  return Obat;
 };

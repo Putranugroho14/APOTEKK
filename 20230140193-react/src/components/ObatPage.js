@@ -1,10 +1,16 @@
 // src/components/ObatPage.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Trash2, Edit3, PlusCircle, X, Package, Image as ImageIcon, Tag, Settings2, Layers, ArrowLeft, Pill, Search, Filter, RefreshCw } from 'lucide-react';
+import {
+    Trash2, Edit3, Plus, X, Package, Image as ImageIcon, Layers,
+    ArrowLeft, Pill, Search, Filter, RefreshCw, LayoutDashboard,
+    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff
+} from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../config";
+import Particles from "./Particles";
 
-const API_URL = "http://localhost:3001/api/obat";
+const API_URL = `${API_BASE_URL}/api/obat`;
 const LOGO_URL = "/logo-apotek.jpeg";
 
 function getToken() { return localStorage.getItem("token"); }
@@ -21,173 +27,29 @@ const decodeTokenPayload = (token) => {
     } catch (e) { return null; }
 };
 
-const stokOptions = Array.from({ length: 101 }, (_, i) => i);
-const hargaOptions = [500, 1000, 2000, 5000, 10000, 15000, 20000, 25000, 50000, 75000, 100000];
 const kategoriOptions = ["Obat Bebas", "Obat Keras", "Suplemen", "Obat Bebas Terbatas", "Vitamin", "Antibiotik"];
-
-const EditObatModal = ({ isOpen, onClose, obatData, onUpdate, getHeaders }) => {
-    const [formData, setFormData] = useState(obatData);
-
-    useEffect(() => { setFormData(obatData); }, [obatData]);
-
-    const handleModalChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }));
-    };
-
-    const handleModalSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.put(`${API_URL}/${formData.id}`, formData, getHeaders());
-            onUpdate("Data berhasil diperbarui!");
-            onClose();
-        } catch (err) { onUpdate(null, "Gagal memperbarui data."); }
-    };
-
-    if (!isOpen || !formData) return null;
-
-    return (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-xl border-2 border-cyan-200 max-h-[90vh] overflow-y-auto">
-                <div className="flex justify-between items-center mb-5">
-                    <h3 className="text-xl font-black text-cyan-900 flex items-center gap-2">
-                        <Settings2 className="text-cyan-600" size={20} /> Edit Produk
-                    </h3>
-                    <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition">
-                        <X className="text-slate-600" size={20} />
-                    </button>
-                </div>
-
-                <form onSubmit={handleModalSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="col-span-2">
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Nama Produk</label>
-                            <input
-                                type="text"
-                                name="nama_obat"
-                                value={formData.nama_obat}
-                                onChange={handleModalChange}
-                                required
-                                className="w-full p-2.5 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100 transition"
-                            />
-                        </div>
-
-                        <div className="col-span-2">
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Kategori</label>
-                            <select
-                                name="kategori"
-                                value={formData.kategori || ""}
-                                onChange={handleModalChange}
-                                className="w-full p-2.5 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                            >
-                                <option value="">-- Pilih Kategori --</option>
-                                {kategoriOptions.map(kat => <option key={kat} value={kat}>{kat}</option>)}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Stok</label>
-                            <select
-                                name="stok"
-                                value={formData.stok}
-                                onChange={handleModalChange}
-                                className="w-full p-2.5 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                            >
-                                {stokOptions.map(n => <option key={n} value={n}>{n} Unit</option>)}
-                            </select>
-                        </div>
-                        <div>
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Harga</label>
-                            <select
-                                name="harga"
-                                value={formData.harga}
-                                onChange={handleModalChange}
-                                className="w-full p-2.5 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                            >
-                                {hargaOptions.map(h => <option key={h} value={h}>Rp {h.toLocaleString()}</option>)}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Deskripsi</label>
-                        <textarea
-                            name="deskripsi"
-                            value={formData.deskripsi || ""}
-                            onChange={handleModalChange}
-                            className="w-full p-2.5 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 h-20 resize-none transition"
-                            placeholder="Deskripsi produk..."
-                        />
-                    </div>
-
-                    <div>
-                        <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Gambar (URL)</label>
-                        <input
-                            type="url"
-                            name="gambar_url"
-                            value={formData.gambar_url}
-                            onChange={handleModalChange}
-                            className="w-full p-2.5 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                            placeholder="https://example.com/image.jpg"
-                        />
-                    </div>
-
-                    <div className="bg-cyan-50 p-3 rounded-xl border-2 border-cyan-200 flex justify-between items-center">
-                        <div>
-                            <p className="text-sm font-bold text-cyan-900">Publikasikan Produk</p>
-                            <p className="text-xs text-cyan-700">Tampilkan di katalog publik</p>
-                        </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
-                            <input
-                                type="checkbox"
-                                name="is_published"
-                                checked={formData.is_published}
-                                onChange={handleModalChange}
-                                className="sr-only peer"
-                            />
-                            <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-lime-500"></div>
-                        </label>
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="w-full py-3 bg-gradient-to-r from-lime-500 to-lime-600 hover:from-lime-600 hover:to-lime-700 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-sm"
-                    >
-                        💾 Simpan Perubahan
-                    </button>
-                </form>
-            </div>
-        </div>
-    );
-};
 
 const ObatPage = () => {
     const navigate = useNavigate();
     const [obats, setObats] = useState([]);
     const [filteredObats, setFilteredObats] = useState([]);
-    const [createForm, setCreateForm] = useState({
-        nama_obat: "",
-        deskripsi: "",
-        kategori: "",
-        stok: 0,
-        harga: 500,
-        gambar_url: "",
-        is_published: true
-    });
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingObat, setEditingObat] = useState(null);
-    const [message, setMessage] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
+    const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
+    const [showAddForm, setShowAddForm] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedKategori, setSelectedKategori] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState("");
-    const [stokFilter, setStokFilter] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+    const [editingObat, setEditingObat] = useState(null);
+    const [formData, setFormData] = useState({
+        nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", is_published: true
+    });
 
     const user = decodeTokenPayload(getToken());
-    const isAdmin = user && user.role === "admin";
+
+    useEffect(() => {
+        if (!getToken()) navigate('/login');
+        if (user) setAdminData({ nama: user.nama, username: user.username });
+        fetchObats();
+    }, []);
 
     const getHeaders = () => ({
         headers: { Authorization: `Bearer ${getToken()}`, "Content-Type": "application/json" }
@@ -203,398 +65,288 @@ const ObatPage = () => {
         finally { setIsLoading(false); }
     };
 
-    useEffect(() => { fetchObats(); }, []);
-
     useEffect(() => {
-        let filtered = [...obats];
-
-        if (searchQuery) {
-            filtered = filtered.filter(obat =>
-                obat.nama_obat.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (obat.deskripsi && obat.deskripsi.toLowerCase().includes(searchQuery.toLowerCase()))
-            );
-        }
-
-        if (selectedKategori) {
-            filtered = filtered.filter(obat => obat.kategori === selectedKategori);
-        }
-
-        if (selectedStatus === "published") {
-            filtered = filtered.filter(obat => obat.is_published);
-        } else if (selectedStatus === "draft") {
-            filtered = filtered.filter(obat => !obat.is_published);
-        }
-
-        if (stokFilter === "low") {
-            filtered = filtered.filter(obat => obat.stok < 10);
-        } else if (stokFilter === "available") {
-            filtered = filtered.filter(obat => obat.stok >= 10);
-        } else if (stokFilter === "out") {
-            filtered = filtered.filter(obat => obat.stok === 0);
-        }
-
+        let filtered = obats.filter(obat =>
+            obat.nama_obat.toLowerCase().includes(searchQuery.toLowerCase()) &&
+            (selectedKategori === "" || obat.kategori === selectedKategori)
+        );
         setFilteredObats(filtered);
-    }, [searchQuery, selectedKategori, selectedStatus, stokFilter, obats]);
+    }, [searchQuery, selectedKategori, obats]);
 
-    const resetFilters = () => {
-        setSearchQuery("");
-        setSelectedKategori("");
-        setSelectedStatus("");
-        setStokFilter("");
-    };
-
-    const handleCreateObat = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(API_URL, createForm, getHeaders());
-            setMessage("Produk baru berhasil ditambahkan!");
-            setCreateForm({
-                nama_obat: "",
-                deskripsi: "",
-                kategori: "",
-                stok: 0,
-                harga: 500,
-                gambar_url: "",
-                is_published: true
-            });
+            if (editingObat) {
+                await axios.put(`${API_URL}/${editingObat.id}`, formData, getHeaders());
+            } else {
+                await axios.post(API_URL, formData, getHeaders());
+            }
+            setShowAddForm(false);
+            setEditingObat(null);
+            setFormData({ nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", is_published: true });
             fetchObats();
-            setTimeout(() => setMessage(""), 3000);
-        } catch (err) {
-            const errorMessage = err.response?.data?.message || "Gagal menambah data.";
-            alert(errorMessage);
-        }
+        } catch (err) { alert("Gagal menyimpan data"); }
     };
 
     const handleDelete = async (id) => {
         if (!window.confirm("Hapus produk ini?")) return;
         try {
             await axios.delete(`${API_URL}/${id}`, getHeaders());
-            setMessage("Produk berhasil dihapus.");
             fetchObats();
-            setTimeout(() => setMessage(""), 3000);
-        } catch (err) { alert("Gagal menghapus produk."); }
+        } catch (err) { alert("Gagal menghapus produk"); }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    };
+
+    const SidebarItem = ({ icon: Icon, label, path, active }) => (
+        <button
+            onClick={() => path && navigate(path)}
+            className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group
+            ${active ? 'premium-gradient text-white shadow-lg shadow-cyan-200' : 'text-slate-500 hover:bg-slate-50 hover:text-cyan-600'}`}
+        >
+            <Icon size={20} className={active ? 'text-white' : 'group-hover:scale-110 transition-transform'} />
+            <span className="font-bold text-sm tracking-wide">{label}</span>
+        </button>
+    );
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-cyan-50 text-slate-800 pb-20 font-sans">
-            <nav className="bg-gradient-to-r from-cyan-600 to-cyan-500 text-white shadow-2xl sticky top-0 z-40">
-                <div className="max-w-7xl mx-auto px-6 py-4">
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-4">
-                            <button
-                                onClick={() => navigate('/dashboard')}
-                                className="p-2 hover:bg-white/20 rounded-xl transition"
-                            >
-                                <ArrowLeft size={24} />
-                            </button>
+        <div className="flex min-h-screen bg-mesh font-sans text-white relative overflow-hidden">
+            {/* BACKGROUND DECORATIONS */}
+            <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none"></div>
+            <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] left-[10%] w-[50%] h-[50%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '-3s' }}></div>
 
-                            <div className="bg-white p-2 rounded-xl shadow-xl">
-                                <img
-                                    src={LOGO_URL}
-                                    alt="Logo Apotek Hadinata"
-                                    className="h-12 w-auto object-contain"
-                                    onError={(e) => {
-                                        e.target.style.display = 'none';
-                                        e.target.nextElementSibling.style.display = 'flex';
-                                    }}
-                                />
-                                <div className="w-12 h-12 bg-white rounded-xl items-center justify-center shadow-xl hidden">
-                                    <Package className="text-cyan-600" size={28} />
-                                </div>
-                            </div>
-
-                            <div>
-                                <h1 className="text-2xl font-black tracking-tight">KELOLA PRODUK</h1>
-                                <p className="text-sm text-cyan-100">Manajemen Stok Obat</p>
-                            </div>
-                        </div>
-
-                        <div className="bg-lime-500 px-6 py-3 rounded-full shadow-xl">
-                            <p className="text-sm font-black">
-                                {filteredObats.length} / {obats.length} Produk
-                            </p>
-                        </div>
+            <Particles count={60} opacity={0.25} speed={0.4} />
+            {/* SIDEBAR */}
+            <aside className="w-80 bg-slate-900/60 backdrop-blur-xl border-r border-white/5 flex flex-col p-6 sticky top-0 h-screen z-50">
+                <div className="flex items-center gap-4 mb-12 px-2">
+                    <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
+                        <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
+                            onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
+                    </div>
+                    <div>
+                        <h1 className="text-xl font-black tracking-tight leading-none text-white">APOTEK <br /><span className="text-cyan-400">HADINATA</span></h1>
+                        <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mt-1">Admin Panel</p>
                     </div>
                 </div>
-            </nav>
 
-            <div className="max-w-7xl mx-auto px-6 mt-8">
-                {message && (
-                    <div className="mb-6 p-3 bg-lime-100 border-2 border-lime-500 text-lime-800 rounded-xl text-center font-bold flex items-center justify-center gap-2">
-                        <span className="text-lg">✓</span> {message}
+                <div className="space-y-2 flex-1 relative z-10">
+                    <SidebarItem icon={LayoutDashboard} label="Dashboard" path="/dashboard" />
+                    <SidebarItem icon={Package} label="Kelola Obat" active />
+                    <SidebarItem icon={FileText} label="Laporan Resep" path="/admin/resep" />
+                </div>
+
+                <div className="mt-auto pt-6 border-t border-white/5 relative z-10">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center justify-center gap-3 py-4 text-red-400 font-black text-xs uppercase tracking-widest bg-white/5 rounded-2xl hover:bg-red-500/20 transition-colors"
+                    >
+                        <LogOut size={16} /> Sign Out
+                    </button>
+                </div>
+            </aside>
+
+            {/* MAIN CONTENT */}
+            <main className="flex-1 p-8 md:p-12 overflow-y-auto relative z-10">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+                    <div>
+                        <h2 className="text-4xl font-black tracking-tight text-white mb-2 underline decoration-cyan-500/30">Manajemen <span className="text-cyan-400">Katalog Obat</span></h2>
+                        <p className="text-slate-400 font-medium italic">Update stok, harga, dan informasi obat secara real-time.</p>
                     </div>
-                )}
+                    <button
+                        onClick={() => { setShowAddForm(true); setEditingObat(null); }}
+                        className="px-10 py-5 premium-gradient text-white font-black rounded-2xl shadow-[0_20px_40px_-10px_rgba(6,182,212,0.5)] hover:scale-[1.05] active:scale-[0.95] transition-all flex items-center gap-4 uppercase tracking-[0.2em] text-[10px]"
+                    >
+                        <Plus size={20} /> Tambah Item Baru
+                    </button>
+                </div>
 
-                {isAdmin && (
-                    <section className="mb-8">
-                        <div className="bg-white border-2 border-cyan-200 rounded-2xl shadow-xl p-6">
-                            <h3 className="text-xl font-black text-cyan-900 mb-4 flex items-center gap-2">
-                                <PlusCircle className="text-lime-600" size={20} /> Tambah Produk Baru
-                            </h3>
-
-                            <form onSubmit={handleCreateObat} className="space-y-4">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block flex items-center gap-2">
-                                            <Package size={12} /> Nama Produk
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Contoh: Paracetamol 500mg"
-                                            value={createForm.nama_obat}
-                                            onChange={(e) => setCreateForm({ ...createForm, nama_obat: e.target.value })}
-                                            required
-                                            className="w-full bg-slate-50 p-3 rounded-lg border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100 transition"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block flex items-center gap-2">
-                                            <Layers size={12} /> Kategori
-                                        </label>
-                                        <select
-                                            value={createForm.kategori}
-                                            onChange={(e) => setCreateForm({ ...createForm, kategori: e.target.value })}
-                                            className="w-full bg-slate-50 p-3 rounded-lg border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                                        >
-                                            <option value="">-- Pilih Kategori --</option>
-                                            {kategoriOptions.map(kat => <option key={kat} value={kat}>{kat}</option>)}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Stok Awal</label>
-                                        <select
-                                            value={createForm.stok}
-                                            onChange={(e) => setCreateForm({ ...createForm, stok: e.target.value })}
-                                            className="w-full bg-slate-50 p-3 rounded-lg border-2 border-cyan-200 text-cyan-900 text-sm outline-none"
-                                        >
-                                            {stokOptions.map(n => <option key={n} value={n}>{n} Unit</option>)}
-                                        </select>
-                                    </div>
-
-                                    <div>
-                                        <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Harga Jual</label>
-                                        <select
-                                            value={createForm.harga}
-                                            onChange={(e) => setCreateForm({ ...createForm, harga: e.target.value })}
-                                            className="w-full bg-slate-50 p-3 rounded-lg border-2 border-cyan-200 text-cyan-900 text-sm outline-none"
-                                        >
-                                            {hargaOptions.map(h => <option key={h} value={h}>Rp {h.toLocaleString('id-ID')}</option>)}
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">URL Gambar</label>
-                                    <div className="relative">
-                                        <ImageIcon className="absolute left-3 top-3 text-cyan-400" size={16} />
-                                        <input
-                                            type="url"
-                                            placeholder="https://example.com/image.jpg"
-                                            value={createForm.gambar_url}
-                                            onChange={(e) => setCreateForm({ ...createForm, gambar_url: e.target.value })}
-                                            className="w-full bg-slate-50 p-3 pl-11 rounded-lg border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">Deskripsi</label>
-                                    <textarea
-                                        placeholder="Contoh: Pereda demam dan nyeri..."
-                                        value={createForm.deskripsi}
-                                        onChange={(e) => setCreateForm({ ...createForm, deskripsi: e.target.value })}
-                                        required
-                                        className="w-full bg-slate-50 p-3 rounded-lg border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 h-20 resize-none transition"
-                                    />
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="w-full py-3 bg-gradient-to-r from-lime-500 to-lime-600 hover:from-lime-600 hover:to-lime-700 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-sm"
-                                >
-                                    💾 Simpan Produk
-                                </button>
-                            </form>
-                        </div>
-                    </section>
-                )}
-
-                <div className="bg-white rounded-2xl border-2 border-cyan-200 shadow-xl p-6 mb-8">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                            <Filter className="text-cyan-600" size={20} />
-                            <h3 className="text-lg font-black text-cyan-900">Filter & Pencarian</h3>
-                        </div>
-                        <button
-                            onClick={resetFilters}
-                            className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-bold transition"
+                {/* Filters */}
+                <div className="glass-card-dark p-6 rounded-[40px] border border-white/5 mb-14 shadow-2xl flex flex-col md:flex-row gap-6">
+                    <div className="flex-1 relative">
+                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+                        <input
+                            type="text"
+                            placeholder="Cari nama obat..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-14 pr-8 py-5 bg-white/5 border border-white/10 rounded-[30px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all text-sm font-bold text-white placeholder-slate-600 shadow-inner"
+                        />
+                    </div>
+                    <div className="w-full md:w-72">
+                        <select
+                            value={selectedKategori}
+                            onChange={(e) => setSelectedKategori(e.target.value)}
+                            className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[30px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all text-sm font-black text-slate-400 appearance-none cursor-pointer"
                         >
-                            <RefreshCw size={16} /> Reset
-                        </button>
+                            <option value="" className="bg-slate-900 text-white">Semua Kategori</option>
+                            {kategoriOptions.map(kat => <option key={kat} value={kat} className="bg-slate-900 text-white">{kat}</option>)}
+                        </select>
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div className="lg:col-span-2">
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">
-                                Cari Produk
-                            </label>
-                            <div className="relative">
-                                <Search className="absolute left-3 top-3 text-cyan-400" size={18} />
-                                <input
-                                    type="text"
-                                    placeholder="Cari nama obat atau deskripsi..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full p-3 pl-11 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100 transition"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">
-                                Kategori
-                            </label>
-                            <select
-                                value={selectedKategori}
-                                onChange={(e) => setSelectedKategori(e.target.value)}
-                                className="w-full p-3 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                            >
-                                <option value="">Semua Kategori</option>
-                                {kategoriOptions.map(kat => (
-                                    <option key={kat} value={kat}>{kat}</option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">
-                                Status
-                            </label>
-                            <select
-                                value={selectedStatus}
-                                onChange={(e) => setSelectedStatus(e.target.value)}
-                                className="w-full p-3 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                            >
-                                <option value="">Semua Status</option>
-                                <option value="published">Published</option>
-                                <option value="draft">Draft</option>
-                            </select>
-                        </div>
-
-                        <div className="lg:col-span-2">
-                            <label className="text-xs font-bold text-cyan-900 uppercase ml-1 mb-1.5 block">
-                                Stok
-                            </label>
-                            <select
-                                value={stokFilter}
-                                onChange={(e) => setStokFilter(e.target.value)}
-                                className="w-full p-3 rounded-lg bg-slate-50 border-2 border-cyan-200 text-cyan-900 text-sm outline-none focus:border-cyan-500 transition"
-                            >
-                                <option value="">Semua Stok</option>
-                                <option value="available">Stok Tersedia (≥10)</option>
-                                <option value="low">Stok Menipis (&lt;10)</option>
-                                <option value="out">Stok Habis (0)</option>
-                            </select>
-                        </div>
-
-                        <div className="lg:col-span-2 flex items-end">
-                            <div className="text-xs text-slate-600 bg-slate-50 px-4 py-3 rounded-lg border border-slate-200 w-full">
-                                <span className="font-bold text-cyan-900">Hasil:</span> Menampilkan {filteredObats.length} dari {obats.length} produk
-                            </div>
-                        </div>
-                    </div>
+                    <button onClick={() => { setSearchQuery(""); setSelectedKategori(""); }} className="w-16 h-16 bg-white/5 border border-white/10 rounded-[30px] flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
+                        <RefreshCw size={22} />
+                    </button>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                {/* Grid Obat */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     {isLoading ? (
-                        <div className="col-span-full text-center py-20">
-                            <div className="animate-spin w-12 h-12 border-4 border-cyan-600 border-t-transparent rounded-full mx-auto mb-3"></div>
-                            <p className="text-cyan-900 font-bold text-sm">Memuat data...</p>
-                        </div>
+                        [1, 2, 3, 4].map(i => <div key={i} className="h-80 bg-white rounded-[32px] animate-pulse border border-slate-100"></div>)
                     ) : filteredObats.length === 0 ? (
-                        <div className="col-span-full text-center py-20">
-                            <Package size={64} className="text-slate-300 mx-auto mb-4" />
-                            <p className="text-slate-400 font-bold text-lg">Tidak ada produk ditemukan</p>
-                            <p className="text-slate-400 text-sm mt-2">Coba ubah filter pencarian Anda</p>
+                        <div className="col-span-full py-20 text-center">
+                            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-200">
+                                <Package size={40} />
+                            </div>
+                            <p className="text-slate-400 font-bold">Produk tidak ditemukan</p>
                         </div>
-                    ) : filteredObats.map(obat => (
-                        <div key={obat.id} className="group bg-white rounded-2xl border-2 border-cyan-100 flex flex-col shadow-md hover:shadow-xl hover:border-cyan-300 transition-all duration-300 overflow-hidden">
-                            <div className="h-40 relative overflow-hidden bg-slate-100">
-                                <img
-                                    src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
-                                    alt={obat.nama_obat}
-                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                />
-
-                                {obat.kategori && (
-                                    <div className="absolute top-2 left-2">
-                                        <div className="px-2 py-1 rounded-full text-[10px] font-bold bg-cyan-600 text-white shadow-lg">
+                    ) : (
+                        filteredObats.map(obat => (
+                            <div key={obat.id} className="glass-card-dark rounded-[40px] border border-white/5 overflow-hidden shadow-2xl hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] transition-all duration-700 group flex flex-col">
+                                <div className="h-52 relative overflow-hidden bg-slate-900">
+                                    <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
+                                        className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                                    <div className="absolute top-5 left-5">
+                                        <span className="bg-cyan-500 text-white px-4 py-1.5 rounded-full text-[9px] font-black shadow-xl uppercase tracking-widest">
                                             {obat.kategori}
+                                        </span>
+                                    </div>
+                                    <div className="absolute top-5 right-5">
+                                        {obat.is_published ?
+                                            <div className="bg-lime-400/20 backdrop-blur-md text-lime-400 p-2.5 rounded-2xl border border-lime-400/20 shadow-lg"><Eye size={16} /></div> :
+                                            <div className="bg-red-400/20 backdrop-blur-md text-red-500 p-2.5 rounded-2xl border border-red-500/20 shadow-lg"><EyeOff size={16} /></div>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="p-8 flex flex-col flex-1 relative">
+                                    <h4 className="font-black text-white mb-3 truncate text-base tracking-tight" title={obat.nama_obat}>{obat.nama_obat}</h4>
+                                    <p className="text-[11px] text-slate-500 font-medium line-clamp-2 mb-6 italic leading-relaxed">"{obat.deskripsi}"</p>
+
+                                    <div className="mt-auto grid grid-cols-2 gap-6 pt-6 border-t border-white/5 mb-8">
+                                        <div>
+                                            <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5">Stok Unit</p>
+                                            <p className={`text-base font-black ${obat.stok < 10 ? 'text-red-400 animate-pulse' : 'text-white'}`}>{obat.stok}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5">Harga Satuan</p>
+                                            <p className="text-base font-black text-cyan-400">Rp{obat.harga.toLocaleString()}</p>
                                         </div>
                                     </div>
-                                )}
 
-                                <div className="absolute top-2 right-2">
-                                    <div className={`px-2 py-1 rounded-full text-[10px] font-bold shadow-lg ${obat.is_published ? 'bg-lime-500 text-white' : 'bg-red-500 text-white'}`}>
-                                        {obat.is_published ? '● Live' : '○ Draft'}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-4">
-                                <div className="flex justify-between items-start mb-2">
-                                    <h4 className="text-base font-black text-cyan-900 leading-tight line-clamp-2">{obat.nama_obat}</h4>
-                                    <Tag className="text-cyan-400 flex-shrink-0 ml-2" size={14} />
-                                </div>
-                                <p className="text-slate-600 text-xs mb-4 line-clamp-2 italic">"{obat.deskripsi}"</p>
-
-                                <div className="flex gap-3 mb-4">
-                                    <div className="flex-1">
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-0.5">Harga</p>
-                                        <p className="text-base font-black text-cyan-700">Rp{Number(obat.harga).toLocaleString()}</p>
-                                    </div>
-                                    <div className="flex-1 text-right">
-                                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-0.5">Stok</p>
-                                        <p className={`text-base font-black ${obat.stok < 10 ? 'text-red-500' : 'text-lime-600'}`}>
-                                            {obat.stok} <span className="text-[10px] font-normal text-slate-500">unit</span>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {isAdmin && (
-                                    <div className="flex gap-2 pt-3 border-t-2 border-slate-100">
+                                    <div className="flex gap-4">
                                         <button
-                                            onClick={() => { setEditingObat(obat); setIsModalOpen(true); }}
-                                            className="flex-1 py-2 bg-cyan-100 hover:bg-cyan-600 text-cyan-700 hover:text-white rounded-lg transition-all font-bold text-xs flex items-center justify-center gap-1.5"
+                                            onClick={() => { setEditingObat(obat); setFormData(obat); setShowAddForm(true); }}
+                                            className="flex-1 py-4 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5 rounded-[20px] transition-all font-black text-[10px] uppercase tracking-[0.2em]"
                                         >
-                                            <Edit3 size={14} /> Edit
+                                            Edit Item
                                         </button>
                                         <button
                                             onClick={() => handleDelete(obat.id)}
-                                            className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all"
+                                            className="w-14 h-14 flex items-center justify-center bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-[20px] transition-all shadow-xl"
                                         >
-                                            <Trash2 size={14} />
+                                            <Trash2 size={20} />
                                         </button>
                                     </div>
-                                )}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
-            </div>
+            </main>
 
-            {isAdmin && isModalOpen && (
-                <EditObatModal
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                    obatData={editingObat}
-                    onUpdate={(msg, err) => { if (msg) { setMessage(msg); fetchObats(); } }}
-                    getHeaders={getHeaders}
-                />
+            {/* MODAL FORM */}
+            {showAddForm && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-slate-950/80 backdrop-blur-xl animate-fade-in" onClick={() => setShowAddForm(false)}>
+                    <div className="glass-card-dark bg-slate-900/90 w-full max-w-2xl rounded-[60px] overflow-hidden shadow-[0_0_100px_rgba(6,182,212,0.2)] border border-white/10 animate-slide-in-up" onClick={e => e.stopPropagation()}>
+                        <div className="p-10 border-b border-white/5 flex justify-between items-center bg-white/5">
+                            <div>
+                                <h3 className="text-3xl font-black tracking-tight text-white mb-1 uppercase">{editingObat ? 'Edit Produk' : 'Tambah Baru'}</h3>
+                                <p className="text-xs font-black text-cyan-400 tracking-[0.3em] uppercase">Inventory System</p>
+                            </div>
+                            <button onClick={() => setShowAddForm(false)} className="w-14 h-14 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-slate-400 hover:bg-red-500 hover:text-white transition-all transform hover:rotate-90"><X size={24} /></button>
+                        </div>
+                        <form onSubmit={handleSubmit} className="p-10 space-y-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Identitas Produk</label>
+                                <input
+                                    type="text" required value={formData.nama_obat}
+                                    onChange={e => setFormData({ ...formData, nama_obat: e.target.value })}
+                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white placeholder-slate-700"
+                                    placeholder="Nama Obat / Produk..."
+                                />
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Kategori</label>
+                                    <select
+                                        required value={formData.kategori}
+                                        onChange={e => setFormData({ ...formData, kategori: e.target.value })}
+                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-black text-sm text-slate-400 appearance-none cursor-pointer"
+                                    >
+                                        <option value="" className="bg-slate-900">Pilih Kategori</option>
+                                        {kategoriOptions.map(k => <option key={k} value={k} className="bg-slate-900">{k}</option>)}
+                                    </select>
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Harga (IDR)</label>
+                                    <input
+                                        type="number" required value={formData.harga}
+                                        onChange={e => setFormData({ ...formData, harga: parseInt(e.target.value) })}
+                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Stok Tersedia</label>
+                                    <input
+                                        type="number" required value={formData.stok}
+                                        onChange={e => setFormData({ ...formData, stok: parseInt(e.target.value) })}
+                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
+                                    />
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Visibilitas</label>
+                                    <div className="flex items-center h-[60px] bg-white/5 border border-white/10 rounded-[25px] px-8 gap-4">
+                                        <input
+                                            type="checkbox" checked={formData.is_published}
+                                            onChange={e => setFormData({ ...formData, is_published: e.target.checked })}
+                                            className="w-6 h-6 rounded-lg text-cyan-500 focus:ring-cyan-500 border-white/10 bg-slate-800"
+                                        />
+                                        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Tayangkan di Katalog</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Tautan Gambar (External)</label>
+                                <input
+                                    type="url" value={formData.gambar_url}
+                                    onChange={e => setFormData({ ...formData, gambar_url: e.target.value })}
+                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white placeholder-slate-700 font-mono text-sm"
+                                    placeholder="https://images.unsplash.com/..."
+                                />
+                            </div>
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Detail Deskripsi</label>
+                                <textarea
+                                    required value={formData.deskripsi}
+                                    onChange={e => setFormData({ ...formData, deskripsi: e.target.value })}
+                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-sm text-white h-32 resize-none placeholder-slate-700"
+                                    placeholder="Jelaskan manfaat dan aturan pakai..."
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="w-full py-6 premium-gradient text-white font-black rounded-[30px] shadow-[0_20px_40px_-10px_rgba(6,182,212,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 uppercase tracking-[0.3em] text-xs"
+                            >
+                                <Save size={20} /> Konfirmasi & Simpan
+                            </button>
+                        </form>
+                    </div>
+                </div>
             )}
         </div>
     );

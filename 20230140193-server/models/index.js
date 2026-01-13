@@ -6,14 +6,14 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
   // Untuk production, parse DATABASE_URL secara manual
   const dbUrl = process.env[config.use_env_variable];
-  
+
   sequelize = new Sequelize(dbUrl, {
     dialect: 'mysql',
     dialectModule: require('mysql2'), // ← TAMBAHKAN INI

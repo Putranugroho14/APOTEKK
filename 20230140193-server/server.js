@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
@@ -20,7 +21,7 @@ app.use(morgan("dev"));
 // Kita gunakan folder /tmp sebagai fallback untuk mencegah error sistem
 const uploadDir = path.join(process.cwd(), 'uploads', 'resep');
 if (!fs.existsSync(uploadDir) && process.env.NODE_ENV !== 'production') {
-    fs.mkdirSync(uploadDir, { recursive: true });
+  fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 // Akses statis folder uploads

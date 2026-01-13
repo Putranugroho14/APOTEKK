@@ -1,8 +1,7 @@
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken'); 
-// Menggunakan variabel global/environment lebih disarankan daripada hardcoding
-const JWT_SECRET = 'INI_ADALAH_KUNCI_RAHASIA_ANDA_YANG_SANGAT_AMAN';
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.register = async (req, res) => {
   try {
@@ -17,11 +16,11 @@ exports.register = async (req, res) => {
     if (role && role !== 'admin') {
       return res.status(400).json({ message: "Role tidak valid. Hanya 'admin' yang diizinkan." });
     }
-    
-    // Set role secara eksplisit ke 'admin'
-    const finalRole = 'admin'; 
 
-    const hashedPassword = await bcrypt.hash(password, 10); 
+    // Set role secara eksplisit ke 'admin'
+    const finalRole = 'admin';
+
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       nama,           // 💡 Baru: Menyimpan nama
       username,       // Menyimpan username
@@ -50,7 +49,7 @@ exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     if (!username || !password) {
-        return res.status(400).json({ message: "Username dan password harus diisi" });
+      return res.status(400).json({ message: "Username dan password harus diisi" });
     }
 
     // Mencari berdasarkan 'username'
@@ -72,17 +71,17 @@ exports.login = async (req, res) => {
     const payload = {
       id: user.id,
       nama: user.nama,     // 💡 Baru: Sertakan nama di payload JWT
-      username: user.username, 
-      role: user.role 
+      username: user.username,
+      role: user.role
     };
 
     const token = jwt.sign(payload, JWT_SECRET, {
-      expiresIn: '1h' 
+      expiresIn: '1h'
     });
 
     res.json({
       message: "Login berhasil",
-      token: token 
+      token: token
     });
 
   } catch (error) {

@@ -1,8 +1,7 @@
-// middleware/authObat.js
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = 'INI_ADALAH_KUNCI_RAHASIA_ANDA_YANG_SANGAT_AMAN';
+const JWT_SECRET = process.env.JWT_SECRET;
 
-exports.authArtikel = (req, res, next) => { // Tetap gunakan nama authArtikel jika route memanggil nama ini
+exports.authAdmin = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
