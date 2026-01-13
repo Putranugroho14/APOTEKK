@@ -198,7 +198,7 @@ const ResepReport = () => {
                                             </td>
                                             <td className="p-8">
                                                 <a
-                                                    href={`${API_BASE_URL}/uploads/resep/${r.foto_resep}`}
+                                                    href={r.foto_resep}
                                                     target="_blank" rel="noreferrer"
                                                     className="inline-flex items-center gap-3 text-xs font-black text-cyan-400 hover:text-white transition-all group/link"
                                                 >
