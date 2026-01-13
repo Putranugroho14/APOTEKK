@@ -67,6 +67,7 @@ exports.getAllResep = async (req, res) => {
     });
     res.json({ data });
   } catch (error) {
+    console.error("Error in getAllResep:", error);
     res.status(500).json({ error: error.message });
   }
 };

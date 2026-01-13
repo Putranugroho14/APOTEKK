@@ -67,7 +67,11 @@ exports.getAllObat = async (req, res) => {
     });
     res.json({ data });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error in getAllObat:", error);
+    res.status(500).json({
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 };
 
@@ -93,24 +97,24 @@ exports.updateObat = async (req, res) => {
     const obat = await Obat.findByPk(req.params.id);
     if (!obat) return res.status(404).json({ message: "Obat tidak ditemukan" });
 
-    const { 
-      nama_obat, 
-      deskripsi, 
-      stok, 
-      harga, 
-      gambar_url, 
-      kategori, 
+    const {
+      nama_obat,
+      deskripsi,
+      stok,
+      harga,
+      gambar_url,
+      kategori,
       is_published // Field status publikasi
     } = req.body;
 
-    await obat.update({ 
-      nama_obat, 
-      deskripsi, 
-      stok, 
-      harga, 
-      gambar_url, 
+    await obat.update({
+      nama_obat,
+      deskripsi,
+      stok,
+      harga,
+      gambar_url,
       kategori,
-      is_published 
+      is_published
     });
 
     res.json({ message: "Data obat berhasil diperbarui", data: obat });
