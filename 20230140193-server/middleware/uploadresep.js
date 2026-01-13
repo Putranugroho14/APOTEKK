@@ -1,23 +1,23 @@
 const multer = require('multer');
-const path = require('path');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/resep/'); // Pastikan folder ini ada di root project Anda
+// Konfigurasi Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'resep_apotek',
+        allowed_formats: ['jpg', 'png', 'jpeg'],
+        public_id: (req, file) => `RESEP-${Date.now()}`
     },
-    filename: (req, file, cb) => {
-        cb(null, `RESEP-${Date.now()}${path.extname(file.originalname)}`);
-    }
 });
 
-const uploadResep = multer({ 
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        const filetypes = /jpeg|jpg|png/;
-        const mimetype = filetypes.test(file.mimetype);
-        if (mimetype) return cb(null, true);
-        cb(new Error("Hanya file gambar (jpg/png) yang diperbolehkan"));
-    }
-});
+const uploadResep = multer({ storage: storage });
 
 module.exports = uploadResep;

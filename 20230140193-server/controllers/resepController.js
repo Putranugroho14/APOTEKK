@@ -2,6 +2,28 @@ const db = require("../models");
 const Resep = db.Resep; // Pastikan di models/index.js sudah terdaftar
 const { body, validationResult } = require("express-validator");
 
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+
+// Konfigurasi Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Setup Storage Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'resep_apotek',
+    allowed_formats: ['jpg', 'png', 'jpeg'],
+  },
+});
+
+const upload = multer({ storage: storage });
+
 // Validasi Input untuk User
 exports.validateResep = [
   body("nama_lengkap").notEmpty().withMessage("Nama lengkap tidak boleh kosong"),
@@ -15,7 +37,8 @@ exports.uploadResep = async (req, res) => {
 
   try {
     const { nama_lengkap, nomor_wa, keterangan } = req.body;
-    const foto_resep = req.file ? req.file.filename : null;
+    // req.file.path sekarang berisi URL lengkap dari Cloudinary
+    const foto_resep = req.file ? req.file.path : null;
 
     if (!foto_resep) {
       return res.status(400).json({ message: "Foto resep wajib diunggah" });
@@ -24,9 +47,9 @@ exports.uploadResep = async (req, res) => {
     const newResep = await Resep.create({
       nama_lengkap,
       nomor_wa,
-      foto_resep,
+      foto_resep, // Simpan URL, bukan cuma filename
       keterangan,
-      status: "pending" // Default status
+      status: "pending"
     });
 
     res.status(201).json({ message: "Resep berhasil dikirim ke apotek.", data: newResep });
@@ -40,7 +63,7 @@ exports.getAllResep = async (req, res) => {
   try {
     const data = await Resep.findAll({
       // Menggunakan created_at karena underscored: true di model
-      order: [['created_at', 'DESC']] 
+      order: [['created_at', 'DESC']]
     });
     res.json({ data });
   } catch (error) {

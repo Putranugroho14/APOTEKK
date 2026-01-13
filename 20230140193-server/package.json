@@ -22,6 +22,8 @@
     "multer": "^2.0.2",
     "mysql2": "^3.16.0",
     "sequelize": "^6.37.7",
-    "sequelize-cli": "^6.6.3"
+    "sequelize-cli": "^6.6.3",
+    "cloudinary": "^2.5.1",
+    "multer-storage-cloudinary": "^4.0.0"
   }
 }
