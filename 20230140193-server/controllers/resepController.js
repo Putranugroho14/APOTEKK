@@ -63,7 +63,7 @@ exports.getAllResep = async (req, res) => {
   try {
     const data = await Resep.findAll({
       // Menggunakan created_at karena underscored: true di model
-      order: [['created_at', 'DESC']]
+      order: [['createdAt', 'DESC']]
     });
     res.json({ data });
   } catch (error) {
