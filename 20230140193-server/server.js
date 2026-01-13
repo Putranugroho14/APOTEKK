@@ -11,6 +11,12 @@ const authRoutes = require("./routes/auth");
 const resepRoutes = require("./routes/resep");
 
 const app = express();
+const db = require("./models");
+
+// Sinkronisasi Database (Penting untuk pertama kali deploy)
+db.sequelize.sync({ alter: true })
+  .then(() => console.log("Database synced successfully"))
+  .catch(err => console.error("Database sync failed:", err));
 
 // Middleware
 app.use(cors());
