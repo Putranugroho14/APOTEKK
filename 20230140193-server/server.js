@@ -49,12 +49,9 @@ app.use((req, res) => {
 // Konfigurasi Port
 const PORT = process.env.PORT || 3001;
 
-// Hanya jalankan app.listen jika tidak sedang di lingkungan Vercel
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server running locally on port ${PORT}`);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 // Ekspor app untuk digunakan oleh runtime Vercel
 module.exports = app;
