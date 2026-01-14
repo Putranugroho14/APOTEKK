@@ -21,6 +21,7 @@ const PublicPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [currentMissionSlide, setCurrentMissionSlide] = useState(0);
     const [cart, setCart] = useState([]);
+    const [address, setAddress] = useState("");
     const [showCart, setShowCart] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [productSlideIndex, setProductSlideIndex] = useState(0);
@@ -154,7 +155,13 @@ const PublicPage = () => {
         cart.forEach((item, index) => {
             message += `${index + 1}. ${item.nama_obat} (${item.qty}x) - Rp${(item.harga * item.qty).toLocaleString()} \n`;
         });
-        message += `\nTotal: Rp${getTotalPrice().toLocaleString()} \n\nMohon informasi pembayarannya ya.`;
+        message += `\nTotal: Rp${getTotalPrice().toLocaleString()}`;
+
+        if (address.trim()) {
+            message += `\n\nAlamat Pengiriman:\n${address}`;
+        }
+
+        message += `\n\nMohon informasi pembayarannya ya.`;
         return encodeURIComponent(message);
     };
 
@@ -687,6 +694,15 @@ const PublicPage = () => {
                             </div>
                             {cart.length > 0 && (
                                 <div className="p-6 md:p-12 bg-white md:rounded-t-[60px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.1)] border-t border-slate-50">
+                                    <div className="mb-6">
+                                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Alamat Pengiriman</label>
+                                        <textarea
+                                            className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors resize-none h-24"
+                                            placeholder="Masukkan alamat lengkap..."
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                        ></textarea>
+                                    </div>
                                     <div className="flex justify-between items-center mb-6 md:mb-10">
                                         <p className="text-slate-400 font-black text-[7px] md:text-[11px] uppercase tracking-[0.3em]">Total Bayar</p>
                                         <p className="text-lg md:text-5xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>

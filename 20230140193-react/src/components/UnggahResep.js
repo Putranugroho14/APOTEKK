@@ -17,6 +17,7 @@ const UnggahResep = () => {
     const [formData, setFormData] = useState({
         nama_lengkap: '',
         nomor_wa: '',
+        alamat: '',
         keterangan: '',
         foto_resep: null
     });
@@ -30,7 +31,9 @@ const UnggahResep = () => {
         const data = new FormData();
         data.append('nama_lengkap', formData.nama_lengkap);
         data.append('nomor_wa', formData.nomor_wa);
-        data.append('keterangan', formData.keterangan);
+
+        const combinedKeterangan = `Alamat Pengiriman: ${formData.alamat}\n\nKeterangan: ${formData.keterangan}`;
+        data.append('keterangan', combinedKeterangan);
         data.append('foto_resep', formData.foto_resep);
 
         try {
@@ -170,11 +173,20 @@ const UnggahResep = () => {
                                     {formData.foto_resep && <p className="text-[10px] font-black text-lime-600 mt-3 flex items-center gap-2 uppercase tracking-widest bg-lime-500/5 px-4 py-2 rounded-xl border border-lime-500/10"><span>✅</span> Berkas: {formData.foto_resep.name}</p>}
                                 </div>
                                 <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Alamat Pengiriman</label>
+                                    <textarea
+                                        required
+                                        onChange={e => setFormData({ ...formData, alamat: e.target.value })}
+                                        className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-sm h-24 resize-none text-slate-900 placeholder:text-slate-300"
+                                        placeholder="Jalan, RT/RW, Kelurahan, Kecamatan..."
+                                    />
+                                </div>
+                                <div className="space-y-2">
                                     <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest ml-1">Keterangan (Opsional)</label>
                                     <textarea
                                         onChange={e => setFormData({ ...formData, keterangan: e.target.value })}
                                         className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-sm h-32 resize-none text-slate-900 placeholder:text-slate-300"
-                                        placeholder="Contoh: Pesanan untuk diantar ke rumah..."
+                                        placeholder="Contoh: Tolong antar di atas jam 5 sore..."
                                     />
                                 </div>
 

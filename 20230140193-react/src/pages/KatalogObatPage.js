@@ -17,6 +17,7 @@ const KatalogObatPage = () => {
   const [sortBy, setSortBy] = useState("nama");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  const [address, setAddress] = useState("");
   const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
 
@@ -61,7 +62,13 @@ const KatalogObatPage = () => {
     cart.forEach((item, index) => {
       message += `${index + 1}. ${item.nama_obat} - Qty: ${item.qty} - Rp${(item.harga * item.qty).toLocaleString()} \n`;
     });
-    message += `\nTotal: Rp${getTotalPrice().toLocaleString()} \n\nMohon diproses. Terima kasih!`;
+    message += `\nTotal: Rp${getTotalPrice().toLocaleString()}`;
+
+    if (address.trim()) {
+      message += `\n\nAlamat Pengiriman:\n${address}`;
+    }
+
+    message += `\n\nMohon diproses. Terima kasih!`;
     return encodeURIComponent(message);
   };
 
@@ -257,6 +264,15 @@ const KatalogObatPage = () => {
             </div>
             {cart.length > 0 && (
               <div className="p-12 bg-white rounded-t-[60px] shadow-2xl border-t border-slate-100">
+                <div className="mb-6">
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Alamat Pengiriman</label>
+                  <textarea
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors resize-none h-24"
+                    placeholder="Masukkan alamat lengkap..."
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  ></textarea>
+                </div>
                 <div className="flex justify-between items-center mb-10">
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Harga</p>
                   <p className="text-4xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
