@@ -115,17 +115,13 @@ const ObatPage = () => {
             setFormData({ nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", gambar_file: null, is_published: true });
             fetchObats();
         } catch (err) {
-            console.error("Submit Error:", err);
-            let msg = "Gagal menyimpan data.";
+            console.error("FULL SUBMIT ERROR:", err);
             if (err.response && err.response.data) {
-                if (err.response.data.errors) {
-                    // Handle express-validator errors
-                    msg = err.response.data.errors.map(e => e.msg).join("\n");
-                } else if (err.response.data.message) {
-                    msg = err.response.data.message;
-                }
+                console.log("SERVER ERROR DATA:", err.response.data);
+                alert("SERVER ERROR:\n" + JSON.stringify(err.response.data, null, 2));
+            } else {
+                alert("Gagal terhubung ke server atau terjadi kesalahan fatal.");
             }
-            alert("Error: \n" + msg);
         }
     };
 

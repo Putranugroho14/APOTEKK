@@ -100,17 +100,24 @@ exports.getObatById = async (req, res) => {
 
 // 4. Update Obat
 exports.updateObat = async (req, res) => {
+  console.log("REQ.BODY:", JSON.stringify(req.body, null, 2));
+  console.log("REQ.PARAMS:", JSON.stringify(req.params, null, 2));
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.error("Validation Errors (Update):", errors.array());
+    console.error("VALIDATION ERROR (UPDATE):", JSON.stringify(errors.array(), null, 2));
+    console.log("BODY RECEIVED:", JSON.stringify(req.body, null, 2));
     return res.status(400).json({
-      message: "Validasi gagal",
-      errors: errors.array()
+      message: "Gagal Validasi Data",
+      errors: errors.array(),
+      received: req.body
     });
   }
 
   try {
-    const obat = await Obat.findByPk(req.params.id);
+    const { id } = req.params;
+    console.log(`ATTEMPTING UPDATE FOR ID: ${id}`);
+
+    const obat = await Obat.findByPk(id);
     if (!obat) return res.status(404).json({ message: "Obat tidak ditemukan" });
 
     const {
@@ -124,25 +131,25 @@ exports.updateObat = async (req, res) => {
       rating
     } = req.body;
 
-    let finalGambarUrl = gambar_url || obat.gambar_url; // Default to existing if not provided
-    if (req.file && req.file.path) {
-      finalGambarUrl = req.file.path;
-    }
-
-    await obat.update({
+    const updateData = {
       nama_obat,
       deskripsi,
-      stok,
-      harga,
-      gambar_url: finalGambarUrl,
-      kategori,
+      stok: parseInt(stok) || 0,
+      harga: parseFloat(harga) || 0,
+      gambar_url: (req.file && req.file.path) ? req.file.path : (gambar_url || obat.gambar_url),
+      kategori: kategori || "Obat Bebas",
       is_published: is_published === 'true' || is_published === true,
       rating: parseFloat(rating) || 4.5
-    });
+    };
+
+    console.log("MAPPING UPDATE DATA:", JSON.stringify(updateData, null, 2));
+
+    await obat.update(updateData);
 
     res.json({ message: "Data obat berhasil diperbarui", data: obat });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("DATABASE OR SYSTEM ERROR:", error);
+    res.status(500).json({ message: "Gagal update ke database", error: error.message });
   }
 };
 
