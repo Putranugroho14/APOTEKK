@@ -140,8 +140,8 @@ const DashboardPage = () => {
               <Menu size={24} />
             </button>
             <div className="flex-1 lg:flex-none">
-              <h2 className="text-2xl md:text-4xl font-black tracking-tight text-white mb-2 leading-tight">Selamat Datang, <span className="text-cyan-400">{adminData.nama}!</span></h2>
-              <p className="text-slate-400 font-medium text-xs md:text-base">Ini adalah ringkasan performa apotek Anda hari ini.</p>
+              <h2 className="text-xl md:text-4xl font-black tracking-tight text-white mb-1 md:mb-2 leading-tight">Selamat Datang, <span className="text-cyan-400">{adminData.nama}!</span></h2>
+              <p className="text-slate-400 font-medium text-[10px] md:text-base">Ringkasan performa apotek Anda hari ini.</p>
             </div>
           </div>
           <div className="flex items-center gap-6 w-full md:w-auto justify-end">
@@ -160,25 +160,22 @@ const DashboardPage = () => {
         </header>
 
         {/* STATS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-12">
           {[
-            { label: 'Total Produk', value: stats.totalObat, icon: Package, color: 'cyan', trend: '+12%' },
-            { label: 'Total Resep', value: stats.totalResep, icon: FileText, color: 'lime', trend: '+5%' },
-            { label: 'Resep Pending', value: stats.pending, icon: Clock, color: 'amber', trend: '-2%' },
-            { label: 'Resep Selesai', value: stats.selesai, icon: CheckCircle, color: 'cyan', trend: '+18%' },
+            { label: 'Produk', value: stats.totalObat, icon: Package, color: 'cyan' },
+            { label: 'Resep', value: stats.totalResep, icon: FileText, color: 'lime' },
+            { label: 'Pending', value: stats.pending, icon: Clock, color: 'amber' },
+            { label: 'Selesai', value: stats.selesai, icon: CheckCircle, color: 'cyan' },
           ].map((s, i) => (
-            <div key={i} className="glass-card-dark p-8 rounded-[40px] border border-white/10 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(6,182,212,0.3)] hover:-translate-y-2 transition-all duration-500 group">
-              <div className="flex justify-between items-start mb-6">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:rotate-12
+            <div key={i} className="glass-card-dark p-5 md:p-8 rounded-[24px] md:rounded-[40px] border border-white/10 shadow-sm hover:translate-y-[-5px] transition-all duration-500 group">
+              <div className="flex justify-between items-start mb-4 md:mb-6">
+                <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:rotate-12
                             ${s.color === 'cyan' ? 'bg-cyan-500/10 text-cyan-400' : s.color === 'lime' ? 'bg-lime-500/10 text-lime-400' : 'bg-amber-500/10 text-amber-400'}`}>
-                  <s.icon size={26} />
+                  <s.icon size={20} className="md:w-[26px] md:h-[26px]" />
                 </div>
-                <span className={`text-[10px] font-black px-2 py-1 rounded-lg ${s.trend.startsWith('+') ? 'bg-lime-500/10 text-lime-400' : 'bg-red-500/10 text-red-400'}`}>
-                  {s.trend}
-                </span>
               </div>
-              <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-1">{s.label}</p>
-              <h3 className="text-4xl font-black text-white tracking-tighter">{isLoading ? '...' : s.value}</h3>
+              <p className="text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1">{s.label}</p>
+              <h3 className="text-xl md:text-4xl font-black text-white tracking-tighter">{isLoading ? '...' : s.value}</h3>
             </div>
           ))}
         </div>
@@ -236,14 +233,14 @@ const DashboardPage = () => {
             <div className="glass-card-dark p-8 rounded-[40px] border border-white/5 shadow-2xl relative overflow-hidden group">
               <div className="relative z-10">
                 <h3 className="text-xl font-black text-white mb-8 tracking-tight">Aksi Cepat</h3>
-                <div className="grid grid-cols-2 gap-6">
-                  <button onClick={() => navigate('/obat')} className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-[32px] hover:bg-cyan-500/20 hover:text-white transition-all transform hover:-translate-y-2 gap-4 group/btn">
-                    <div className="w-14 h-14 bg-white/5 rounded-2xl shadow-xl flex items-center justify-center group-hover/btn:scale-110 group-hover/btn:rotate-6 transition-all border border-white/10"><Plus size={24} className="text-cyan-400" /></div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover/btn:text-white">Tambah Obat</span>
+                <div className="grid grid-cols-2 gap-4 md:gap-6">
+                  <button onClick={() => navigate('/obat')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-white/5 rounded-[24px] md:rounded-[32px] hover:bg-cyan-500/20 hover:text-white transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn">
+                    <div className="w-10 h-10 md:w-14 md:h-14 bg-white/5 rounded-xl md:rounded-2xl shadow-xl flex items-center justify-center group-hover/btn:scale-110 transition-all border border-white/10"><Plus size={20} className="text-cyan-400 md:w-6 md:h-6" /></div>
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover/btn:text-white">Tambah Obat</span>
                   </button>
-                  <button onClick={() => navigate('/admin/resep')} className="flex flex-col items-center justify-center p-8 bg-white/5 rounded-[32px] hover:bg-lime-500/20 hover:text-white transition-all transform hover:-translate-y-2 gap-4 group/btn">
-                    <div className="w-14 h-14 bg-white/5 rounded-2xl shadow-xl flex items-center justify-center group-hover/btn:scale-110 group-hover/btn:rotate-6 transition-all border border-white/10"><Activity size={24} className="text-lime-400" /></div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover/btn:text-white">Cek Resep</span>
+                  <button onClick={() => navigate('/admin/resep')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-white/5 rounded-[24px] md:rounded-[32px] hover:bg-lime-500/20 hover:text-white transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn">
+                    <div className="w-10 h-10 md:w-14 md:h-14 bg-white/5 rounded-xl md:rounded-2xl shadow-xl flex items-center justify-center group-hover/btn:scale-110 transition-all border border-white/10"><Activity size={20} className="text-lime-400 md:w-6 md:h-6" /></div>
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover/btn:text-white">Cek Resep</span>
                   </button>
                 </div>
               </div>

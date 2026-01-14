@@ -203,12 +203,12 @@ const PublicPage = () => {
                 </div>
 
                 {/* MOBILE MENU DRAWER */}
-                <div className={`fixed inset-0 z-[100] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)}></div>
-                    <div className={`absolute top-0 right-0 w-[75%] h-full bg-slate-900 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-10 flex flex-col z-[101]`}>
-                        <div className="flex justify-between items-center mb-16">
-                            <h2 className="text-xl font-black tracking-tighter text-white">MENU</h2>
-                            <button onClick={() => setIsMenuOpen(false)} className="text-white"><X size={32} /></button>
+                <div className={`fixed inset-0 z-[110] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                    <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-2xl" onClick={() => setIsMenuOpen(false)}></div>
+                    <div className={`absolute top-0 right-0 w-[85%] sm:w-[75%] h-full bg-slate-900 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-8 sm:p-10 flex flex-col z-[111]`}>
+                        <div className="flex justify-between items-center mb-12 sm:mb-16">
+                            <h2 className="text-lg font-black tracking-tighter text-white">MENU</h2>
+                            <button onClick={() => setIsMenuOpen(false)} className="text-white"><X size={28} /></button>
                         </div>
                         <nav className="flex flex-col gap-10">
                             {['Beranda', 'Produk', 'Layanan', 'Kontak'].map((item) => (
@@ -355,9 +355,9 @@ const PublicPage = () => {
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className={`${obats.length > 4 ? 'min-w-full md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.333rem)] xl:min-w-[calc(25%-1.5rem)]' : 'w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[40px] p-6 border border-white/10 shadow-sm hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:-translate-y-4 flex flex-col`}
+                                            className={`${obats.length > 4 ? 'min-w-[calc(100%-1rem)] md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.333rem)] xl:min-w-[calc(25%-1.5rem)]' : 'w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[32px] md:rounded-[40px] p-5 md:p-6 border border-white/10 shadow-sm hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:-translate-y-4 flex flex-col`}
                                         >
-                                            <div className="relative h-64 mb-8 overflow-hidden rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <div className="relative h-48 md:h-64 mb-6 md:mb-8 overflow-hidden rounded-[24px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
                                                     src={obat.gambar_url || "https://images.unsplash.com/photo-1576091160550-217359f48f4c?w=500"}
                                                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
@@ -371,23 +371,23 @@ const PublicPage = () => {
                                                 </div>
                                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                             </div>
-                                            <h4 className="font-black text-white text-xl mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <h4 className="font-black text-white text-lg md:text-xl mb-2 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 {obat.nama_obat}
                                             </h4>
-                                            <div className="flex items-center gap-2 mb-6">
-                                                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} className="fill-amber-400 text-amber-400" />)}
-                                                <span className="text-[10px] font-black text-slate-400 ml-1">4.9 / 5.0</span>
+                                            <div className="flex items-center gap-2 mb-4 md:mb-6">
+                                                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={10} className="fill-amber-400 text-amber-400" />)}
+                                                <span className="text-[9px] md:text-[10px] font-black text-slate-400 ml-1">4.9 / 5.0</span>
                                             </div>
-                                            <div className="flex items-center justify-between pt-6 border-t border-white/5 mt-auto">
+                                            <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
                                                 <div>
-                                                    <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-1">HARGA TERBAIK</p>
-                                                    <p className="text-2xl font-black text-cyan-400 tracking-tight">Rp{Number(obat.harga).toLocaleString()}</p>
+                                                    <p className="text-[8px] md:text-[9px] font-black text-slate-400 md:text-slate-300 uppercase tracking-widest mb-1">HARGA TERBAIK</p>
+                                                    <p className="text-xl md:text-2xl font-black text-cyan-400 tracking-tight">Rp{Number(obat.harga).toLocaleString()}</p>
                                                 </div>
                                                 <button
                                                     onClick={(e) => addToCart(obat, e)}
-                                                    className="w-14 h-14 bg-white/5 text-white rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10"
+                                                    className="w-12 h-12 md:w-14 md:h-14 bg-white/5 text-white rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10"
                                                 >
-                                                    <Plus size={24} />
+                                                    <Plus size={20} className="md:w-6 md:h-6" />
                                                 </button>
                                             </div>
                                         </div>
@@ -528,34 +528,34 @@ const PublicPage = () => {
 
             {/* PRODUCT MODAL */}
             {selectedProduct && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setSelectedProduct(null)}>
-                    <div className="bg-white w-full max-w-5xl rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[95vh] relative" onClick={e => e.stopPropagation()}>
-                        <button onClick={() => setSelectedProduct(null)} className="absolute top-8 right-8 w-14 h-14 bg-white/90 backdrop-blur-md rounded-3xl flex items-center justify-center shadow-2xl z-20 hover:rotate-90 transition-all duration-500"><X size={28} /></button>
-                        <div className="md:w-1/2 relative h-[400px] md:h-auto overflow-hidden">
+                <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setSelectedProduct(null)}>
+                    <div className="bg-white w-full max-w-4xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[95vh] relative" onClick={e => e.stopPropagation()}>
+                        <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-10 h-10 md:w-14 md:h-14 bg-white/90 backdrop-blur-md rounded-2xl md:rounded-3xl flex items-center justify-center shadow-2xl z-20 hover:rotate-90 transition-all duration-500"><X size={24} className="md:w-7 md:h-7" /></button>
+                        <div className="md:w-1/2 relative h-48 sm:h-64 md:h-auto overflow-hidden">
                             <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover" alt={selectedProduct.nama_obat} />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
-                            <div className="absolute bottom-10 left-10"><span className="bg-cyan-600 text-white px-6 py-2 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl">Official Stock</span></div>
+                            <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10"><span className="bg-cyan-600 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl">Official Stock</span></div>
                         </div>
-                        <div className="md:w-1/2 p-12 md:p-20 overflow-y-auto bg-slate-50/30">
-                            <div className="mb-12">
-                                <h3 className="text-4xl md:text-5xl font-black tracking-tight mb-6 text-slate-900">{selectedProduct.nama_obat}</h3>
-                                <div className="inline-flex items-center gap-3 bg-white px-6 py-2 rounded-2xl shadow-sm border border-slate-100 mb-10">
-                                    <div className="flex gap-1">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} className="fill-amber-400 text-amber-400" />)}</div>
-                                    <span className="text-[11px] font-black text-slate-400">Trusted By 100+ Customers</span>
+                        <div className="md:w-1/2 p-6 sm:p-8 md:p-20 overflow-y-auto bg-slate-50/30">
+                            <div className="mb-8 md:mb-12">
+                                <h3 className="text-2xl md:text-5xl font-black tracking-tight mb-4 md:mb-6 text-slate-900">{selectedProduct.nama_obat}</h3>
+                                <div className="inline-flex items-center gap-2 md:gap-3 bg-white px-4 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl shadow-sm border border-slate-100 mb-6 md:mb-10">
+                                    <div className="flex gap-1">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} className="fill-amber-400 text-amber-400 md:w-3.5 md:h-3.5" />)}</div>
+                                    <span className="text-[9px] md:text-[11px] font-black text-slate-400">Trusted Product</span>
                                 </div>
-                                <p className="text-slate-500 text-lg font-medium leading-loose mb-12 italic border-l-4 border-cyan-500 pl-8">{selectedProduct.deskripsi || 'Produk farmasi berkualitas premium untuk menunjang kesehatan optimal Anda.'}</p>
+                                <p className="text-slate-500 text-sm md:text-lg font-medium leading-relaxed md:leading-loose mb-8 md:mb-12 italic border-l-4 border-cyan-500 pl-6 md:pl-8">{selectedProduct.deskripsi || 'Produk farmasi berkualitas premium untuk menunjang kesehatan optimal Anda.'}</p>
                             </div>
-                            <div className="grid grid-cols-2 gap-8 mb-12">
-                                <div className="bg-white p-8 rounded-[40px] shadow-xl shadow-slate-200/40 border border-slate-50">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Harga Unit</p>
-                                    <p className="text-4xl font-black text-cyan-600 tracking-tight">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+                            <div className="grid grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
+                                <div className="bg-white p-5 md:p-8 rounded-[24px] md:rounded-[40px] shadow-xl shadow-slate-200/40 border border-slate-50">
+                                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 md:mb-4">Harga Unit</p>
+                                    <p className="text-xl md:text-4xl font-black text-cyan-600 tracking-tight">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                                 </div>
-                                <div className="bg-white p-8 rounded-[40px] shadow-xl shadow-slate-200/40 border border-slate-50">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Sedia Stok</p>
-                                    <p className="text-4xl font-black text-slate-900 tracking-tight">{selectedProduct.stok} <span className="text-sm font-bold opacity-30 uppercase">Unit</span></p>
+                                <div className="bg-white p-5 md:p-8 rounded-[24px] md:rounded-[40px] shadow-xl shadow-slate-200/40 border border-slate-50">
+                                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 md:mb-4">Sedia Stok</p>
+                                    <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{selectedProduct.stok} <span className="text-[10px] md:text-sm font-bold opacity-30 uppercase">Unit</span></p>
                                 </div>
                             </div>
-                            <button onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }} className="w-full py-6 premium-gradient text-white font-black rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-6 text-xs uppercase tracking-[0.3em]"><ShoppingBag size={24} /> Masukkan Keranjang</button>
+                            <button onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }} className="w-full py-4 md:py-6 premium-gradient text-white font-black rounded-2xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 md:gap-6 text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em]"><ShoppingBag size={20} className="md:w-6 md:h-6" /> Masukkan Keranjang</button>
                         </div>
                     </div>
                 </div>
@@ -615,17 +615,19 @@ const PublicPage = () => {
             )}
 
             {/* FLOATING ACTION BUTTONS */}
-            <div className="fixed bottom-10 right-10 flex flex-col gap-6 z-[60]">
-                {showBackToTop && (
-                    <button onClick={scrollToTop} className="w-16 h-16 bg-white rounded-3xl shadow-2xl border border-slate-100 flex items-center justify-center hover:scale-110 active:scale-95 transition-all text-slate-900 group overflow-hidden">
-                        <ArrowUp size={24} className="group-hover:-translate-y-1 transition-transform" />
-                        <div className="absolute inset-0 bg-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </button>
-                )}
-                <a href={`https://wa.me/628981335197?text=Halo Apotek Hadinata, saya ingin konsultasi`} target="_blank" rel="noreferrer" className="w-20 h-20 bg-lime-500 text-white rounded-[32px] shadow-[0_24px_48px_-12px_rgba(132,204,22,0.4)] flex items-center justify-center hover:scale-110 hover:rotate-6 active:scale-95 transition-all group relative overflow-hidden">
-                    <Phone size={32} /><div className="absolute top-0 left-[-100%] w-full h-full bg-white/30 skew-x-[45deg] group-hover:animate-shine"></div>
-                </a>
-            </div>
+            {!isMenuOpen && (
+                <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 flex flex-col gap-4 md:gap-6 z-[60]">
+                    {showBackToTop && (
+                        <button onClick={scrollToTop} className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-2xl md:rounded-3xl shadow-2xl border border-slate-100 flex items-center justify-center hover:scale-110 active:scale-95 transition-all text-slate-900 group overflow-hidden">
+                            <ArrowUp size={20} className="md:w-6 md:h-6 group-hover:-translate-y-1 transition-transform" />
+                            <div className="absolute inset-0 bg-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </button>
+                    )}
+                    <a href={`https://wa.me/628981335197?text=Halo Apotek Hadinata, saya ingin konsultasi`} target="_blank" rel="noreferrer" className="w-14 h-14 md:w-20 md:h-20 bg-lime-500 text-white rounded-[24px] md:rounded-[32px] shadow-[0_20px_40px_-10px_rgba(132,204,22,0.4)] flex items-center justify-center hover:scale-110 hover:rotate-6 active:scale-95 transition-all group relative overflow-hidden">
+                        <Phone size={24} className="md:w-8 md:h-8" /><div className="absolute top-0 left-[-100%] w-full h-full bg-white/30 skew-x-[45deg] group-hover:animate-shine"></div>
+                    </a>
+                </div>
+            )}
 
             <style jsx>{`
                 @keyframes shine { 0% { transform: translateX(-100%) skewX(45deg); } 100% { transform: translateX(200%) skewX(45deg); } }

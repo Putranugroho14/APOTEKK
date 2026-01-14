@@ -174,41 +174,41 @@ const ObatPage = () => {
                             <Menu size={24} />
                         </button>
                         <div className="flex-1 lg:flex-none">
-                            <h2 className="text-2xl md:text-4xl font-black tracking-tight text-white mb-2 leading-tight underline decoration-cyan-500/30">Manajemen <span className="text-cyan-400">Katalog Obat</span></h2>
-                            <p className="text-slate-400 font-medium italic text-xs md:text-base">Update stok, harga, dan informasi obat secara real-time.</p>
+                            <h2 className="text-xl md:text-4xl font-black tracking-tight text-white mb-1 md:mb-2 leading-tight underline decoration-cyan-500/30">Manajemen <span className="text-cyan-400">Katalog Obat</span></h2>
+                            <p className="text-slate-400 font-medium italic text-[10px] md:text-base">Update stok, harga, dan informasi secara real-time.</p>
                         </div>
                     </div>
                     <button
                         onClick={() => { setShowAddForm(true); setEditingObat(null); }}
-                        className="w-full md:w-auto px-10 py-5 premium-gradient text-white font-black rounded-2xl shadow-[0_20px_40px_-10px_rgba(6,182,212,0.5)] hover:scale-[1.05] active:scale-[0.95] transition-all flex items-center justify-center gap-4 uppercase tracking-[0.2em] text-[10px]"
+                        className="w-full md:w-auto px-6 py-4 md:px-10 md:py-5 premium-gradient text-white font-black rounded-xl md:rounded-2xl shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 md:gap-4 uppercase tracking-[0.1em] md:tracking-[0.2em] text-[10px]"
                     >
-                        <Plus size={20} /> Tambah Item Baru
+                        <Plus size={18} className="md:w-5 md:h-5" /> Tambah Baru
                     </button>
                 </div>
 
                 {/* Filters */}
-                <div className="glass-card-dark p-6 rounded-[40px] border border-white/5 mb-14 shadow-2xl flex flex-col md:flex-row gap-6">
+                <div className="glass-card-dark p-4 md:p-6 rounded-[24px] md:rounded-[40px] border border-white/5 mb-8 md:mb-14 shadow-2xl flex flex-col md:flex-row gap-4 md:gap-6">
                     <div className="flex-1 relative">
-                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                         <input
                             type="text"
                             placeholder="Cari nama obat..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-14 pr-8 py-5 bg-white/5 border border-white/10 rounded-[30px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all text-sm font-bold text-white placeholder-slate-600 shadow-inner"
+                            className="w-full pl-12 pr-6 py-4 md:pl-14 md:pr-8 md:py-5 bg-white/5 border border-white/10 rounded-[20px] md:rounded-[30px] outline-none focus:bg-white/10 transition-all text-xs md:text-sm font-bold text-white placeholder-slate-600 shadow-inner"
                         />
                     </div>
                     <div className="w-full md:w-72">
                         <select
                             value={selectedKategori}
                             onChange={(e) => setSelectedKategori(e.target.value)}
-                            className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[30px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all text-sm font-black text-slate-400 appearance-none cursor-pointer"
+                            className="w-full px-6 py-4 md:px-8 md:py-5 bg-white/5 border border-white/10 rounded-[20px] md:rounded-[30px] outline-none transition-all text-[10px] md:text-sm font-black text-slate-400 appearance-none cursor-pointer"
                         >
                             <option value="" className="bg-slate-900 text-white">Semua Kategori</option>
                             {kategoriOptions.map(kat => <option key={kat} value={kat} className="bg-slate-900 text-white">{kat}</option>)}
                         </select>
                     </div>
-                    <button onClick={() => { setSearchQuery(""); setSelectedKategori(""); }} className="w-16 h-16 bg-white/5 border border-white/10 rounded-[30px] flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
+                    <button onClick={() => { setSearchQuery(""); setSelectedKategori(""); }} className="hidden md:flex w-16 h-16 bg-white/5 border border-white/10 rounded-[30px] items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
                         <RefreshCw size={22} />
                     </button>
                 </div>
@@ -226,50 +226,50 @@ const ObatPage = () => {
                         </div>
                     ) : (
                         filteredObats.map(obat => (
-                            <div key={obat.id} className="glass-card-dark rounded-[40px] border border-white/5 overflow-hidden shadow-2xl hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] transition-all duration-700 group flex flex-col">
-                                <div className="h-52 relative overflow-hidden bg-slate-900">
+                            <div key={obat.id} className="glass-card-dark rounded-[30px] md:rounded-[40px] border border-white/5 overflow-hidden shadow-2xl hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] transition-all duration-700 group flex flex-col">
+                                <div className="h-40 md:h-52 relative overflow-hidden bg-slate-900">
                                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
                                         className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
-                                    <div className="absolute top-5 left-5">
-                                        <span className="bg-cyan-500 text-white px-4 py-1.5 rounded-full text-[9px] font-black shadow-xl uppercase tracking-widest">
+                                    <div className="absolute top-4 left-4 md:top-5 md:left-5">
+                                        <span className="bg-cyan-500 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[8px] md:text-[9px] font-black shadow-xl uppercase tracking-widest">
                                             {obat.kategori}
                                         </span>
                                     </div>
-                                    <div className="absolute top-5 right-5">
+                                    <div className="absolute top-4 right-4 md:top-5 md:right-5">
                                         {obat.is_published ?
-                                            <div className="bg-lime-400/20 backdrop-blur-md text-lime-400 p-2.5 rounded-2xl border border-lime-400/20 shadow-lg"><Eye size={16} /></div> :
-                                            <div className="bg-red-400/20 backdrop-blur-md text-red-500 p-2.5 rounded-2xl border border-red-500/20 shadow-lg"><EyeOff size={16} /></div>
+                                            <div className="bg-lime-400/20 backdrop-blur-md text-lime-400 p-2 md:p-2.5 rounded-xl md:rounded-2xl border border-lime-400/20 shadow-lg"><Eye size={14} className="md:w-4 md:h-4" /></div> :
+                                            <div className="bg-red-400/20 backdrop-blur-md text-red-500 p-2 md:p-2.5 rounded-xl md:rounded-2xl border border-red-500/20 shadow-lg"><EyeOff size={14} className="md:w-4 md:h-4" /></div>
                                         }
                                     </div>
                                 </div>
-                                <div className="p-8 flex flex-col flex-1 relative">
-                                    <h4 className="font-black text-white mb-3 truncate text-base tracking-tight" title={obat.nama_obat}>{obat.nama_obat}</h4>
-                                    <p className="text-[11px] text-slate-500 font-medium line-clamp-2 mb-6 italic leading-relaxed">"{obat.deskripsi}"</p>
+                                <div className="p-6 md:p-8 flex flex-col flex-1 relative">
+                                    <h4 className="font-black text-white mb-2 md:mb-3 truncate text-sm md:text-base tracking-tight" title={obat.nama_obat}>{obat.nama_obat}</h4>
+                                    <p className="text-[10px] md:text-[11px] text-slate-500 font-medium line-clamp-2 mb-4 md:mb-6 italic leading-relaxed">"{obat.deskripsi}"</p>
 
-                                    <div className="mt-auto grid grid-cols-2 gap-6 pt-6 border-t border-white/5 mb-8">
+                                    <div className="mt-auto grid grid-cols-2 gap-4 md:gap-6 pt-4 md:pt-6 border-t border-white/5 mb-6 md:mb-8">
                                         <div>
-                                            <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5">Stok Unit</p>
-                                            <p className={`text-base font-black ${obat.stok < 10 ? 'text-red-400 animate-pulse' : 'text-white'}`}>{obat.stok}</p>
+                                            <p className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-1.5">Stok</p>
+                                            <p className={`text-sm md:text-base font-black ${obat.stok < 10 ? 'text-red-400 animate-pulse' : 'text-white'}`}>{obat.stok} <span className="text-[8px] opacity-30">UNIT</span></p>
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5">Harga Satuan</p>
-                                            <p className="text-base font-black text-cyan-400">Rp{obat.harga.toLocaleString()}</p>
+                                            <p className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-1.5">Harga</p>
+                                            <p className="text-sm md:text-base font-black text-cyan-400">Rp{obat.harga.toLocaleString()}</p>
                                         </div>
                                     </div>
 
-                                    <div className="flex gap-4">
+                                    <div className="flex gap-3 md:gap-4">
                                         <button
                                             onClick={() => { setEditingObat(obat); setFormData(obat); setShowAddForm(true); }}
-                                            className="flex-1 py-4 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5 rounded-[20px] transition-all font-black text-[10px] uppercase tracking-[0.2em]"
+                                            className="flex-1 py-3 md:py-4 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5 rounded-xl md:rounded-[20px] transition-all font-black text-[8px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em]"
                                         >
                                             Edit Item
                                         </button>
                                         <button
                                             onClick={() => handleDelete(obat.id)}
-                                            className="w-14 h-14 flex items-center justify-center bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-[20px] transition-all shadow-xl"
+                                            className="w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/20 rounded-xl md:rounded-[20px] transition-all"
                                         >
-                                            <Trash2 size={20} />
+                                            <Trash2 size={16} className="md:w-5 md:h-5" />
                                         </button>
                                     </div>
                                 </div>

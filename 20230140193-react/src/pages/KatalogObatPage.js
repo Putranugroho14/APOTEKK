@@ -160,21 +160,21 @@ const KatalogObatPage = () => {
               </div>
             ) : (
               filtered.map(obat => (
-                <div key={obat.id} className="group glass-card-dark rounded-[40px] p-6 border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 flex flex-col animate-fade-in">
-                  <div className="relative h-56 mb-8 overflow-hidden rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                <div key={obat.id} className="group glass-card-dark rounded-[32px] md:rounded-[40px] p-5 md:p-6 border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 flex flex-col animate-fade-in">
+                  <div className="relative h-48 md:h-56 mb-6 md:mb-8 overflow-hidden rounded-[24px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={obat.nama_obat} />
                     <div className="absolute top-4 left-4"><span className="bg-slate-900/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">{obat.kategori}</span></div>
                   </div>
                   <div className="flex-1 flex flex-col">
-                    <h4 className="font-black text-white text-lg mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
-                    <p className="text-[11px] text-slate-400 font-medium italic mb-6 line-clamp-2">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
-                    <div className="flex items-center justify-between pt-6 border-t border-white/5 mt-auto">
+                    <h4 className="font-black text-white text-base md:text-lg mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
+                    <p className="text-[10px] md:text-[11px] text-slate-400 font-medium italic mb-6 line-clamp-2">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
+                    <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
                       <div>
-                        <p className="text-[9px] font-black text-slate-300 uppercase tracking-widest mb-1">HARGA</p>
-                        <p className="text-2xl font-black text-cyan-400 tracking-tight">Rp{Number(obat.harga).toLocaleString()}</p>
+                        <p className="text-[8px] md:text-[9px] font-black text-slate-300 uppercase tracking-widest mb-1">HARGA</p>
+                        <p className="text-xl md:text-2xl font-black text-cyan-400 tracking-tight">Rp{Number(obat.harga).toLocaleString()}</p>
                       </div>
-                      <button onClick={() => addToCart(obat)} className="w-14 h-14 bg-white/5 text-white border border-white/10 rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10">
-                        <Plus size={24} />
+                      <button onClick={() => addToCart(obat)} className="w-12 h-12 md:w-14 md:h-14 bg-white/5 text-white border border-white/10 rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10">
+                        <Plus size={20} className="md:w-6 md:h-6" />
                       </button>
                     </div>
                   </div>
@@ -249,30 +249,30 @@ const KatalogObatPage = () => {
 
       {selectedProduct && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in" onClick={() => setSelectedProduct(null)}>
-          <div className="glass-card-dark w-full max-w-4xl rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row relative border border-white/10" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setSelectedProduct(null)} className="absolute top-8 right-8 w-12 h-12 bg-white/10 text-white rounded-2xl flex items-center justify-center shadow-xl hover:rotate-90 transition-all border border-white/10"><X size={24} /></button>
-            <div className="md:w-1/2 h-80 md:h-auto border-r border-white/5">
+          <div className="glass-card-dark w-full max-w-4xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[95vh] relative border border-white/10" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-10 h-10 md:w-12 md:h-12 bg-white/10 text-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-xl hover:rotate-90 transition-all border border-white/10 z-20"><X size={20} className="md:w-6 md:h-6" /></button>
+            <div className="md:w-1/2 h-48 sm:h-64 md:h-auto border-r border-white/5 overflow-hidden">
               <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover" />
             </div>
-            <div className="md:w-1/2 p-12 md:p-16">
-              <h3 className="text-4xl font-black text-white mb-4 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
-              <div className="flex gap-1 mb-8">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} className="fill-amber-400 text-amber-400" />)}</div>
-              <p className="text-slate-400 text-lg font-medium leading-relaxed italic mb-12 border-l-4 border-cyan-500 pl-8">{selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi.'}</p>
-              <div className="grid grid-cols-2 gap-6 mb-12">
-                <div className="bg-white/5 p-6 rounded-3xl border border-white/5">
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Harga</p>
-                  <p className="text-3xl font-black text-cyan-400">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+            <div className="md:w-1/2 p-8 md:p-16 overflow-y-auto">
+              <h3 className="text-2xl md:text-4xl font-black text-white mb-4 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
+              <div className="flex gap-1 mb-6 md:mb-8">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} className="fill-amber-400 text-amber-400 md:w-3.5 md:h-3.5" />)}</div>
+              <p className="text-slate-400 text-sm md:text-lg font-medium leading-relaxed italic mb-8 md:mb-12 border-l-4 border-cyan-500 pl-6 md:pl-8">{selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi.'}</p>
+              <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
+                <div className="bg-white/5 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-white/5">
+                  <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Harga</p>
+                  <p className="text-lg md:text-3xl font-black text-cyan-400">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                 </div>
-                <div className="bg-white/5 p-6 rounded-3xl border border-white/5">
-                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Stok</p>
-                  <p className="text-3xl font-black text-white">{selectedProduct.stok}</p>
+                <div className="bg-white/5 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-white/5">
+                  <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Stok</p>
+                  <p className="text-lg md:text-3xl font-black text-white">{selectedProduct.stok} <span className="text-[8px] md:text-xs">UNIT</span></p>
                 </div>
               </div>
               <button
                 onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}
-                className="w-full py-6 premium-gradient text-white font-black rounded-3xl text-sm uppercase tracking-widest flex items-center justify-center gap-4 shadow-xl shadow-cyan-500/20"
+                className="w-full py-4 md:py-6 premium-gradient text-white font-black rounded-2xl md:rounded-3xl text-[10px] md:text-sm uppercase tracking-widest flex items-center justify-center gap-4 shadow-xl shadow-cyan-500/20"
               >
-                <Plus size={20} /> Tambah Ke Keranjang
+                <Plus size={18} className="md:w-5 md:h-5" /> Tambah Ke Keranjang
               </button>
             </div>
           </div>
