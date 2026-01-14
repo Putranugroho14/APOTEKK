@@ -7,16 +7,18 @@ require("dotenv").config();
 const app = express();
 
 // 1. CORS - MUST BE FIRST
-// Using a permissive config to debug
 app.use(cors({
-  origin: "*",
+  origin: function (origin, callback) {
+    // Allow all origins to debug, but must not be "*" if credentials is true
+    callback(null, true);
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
   credentials: true
 }));
 
-// Handle Preflight
-app.options("*", cors());
+// Handle Preflight - Fix for Express 5 wildcard syntax
+app.options("(.*)", cors());
 
 // 2. Body Parser
 app.use(express.json());
