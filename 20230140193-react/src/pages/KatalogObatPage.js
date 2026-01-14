@@ -169,9 +169,9 @@ const KatalogObatPage = () => {
                     <h4 className="font-black text-white text-xs md:text-lg mb-1 md:mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
                     <p className="hidden md:block text-[11px] text-slate-400 font-medium italic mb-6 line-clamp-2">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
                     <div className="flex items-center justify-between pt-3 md:pt-6 border-t border-white/5 mt-auto">
-                      <div>
-                        <p className="text-[7px] md:text-[9px] font-black text-slate-400 md:text-slate-300 uppercase tracking-widest mb-0.5 md:mb-1">HARGA</p>
+                      <div className="flex flex-row items-baseline gap-2 min-w-0">
                         <p className="text-sm md:text-2xl font-black text-cyan-400 tracking-tight">Rp{Math.floor(obat.harga).toLocaleString()}</p>
+                        <span className="hidden min-[380px]:block text-[7px] md:text-[8px] font-black text-slate-500 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-md whitespace-nowrap border border-white/5">Terbaik</span>
                       </div>
                       <button onClick={() => addToCart(obat)} className="w-8 h-8 md:w-14 md:h-14 bg-white/5 text-white border border-white/10 rounded-lg md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all">
                         <Plus size={16} className="md:w-6 md:h-6" />

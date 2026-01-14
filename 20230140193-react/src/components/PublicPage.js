@@ -410,13 +410,10 @@ const PublicPage = () => {
                                                 </div>
                                                 <span className="text-[9px] md:text-[10px] font-black text-slate-400 ml-1">{(obat.rating || 4.5).toFixed(1)} / 5.0</span>
                                             </div>
-                                            <div className="flex items-end justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
-                                                <div className="flex flex-col">
-                                                    <div className="flex items-center gap-2 mb-1">
-                                                        <span className="w-1 h-3 bg-cyan-500 rounded-full"></span>
-                                                        <p className="text-[7px] md:text-[8px] font-black text-slate-400 md:text-slate-300 uppercase tracking-[0.2em]">HARGA TERBAIK</p>
-                                                    </div>
+                                            <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
+                                                <div className="flex flex-row items-baseline gap-2 min-w-0">
                                                     <p className="text-xl md:text-2xl font-black text-cyan-400 tracking-tight leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
+                                                    <span className="hidden min-[360px]:block text-[7px] md:text-[8px] font-black text-slate-500 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-md whitespace-nowrap border border-white/5">Terbaik</span>
                                                 </div>
                                                 <button
                                                     onClick={(e) => addToCart(obat, e)}
