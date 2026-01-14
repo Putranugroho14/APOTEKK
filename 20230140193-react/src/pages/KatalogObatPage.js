@@ -112,8 +112,8 @@ const KatalogObatPage = () => {
       <main className="relative z-10 pt-16 pb-32">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mb-20 animate-fade-in">
-            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-cyan-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8">
-              <Zap size={14} /> Pharma Catalog
+            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-cyan-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8">
+              <Package size={14} /> APOTEK HADINATA
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-6">
               Temukan Produk <br /><span className="text-gradient">Kesehatan Terbaik.</span>
@@ -150,31 +150,31 @@ const KatalogObatPage = () => {
           </div>
 
           {/* PRODUCT GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
             {loading ? (
-              [1, 2, 3, 4, 5, 6, 7, 8].map(i => <div key={i} className="h-96 bg-slate-900/50 rounded-[40px] animate-pulse"></div>)
+              [1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-64 md:h-96 bg-slate-900/50 rounded-[32px] md:rounded-[40px] animate-pulse"></div>)
             ) : filtered.length === 0 ? (
               <div className="col-span-full py-40 text-center animate-fade-in">
                 <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-500"><Package size={40} /></div>
-                <p className="text-slate-400 font-bold italic">Produk tidak ditemukan sesuai filter Anda.</p>
+                <p className="text-slate-400 font-bold italic">Produk tidak ditemukan.</p>
               </div>
             ) : (
               filtered.map(obat => (
-                <div key={obat.id} className="group glass-card-dark rounded-[32px] md:rounded-[40px] p-5 md:p-6 border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-700 hover:-translate-y-4 flex flex-col animate-fade-in">
-                  <div className="relative h-48 md:h-56 mb-6 md:mb-8 overflow-hidden rounded-[24px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                <div key={obat.id} className="group glass-card-dark rounded-[24px] md:rounded-[40px] p-3 md:p-6 border border-white/10 shadow-sm hover:shadow-2xl transition-all duration-700 hover:-translate-y-2 flex flex-col animate-fade-in">
+                  <div className="relative h-32 sm:h-40 md:h-56 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={obat.nama_obat} />
-                    <div className="absolute top-4 left-4"><span className="bg-slate-900/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">{obat.kategori}</span></div>
+                    <div className="absolute top-2 left-2 md:top-4 md:left-4"><span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[7px] md:text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">{obat.kategori}</span></div>
                   </div>
                   <div className="flex-1 flex flex-col">
-                    <h4 className="font-black text-white text-base md:text-lg mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
-                    <p className="text-[10px] md:text-[11px] text-slate-400 font-medium italic mb-6 line-clamp-2">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
-                    <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
+                    <h4 className="font-black text-white text-xs md:text-lg mb-1 md:mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
+                    <p className="hidden md:block text-[11px] text-slate-400 font-medium italic mb-6 line-clamp-2">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
+                    <div className="flex items-center justify-between pt-3 md:pt-6 border-t border-white/5 mt-auto">
                       <div>
-                        <p className="text-[8px] md:text-[9px] font-black text-slate-300 uppercase tracking-widest mb-1">HARGA</p>
-                        <p className="text-xl md:text-2xl font-black text-cyan-400 tracking-tight">Rp{Number(obat.harga).toLocaleString()}</p>
+                        <p className="text-[7px] md:text-[9px] font-black text-slate-400 md:text-slate-300 uppercase tracking-widest mb-0.5 md:mb-1">HARGA</p>
+                        <p className="text-sm md:text-2xl font-black text-cyan-400 tracking-tight">Rp{Math.floor(obat.harga).toLocaleString()}</p>
                       </div>
-                      <button onClick={() => addToCart(obat)} className="w-12 h-12 md:w-14 md:h-14 bg-white/5 text-white border border-white/10 rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10">
-                        <Plus size={20} className="md:w-6 md:h-6" />
+                      <button onClick={() => addToCart(obat)} className="w-8 h-8 md:w-14 md:h-14 bg-white/5 text-white border border-white/10 rounded-lg md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all">
+                        <Plus size={16} className="md:w-6 md:h-6" />
                       </button>
                     </div>
                   </div>
