@@ -58,14 +58,21 @@ exports.createObat = async (req, res) => {
 // 2. Get All Obat
 exports.getAllObat = async (req, res) => {
   try {
-    const query = req.query.published === 'true' ? { where: { is_published: true } } : {};
+    const { published } = req.query;
+    const where = published === 'true' ? { is_published: true } : {};
+
     const obats = await Obat.findAll({
-      ...query,
+      where,
       order: [['createdAt', 'DESC']]
     });
-    res.json(obats);
+    return res.json(obats);
   } catch (error) {
-    res.status(500).json({ message: "Gagal mengambil data obat", error: error.message });
+    console.error("Error in getAllObat:", error);
+    return res.status(500).json({
+      message: "Gagal mengambil data obat",
+      error: error.message,
+      detail: error.original ? error.original.message : null
+    });
   }
 };
 
@@ -74,9 +81,13 @@ exports.getObatById = async (req, res) => {
   try {
     const obat = await Obat.findByPk(req.params.id);
     if (!obat) return res.status(404).json({ message: "Obat tidak ditemukan" });
-    res.json(obat);
+    return res.json(obat);
   } catch (error) {
-    res.status(500).json({ message: "Gagal mengambil data obat", error: error.message });
+    console.error("Error in getObatById:", error);
+    return res.status(500).json({
+      message: "Gagal mengambil data obat",
+      error: error.message
+    });
   }
 };
 

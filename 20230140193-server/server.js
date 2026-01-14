@@ -9,7 +9,6 @@ const app = express();
 // 1. CORS - MUST BE FIRST
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow all origins to debug, but must not be "*" if credentials is true
     callback(null, true);
   },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
@@ -22,16 +21,42 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-// 3. Health Check (To verify the app is even booting)
-app.get("/", (req, res) => {
+// 3. Database Initialization
+const db = require("./models");
+
+// 4. Health Check with DB Diagnostics
+app.get("/", async (req, res) => {
+  let dbStatus = "Unknown";
+  let dbError = null;
+  let tables = [];
+
+  try {
+    await db.sequelize.authenticate();
+    dbStatus = "Connected";
+
+    // Check if tables exist
+    const [results] = await db.sequelize.query("SHOW TABLES");
+    tables = results.map(r => Object.values(r)[0]);
+
+  } catch (err) {
+    dbStatus = "Failed";
+    dbError = err.message;
+  }
+
   res.status(200).json({
     status: "Success",
-    message: "Apotek API is alive!",
-    env: process.env.NODE_ENV
+    message: "Apotek API Diagnostics",
+    database: {
+      status: dbStatus,
+      error: dbError,
+      found_tables: tables
+    },
+    env: process.env.NODE_ENV,
+    time: new Date().toISOString()
   });
 });
 
-// 4. Routes
+// 5. Routes
 const obatRoutes = require("./routes/obat");
 const authRoutes = require("./routes/auth");
 const resepRoutes = require("./routes/resep");
@@ -40,21 +65,26 @@ app.use("/api/obat", obatRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/resep", resepRoutes);
 
-// 5. Database Initialization (Non-blocking)
-const db = require("./models");
-db.sequelize.authenticate()
-  .then(() => {
-    console.log("Database connected.");
-    // Sync only if needed, don't let it crash the boot
-    db.sequelize.sync({ alter: true }).catch(err => console.error("Sync error:", err));
-  })
-  .catch(err => {
-    console.error("Database connection error:", err.message);
-  });
+// Database Sync (Background)
+db.sequelize.sync({ alter: true }).then(() => {
+  console.log("Database synced (alter: true)");
+}).catch(err => {
+  console.error("Database sync background error:", err.message);
+});
 
 // 6. 404 Handler
 app.use((req, res) => {
   res.status(404).json({ message: "Endpoint tidak ditemukan" });
+});
+
+// 7. Global Error Handler (Catch-all for 500s)
+app.use((err, req, res, next) => {
+  console.error("FATAL ERROR:", err);
+  res.status(500).json({
+    message: "Terjadi kesalahan pada server",
+    error: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
 });
 
 module.exports = app;
