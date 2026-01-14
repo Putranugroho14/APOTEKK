@@ -165,19 +165,27 @@ const PublicPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-mesh font-sans text-white overflow-x-hidden relative">
-            <Particles count={120} opacity={0.4} speed={0.3} />
-            <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none"></div>
+        <div className="min-h-screen bg-mesh font-sans text-slate-900 overflow-x-hidden relative">
+            <Particles count={40} opacity={0.15} speed={0.4} color="#06b6d4" />
+
+            {/* Liquid Orbs Background */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] bg-cyan-500/5 rounded-full blur-[120px] animate-float opacity-30"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-lime-500/5 rounded-full blur-[120px] animate-float opacity-30" style={{ animationDelay: '-4s' }}></div>
+                <div className="absolute top-[40%] left-[20%] w-[30vw] h-[30vw] bg-blue-500/3 rounded-full blur-[100px] animate-pulse-glow"></div>
+            </div>
+
+            <div className="absolute inset-0 bg-dot-pattern opacity-5 pointer-events-none"></div>
 
             {/* NAV BAR */}
-            <header className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-300 ${scrolled ? 'py-3 bg-slate-900 border-b border-white/10 shadow-2xl' : 'py-4 md:py-8 bg-transparent'}`}>
+            <header className={`fixed top-0 left-0 right-0 z-[80] transition-all duration-300 ${scrolled ? 'py-3 bg-white/90 border-b border-slate-100 shadow-xl backdrop-blur-md' : 'py-4 md:py-8 bg-transparent'}`}>
                 <div className="container mx-auto px-6 flex justify-between items-center">
                     <div className="flex items-center gap-3 md:gap-5 group cursor-pointer" onClick={scrollToTop}>
-                        <div className={`transition-all duration-500 ${scrolled ? 'w-8 h-8 md:w-10 h-10' : 'w-10 h-10 md:w-14 h-14'} bg-white rounded-xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-50 group-hover:rotate-6`}>
+                        <div className={`transition-all duration-500 ${scrolled ? 'w-8 h-8 md:w-10 h-10' : 'w-10 h-10 md:w-14 h-14'} bg-white rounded-xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-100 group-hover:rotate-6`}>
                             <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
                         </div>
-                        <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-base md:text-2xl' : 'text-lg md:text-4xl'} text-white`}>
-                            APOTEK <span className="text-cyan-400">HADINATA</span>
+                        <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-base md:text-2xl' : 'text-lg md:text-4xl'} text-slate-900`}>
+                            APOTEK <span className="text-cyan-500">HADINATA</span>
                         </h1>
                     </div>
 
@@ -213,7 +221,7 @@ const PublicPage = () => {
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setShowCart(true)}
-                            className={`relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${scrolled ? 'bg-white/5 text-white border border-white/10 hover:bg-cyan-500/20' : 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20'}`}
+                            className={`relative w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 ${scrolled ? 'bg-cyan-500/10 text-cyan-600 border border-cyan-100 hover:bg-cyan-500/20' : 'bg-white/40 text-slate-900 backdrop-blur-md border border-white/40 hover:bg-white/60'}`}
                         >
                             <ShoppingCart size={20} />
                             {getTotalItems() > 0 && (
@@ -223,7 +231,7 @@ const PublicPage = () => {
                             )}
                         </button>
 
-                        <button className="lg:hidden p-2 text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        <button className="lg:hidden p-2 text-slate-900" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
                         </button>
                     </div>
@@ -287,13 +295,13 @@ const PublicPage = () => {
                                     className={`absolute top-0 left-0 w-full transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] transform
                                         ${idx === currentMissionSlide ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
                                 >
-                                    <h2 className="text-2xl md:text-8xl font-black text-white leading-[1.1] md:leading-[0.9] mb-4 md:mb-8 tracking-tighter">
+                                    <h2 className="text-2xl md:text-8xl font-black text-slate-900 leading-[1.1] md:leading-[0.9] mb-4 md:mb-8 tracking-tighter">
                                         {slide.title} <br />
-                                        <span className={`bg-gradient-to-r ${slide.accent} bg-clip-text text-transparent`}>
+                                        <span className={`bg-gradient-to-r ${slide.accent} bg-clip-text text-transparent underline decoration-cyan-500/20 decoration-8 underline-offset-8`}>
                                             {slide.subtitle}
                                         </span>
                                     </h2>
-                                    <p className="text-slate-400 text-xs md:text-xl max-w-2xl font-medium leading-relaxed">
+                                    <p className="text-slate-600 text-xs md:text-xl max-w-2xl font-semibold leading-relaxed">
                                         {slide.content}
                                     </p>
                                 </div>
@@ -323,16 +331,16 @@ const PublicPage = () => {
             <section className="py-8 md:py-16 relative z-10">
                 <div className="container mx-auto px-6">
                     <div className="liquid-glass rounded-[32px] md:rounded-[60px] p-8 md:p-14 flex flex-wrap justify-center md:justify-between items-center gap-10 md:gap-12 group transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]">
-                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-white group-hover:scale-105 transition-all">
-                            <div className="w-10 h-10 md:w-16 md:h-16 bg-cyan-500/10 rounded-2xl md:rounded-3xl flex items-center justify-center border border-cyan-500/20"><ShieldCheck className="text-cyan-400 w-5 h-5 md:w-8 md:h-8" /></div>
+                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-slate-900 group-hover:scale-105 transition-all">
+                            <div className="w-10 h-10 md:w-16 md:h-16 bg-cyan-500/5 rounded-2xl md:rounded-3xl flex items-center justify-center border border-cyan-500/10"><ShieldCheck className="text-cyan-500 w-5 h-5 md:w-8 md:h-8" /></div>
                             DISTRIBUTOR RESMI
                         </div>
-                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-white group-hover:scale-105 transition-all" style={{ transitionDelay: '0.1s' }}>
-                            <div className="w-10 h-10 md:w-16 md:h-16 bg-lime-500/10 rounded-2xl md:rounded-3xl flex items-center justify-center border border-lime-500/20"><Award className="text-lime-400 w-5 h-5 md:w-8 md:h-8" /></div>
+                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-slate-900 group-hover:scale-105 transition-all" style={{ transitionDelay: '0.1s' }}>
+                            <div className="w-10 h-10 md:w-16 md:h-16 bg-lime-500/5 rounded-2xl md:rounded-3xl flex items-center justify-center border border-lime-500/10"><Award className="text-lime-500 w-5 h-5 md:w-8 md:h-8" /></div>
                             APOTEKER BERLISENSI
                         </div>
-                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-white group-hover:scale-105 transition-all" style={{ transitionDelay: '0.2s' }}>
-                            <div className="w-10 h-10 md:w-16 md:h-16 bg-cyan-500/10 rounded-2xl md:rounded-3xl flex items-center justify-center border border-cyan-500/20"><CheckCircle className="text-cyan-400 w-5 h-5 md:w-8 md:h-8" /></div>
+                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-slate-900 group-hover:scale-105 transition-all" style={{ transitionDelay: '0.2s' }}>
+                            <div className="w-10 h-10 md:w-16 md:h-16 bg-cyan-500/5 rounded-2xl md:rounded-3xl flex items-center justify-center border border-cyan-500/10"><CheckCircle className="text-cyan-500 w-5 h-5 md:w-8 md:h-8" /></div>
                             100% PRODUK ASLI
                         </div>
                     </div>
@@ -350,10 +358,10 @@ const PublicPage = () => {
                             <div className="inline-flex items-center gap-4 liquid-glass px-6 py-3 rounded-2xl text-cyan-400 text-[9px] md:text-xs font-black uppercase tracking-[0.4em] mb-6 md:mb-10">
                                 <Package size={16} className="animate-float" /> PRODUK UNGGULAN
                             </div>
-                            <h2 className="text-3xl md:text-8xl font-black text-white tracking-tighter leading-[1] md:leading-[0.85] mb-6 md:mb-8">
-                                Pilih Obat <br className="hidden md:block" /><span className="text-cyan-400">Terbaik</span> Anda.
+                            <h2 className="text-3xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[1] md:leading-[0.85] mb-6 md:mb-8">
+                                Pilih Obat <br className="hidden md:block" /><span className="text-cyan-500">Terbaik</span> Anda.
                             </h2>
-                            <p className="text-slate-400 font-medium text-xs md:text-2xl leading-relaxed max-w-2xl">Jaminan keaslian 100% dan pengiriman instan langsung ke rumah.</p>
+                            <p className="text-slate-600 font-bold text-xs md:text-2xl leading-relaxed max-w-2xl">Jaminan keaslian 100% dan pengiriman instan langsung ke rumah.</p>
                         </div>
                     </div>
 
@@ -409,7 +417,7 @@ const PublicPage = () => {
                                                 </div>
                                             </div>
 
-                                            <h4 className="font-black text-white text-[11px] md:text-sm mb-1.5 md:mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer w-full text-center" onClick={() => setSelectedProduct(obat)}>
+                                            <h4 className="font-black text-slate-800 text-[11px] md:text-sm mb-1.5 md:mb-2 line-clamp-1 group-hover:text-cyan-600 transition-colors cursor-pointer w-full text-center" onClick={() => setSelectedProduct(obat)}>
                                                 {obat.nama_obat}
                                             </h4>
 
@@ -419,21 +427,21 @@ const PublicPage = () => {
                                                         <Star
                                                             key={s}
                                                             size={8}
-                                                            className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-2.5 md:h-2.5`}
+                                                            className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-200 text-slate-200"} md:w-2.5 md:h-2.5`}
                                                         />
                                                     ))}
                                                 </div>
-                                                <span className="text-[7px] md:text-[9px] font-black text-slate-500">{(obat.rating || 4.8).toFixed(1)} / 5</span>
+                                                <span className="text-[7px] md:text-[9px] font-black text-slate-500 uppercase">{(obat.rating || 4.8).toFixed(1)} / 5</span>
                                             </div>
 
-                                            <div className="flex items-center justify-between pt-3 border-t border-white/5 mt-auto w-full">
+                                            <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto w-full">
                                                 <div className="text-left">
-                                                    <p className="text-[6px] md:text-[7px] font-black text-slate-600 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
-                                                    <p className="text-xs md:text-lg font-black text-cyan-400 tracking-tighter leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
+                                                    <p className="text-[6px] md:text-[7px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
+                                                    <p className="text-xs md:text-lg font-black text-cyan-600 tracking-tighter leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
                                                 </div>
                                                 <button
                                                     onClick={(e) => addToCart(obat, e)}
-                                                    className="w-7 h-7 md:w-9 md:h-9 bg-white/5 text-white rounded-lg md:rounded-xl flex items-center justify-center hover:bg-cyan-500 hover:rotate-6 active:scale-95 transition-all border border-white/10"
+                                                    className="w-7 h-7 md:w-9 md:h-9 bg-slate-50 text-cyan-600 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:rotate-6 active:scale-95 transition-all border border-slate-100"
                                                 >
                                                     <Plus size={14} className="md:w-5 md:h-5" />
                                                 </button>
@@ -471,25 +479,27 @@ const PublicPage = () => {
 
             {/* CTA SECTION */}
             < section id="layanan" className="py-20 md:py-40 relative overflow-hidden" >
-                <div className="absolute inset-0 bg-mesh opacity-40"></div>
-                <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-lime-500/10 rounded-full blur-[180px] animate-pulse-glow"></div>
-
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="max-w-5xl mx-auto glass-card-dark bg-slate-900/40 border-white/10 p-8 md:p-20 text-center shadow-[0_60px_120px_-20px_rgba(0,0,0,0.8)] rounded-[40px] md:rounded-[60px]">
-                        <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-lime-400 to-lime-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-lime-500/30 transform hover:rotate-12 transition-transform duration-500">
-                            <FileText size={28} />
-                        </div>
-                        <h2 className="text-2xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-6 md:mb-8">
-                            Penebusan Resep <br /><span className="bg-gradient-to-r from-lime-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">Lebih Praktis.</span>
-                        </h2>
-                        <p className="text-slate-400 text-sm md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-10 italic">
-                            Foto resep Anda, kirim online, dan terima obat di rumah.
-                        </p>
-                        <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6">
-                            <Link to="/unggah-resep" className="px-10 py-5 bg-white text-slate-900 font-black rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:bg-lime-400 transition-all shadow-2xl group text-center">
-                                Mulai Kirim Resep
-                            </Link>
+                    <div className="max-w-5xl mx-auto glass-card border-slate-100 p-8 md:p-20 text-center shadow-premium rounded-[40px] md:rounded-[60px] relative overflow-hidden">
+                        <div className="absolute inset-0 bg-mesh opacity-30"></div>
+                        <div className="relative z-10">
+                            <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-lime-500 to-lime-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-lime-500/20 transform hover:rotate-12 transition-transform duration-500">
+                                <FileText size={28} />
+                            </div>
+                            <h2 className="text-2xl md:text-6xl font-black text-slate-900 tracking-tighter leading-tight mb-6 md:mb-8">
+                                Penebusan Resep <br /><span className="bg-gradient-to-r from-lime-600 via-cyan-600 to-blue-700 bg-clip-text text-transparent">Lebih Praktis.</span>
+                            </h2>
+                            <p className="text-slate-600 text-sm md:text-xl font-bold max-w-2xl mx-auto leading-relaxed mb-10">
+                                Foto resep Anda, kirim online, dan terima obat di rumah.
+                            </p>
+                            <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6">
+                                <Link to="/unggah-resep" className="px-10 py-5 bg-slate-900 text-white font-black rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:bg-lime-500 transition-all shadow-xl text-center">
+                                    Mulai Kirim Resep
+                                </Link>
+                                <a href="https://wa.me/6281390807472" className="px-10 py-5 bg-white text-slate-900 border border-slate-200 font-black rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:bg-slate-50 transition-all shadow-xl text-center">
+                                    Tanya Apoteker
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -499,26 +509,26 @@ const PublicPage = () => {
             < section className="py-20 md:py-40 relative overflow-hidden" >
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20">
-                        <div className="text-center group p-8 md:p-12 glass-card-dark rounded-[40px] md:rounded-[50px] border-white/5 shadow-xl">
-                            <div className="w-16 h-16 md:w-24 md:h-24 bg-cyan-500/10 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-cyan-400 transition-all duration-700 shadow-inner">
+                        <div className="text-center group p-8 md:p-12 glass-card rounded-[40px] md:rounded-[50px] border-slate-100 shadow-xl">
+                            <div className="w-16 h-16 md:w-24 md:h-24 bg-cyan-500/5 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-cyan-500 transition-all duration-700 shadow-inner">
                                 <Truck size={32} className="md:w-10 md:h-10" />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-black text-white mb-4 tracking-tight">Kurir Prioritas</h3>
-                            <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed italic">Pengiriman cepat di bawah 60 menit.</p>
+                            <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-4 tracking-tighter">Kurir Prioritas</h3>
+                            <p className="text-slate-600 text-sm md:text-base font-bold leading-relaxed">Pengiriman cepat di bawah 60 menit.</p>
                         </div>
-                        <div className="text-center group p-8 md:p-12 glass-card-dark rounded-[40px] md:rounded-[50px] border-white/5 shadow-xl">
-                            <div className="w-16 h-16 md:w-24 md:h-24 bg-lime-500/10 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-lime-400 transition-all duration-700 shadow-inner">
+                        <div className="text-center group p-8 md:p-12 glass-card rounded-[40px] md:rounded-[50px] border-slate-100 shadow-xl">
+                            <div className="w-16 h-16 md:w-24 md:h-24 bg-lime-500/5 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-lime-500 transition-all duration-700 shadow-inner">
                                 <ShieldCheck size={32} className="md:w-10 md:h-10" />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-black text-white mb-4 tracking-tight">Kualitas Terjamin</h3>
-                            <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed italic">Produk asli dengan izin resmi BPOM.</p>
+                            <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-4 tracking-tighter">Kualitas Terjamin</h3>
+                            <p className="text-slate-600 text-sm md:text-base font-bold leading-relaxed">Produk asli dengan izin resmi BPOM.</p>
                         </div>
-                        <div className="text-center group p-8 md:p-12 glass-card-dark rounded-[40px] md:rounded-[50px] border-white/5 shadow-xl">
-                            <div className="w-16 h-16 md:w-24 md:h-24 bg-white/5 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-white transition-all duration-700 shadow-inner">
+                        <div className="text-center group p-8 md:p-12 glass-card rounded-[40px] md:rounded-[50px] border-slate-100 shadow-xl">
+                            <div className="w-16 h-16 md:w-24 md:h-24 bg-cyan-500/5 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-cyan-500 transition-all duration-700 shadow-inner">
                                 <Headphones size={32} className="md:w-10 md:h-10" />
                             </div>
-                            <h3 className="text-xl md:text-2xl font-black text-white mb-4 tracking-tight">Layanan 24/7</h3>
-                            <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed italic">Siap melayani konsultasi obat kapan saja.</p>
+                            <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-4 tracking-tighter">Layanan 24/7</h3>
+                            <p className="text-slate-600 text-sm md:text-base font-bold leading-relaxed">Siap melayani konsultasi obat kapan saja.</p>
                         </div>
                     </div>
                 </div>

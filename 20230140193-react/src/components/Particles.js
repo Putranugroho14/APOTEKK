@@ -89,7 +89,7 @@ const Particles = ({
             className={`${fullScreen ? 'fixed' : 'absolute'} inset-0 pointer-events-none`}
             style={{
                 zIndex: 1,
-                mixBlendMode: 'screen',
+                mixBlendMode: 'multiply',
                 display: 'block'
             }}
         />
