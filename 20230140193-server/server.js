@@ -48,7 +48,9 @@ app.use(cors({
 }));
 
 // Handle preflight requests specifically
-app.options('*', cors());
+app.options('*', (req, res) => {
+  res.status(200).send();
+});
 
 app.use(express.json());
 app.use(morgan("dev"));
