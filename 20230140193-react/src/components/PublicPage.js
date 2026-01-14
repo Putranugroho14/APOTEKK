@@ -156,7 +156,7 @@ const PublicPage = () => {
             <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none"></div>
 
             {/* NAV BAR */}
-            <header className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-500 ${scrolled ? 'py-3 md:py-4 bg-slate-900/90 backdrop-blur-2xl border-b border-white/5 shadow-2xl' : 'py-4 md:py-8 bg-transparent'}`}>
+            <header className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-300 ${scrolled ? 'py-3 bg-slate-900 border-b border-white/10 shadow-2xl' : 'py-4 md:py-8 bg-transparent'}`}>
                 <div className="container mx-auto px-6 flex justify-between items-center">
                     <div className="flex items-center gap-3 md:gap-5 group cursor-pointer" onClick={scrollToTop}>
                         <div className={`transition-all duration-500 ${scrolled ? 'w-8 h-8 md:w-10 h-10' : 'w-10 h-10 md:w-14 h-14'} bg-white rounded-xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-50 group-hover:rotate-6`}>
@@ -355,9 +355,9 @@ const PublicPage = () => {
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className={`${obats.length > 4 ? 'min-w-[calc(100%-1rem)] md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.333rem)] xl:min-w-[calc(25%-1.5rem)]' : 'w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[32px] md:rounded-[40px] p-5 md:p-6 border border-white/10 shadow-sm hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:-translate-y-4 flex flex-col`}
+                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.333rem)] xl:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[24px] md:rounded-[40px] p-3 md:p-6 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
                                         >
-                                            <div className="relative h-48 md:h-64 mb-6 md:mb-8 overflow-hidden rounded-[24px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <div className="relative h-32 md:h-64 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
                                                     src={obat.gambar_url || "https://images.unsplash.com/photo-1576091160550-217359f48f4c?w=500"}
                                                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"

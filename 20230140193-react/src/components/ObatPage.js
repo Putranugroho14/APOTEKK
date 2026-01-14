@@ -214,7 +214,7 @@ const ObatPage = () => {
                 </div>
 
                 {/* Grid Obat */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
                     {isLoading ? (
                         [1, 2, 3, 4].map(i => <div key={i} className="h-80 bg-white rounded-[32px] animate-pulse border border-slate-100"></div>)
                     ) : filteredObats.length === 0 ? (
@@ -226,8 +226,8 @@ const ObatPage = () => {
                         </div>
                     ) : (
                         filteredObats.map(obat => (
-                            <div key={obat.id} className="glass-card-dark rounded-[30px] md:rounded-[40px] border border-white/5 overflow-hidden shadow-2xl hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] transition-all duration-700 group flex flex-col">
-                                <div className="h-40 md:h-52 relative overflow-hidden bg-slate-900">
+                            <div key={obat.id} className="glass-card-dark rounded-[24px] md:rounded-[40px] border border-white/5 overflow-hidden shadow-2xl transition-all duration-500 group flex flex-col">
+                                <div className="h-32 md:h-52 relative overflow-hidden bg-slate-900">
                                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
                                         className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
