@@ -38,6 +38,14 @@ app.get("/", async (req, res) => {
     const [results] = await db.sequelize.query("SHOW TABLES");
     tables = results.map(r => Object.values(r)[0]);
 
+    // Check Obat table structure specifically
+    try {
+      const [columns] = await db.sequelize.query("DESCRIBE obats");
+      db.obats_structure = columns;
+    } catch (e) {
+      db.obats_structure = "Table 'obats' not found or error: " + e.message;
+    }
+
   } catch (err) {
     dbStatus = "Failed";
     dbError = err.message;
@@ -49,7 +57,8 @@ app.get("/", async (req, res) => {
     database: {
       status: dbStatus,
       error: dbError,
-      found_tables: tables
+      found_tables: tables,
+      obats_table: db.obats_structure
     },
     env: process.env.NODE_ENV,
     time: new Date().toISOString()
