@@ -42,11 +42,14 @@ db.sequelize.sync({ alter: true })
 
 // Middleware
 app.use(cors({
-  origin: ["https://hadinata-nine.vercel.app", "http://localhost:3000"],
+  origin: "*", // Allow all for debugging CORS 
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
 }));
+
+// Handle preflight requests specifically
+app.options('*', cors());
+
 app.use(express.json());
 app.use(morgan("dev"));
 
