@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
     Upload, Send, ArrowLeft, CheckCircle, Phone, Mail, MapPin,
     Facebook, Instagram, Clock, ShieldCheck, Award, FileText,
-    Camera, BadgeCheck, Loader2
+    Camera, BadgeCheck, Loader2, Package
 } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import API_BASE_URL from '../config';
