@@ -13,48 +13,21 @@ const resepRoutes = require("./routes/resep");
 
 const app = express();
 
-// 1. PRIORITY: CORS Configuration (Must be first)
-app.use(cors({
-  origin: true, // Allow all origins dynamically
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
-  credentials: true
-}));
+// 1. CORS (Kembali ke versi paling dasar yang sebelumnya jalan)
+app.use(cors());
 
-// Handle OPTIONS explicitly for Vercel
-app.options('*', (req, res) => {
-  res.status(200).end();
-});
-
-// 2. Core Middleware
+// 2. Middleware Dasar
 app.use(express.json());
 app.use(morgan("dev"));
 
+// Database model
 const db = require("./models");
 
-// 3. Database Sync (Non-blocking / Background)
-// In serverless, we generally avoid blocking startup for DB sync
-(async () => {
-  try {
-    // Only verify connection, don't auto-alter in standard production runs to avoid timeout
-    await db.sequelize.authenticate();
-    console.log("Database connected.");
-
-    // Lazy sync hook - check conditions before running heavy operations
-    // db.sequelize.sync({ alter: true }).catch(err => console.error("Sync error:", err)); 
-  } catch (err) {
-    console.error("DB Connection Failed (Server still running):", err.message);
-  }
-})();
-
-// Penanganan folder uploads
-const uploadDir = path.join(process.cwd(), 'uploads', 'resep');
-if (!fs.existsSync(uploadDir) && process.env.NODE_ENV !== 'production') {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Akses statis folder uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Sinkronisasi Database (Penting untuk pertama kali/perubahan skema)
+// Kita gunakan sync() biasa, dan handle error agar tidak membunuh main process
+db.sequelize.sync({ alter: true }).catch(err => {
+  console.error("Database sync failed, but server continues:", err);
+});
 
 // Routing API
 app.use("/api/obat", obatRoutes);
@@ -65,28 +38,10 @@ app.use("/api/resep", resepRoutes);
 app.get("/", async (req, res) => {
   let dbStatus = "Unknown";
   let dbError = null;
-  let adminStatus = "Checking...";
 
   try {
     await db.sequelize.authenticate();
     dbStatus = "Connected";
-
-    // Pastikan admin ada (Seringkali cold start vercel melewati blok .then di atas)
-    const { User } = db;
-    const adminUser = await User.findOne({ where: { username: 'admin' } });
-    if (!adminUser) {
-      const hashedPassword = await bcrypt.hash('admin123', 10);
-      await User.create({
-        nama: 'Administrator',
-        username: 'admin',
-        password: hashedPassword,
-        role: 'admin'
-      });
-      adminStatus = "Default created (admin/admin123)";
-    } else {
-      adminStatus = "Ready";
-    }
-
   } catch (err) {
     dbStatus = "Failed";
     dbError = err.message;
@@ -96,8 +51,7 @@ app.get("/", async (req, res) => {
     status: "Success",
     message: "Server Apotek Online Berjalan!",
     database: dbStatus,
-    database_error: dbError,
-    admin_system: adminStatus
+    database_error: dbError
   });
 });
 
@@ -109,9 +63,14 @@ app.use((req, res) => {
 // Konfigurasi Port
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Jangan panggil app.listen di Vercel jika diekspor, 
+// tapi biasanya aman (Vercel mengabaikannya). 
+// Namun untuk keamanan, kita cek jika tidak dideploy di Vercel.
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
 // Ekspor app untuk digunakan oleh runtime Vercel
 module.exports = app;
