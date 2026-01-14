@@ -311,17 +311,14 @@ const PublicPage = () => {
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
                         <div className="max-w-3xl transform transition-all duration-1000">
-                            <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-cyan-400 text-[10px] md:text-xs font-black uppercase tracking-[0.3em] mb-6 md:mb-10 shadow-sm">
-                                <Package size={16} /> APOTEK HADINATA
+                            <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-cyan-400 text-[9px] md:text-sm font-black uppercase tracking-[0.3em] mb-6 md:mb-10 shadow-sm">
+                                <Package size={16} /> PRODUK UNGGULAN
                             </div>
                             <h2 className="text-3xl md:text-8xl font-black text-white tracking-tighter leading-[1] md:leading-[0.85] mb-6 md:mb-8">
-                                Solusi <span className="text-cyan-400">Terpercaya</span> <br className="hidden md:block" />Untuk Anda.
+                                Pilih Obat <br className="hidden md:block" /><span className="text-cyan-400">Terbaik</span> Anda.
                             </h2>
-                            <p className="text-slate-400 font-medium text-sm md:text-2xl leading-relaxed max-w-2xl">Kesehatan keluarga Anda adalah prioritas kami dengan jaminan keaslian 100%.</p>
+                            <p className="text-slate-400 font-medium text-xs md:text-2xl leading-relaxed max-w-2xl">Jaminan keaslian 100% dan pengiriman instan langsung ke rumah.</p>
                         </div>
-                        <Link to="/semua-obat" className="font-black text-sm uppercase tracking-[0.4em] text-slate-400 hover:text-white transition-all flex items-center gap-6 group mb-4">
-                            Lihat Semua <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cyan-50 group-hover:text-white transition-all active:scale-90"><ArrowRight size={24} /></div>
-                        </Link>
                     </div>
 
                     {loading ? (
@@ -400,17 +397,26 @@ const PublicPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex justify-center gap-3 mt-12 xl:hidden">
-                                {obats.slice(0, 10).map((_, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => {
-                                            const count = obats.slice(0, 10).length;
-                                            setProductSlideIndex(count * 2 + i);
-                                        }}
-                                        className={`h-1.5 transition-all duration-500 rounded-full ${i === (productSlideIndex % (obats.slice(0, 10).length || 1)) ? 'w-10 bg-cyan-400' : 'w-2 bg-white/10 hover:bg-white/20'}`}
-                                    />
-                                ))}
+                            <div className="flex flex-col items-center gap-8 mt-12 md:mt-20">
+                                <div className="flex justify-center gap-3 xl:hidden">
+                                    {obats.slice(0, 10).map((_, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => {
+                                                const count = obats.slice(0, 10).length;
+                                                setProductSlideIndex(count * 2 + i);
+                                            }}
+                                            className={`h-1.5 transition-all duration-500 rounded-full ${i === (productSlideIndex % (obats.slice(0, 10).length || 1)) ? 'w-10 bg-cyan-400' : 'w-2 bg-white/10 hover:bg-white/20'}`}
+                                        />
+                                    ))}
+                                </div>
+
+                                <Link to="/katalog" className="group flex items-center gap-4 md:gap-6 bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 md:px-12 md:py-6 rounded-2xl md:rounded-[32px] transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                    <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-slate-300 group-hover:text-white transition-colors">LIHAT SEMUA PRODUK</span>
+                                    <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-cyan-500/20 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white text-cyan-400 transition-all duration-500 shadow-xl">
+                                        <ArrowRight size={18} className="md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     )}
