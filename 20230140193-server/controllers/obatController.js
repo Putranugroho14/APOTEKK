@@ -3,18 +3,25 @@ const Obat = db.Obat;
 const User = db.User;
 const { body, validationResult } = require("express-validator");
 
-// Validasi Input
+// Validasi Input (Lebih toleran untuk FormData)
 exports.validateObat = [
-  body("nama_obat").notEmpty().withMessage("Nama obat tidak boleh kosong"),
-  body("deskripsi").notEmpty().withMessage("Deskripsi tidak boleh kosong"),
-  body("harga").isNumeric().withMessage("Harga harus berupa angka"),
-  body("stok").isNumeric().withMessage("Stok harus berupa angka"),
+  body("nama_obat").trim().notEmpty().withMessage("Nama obat tidak boleh kosong"),
+  body("deskripsi").trim().notEmpty().withMessage("Deskripsi tidak boleh kosong"),
+  body("harga").custom((val) => !isNaN(parseFloat(val))).withMessage("Harga harus berupa angka"),
+  body("stok").custom((val) => !isNaN(parseInt(val))).withMessage("Stok harus berupa angka"),
 ];
 
 // 1. Create Obat (Menambahkan dukungan is_published & Upload Gambar)
 exports.createObat = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  if (!errors.isEmpty()) {
+    console.error("Validation Errors:", errors.array());
+    console.log("Received Body:", req.body);
+    return res.status(400).json({
+      message: "Validasi gagal",
+      errors: errors.array()
+    });
+  }
 
   try {
     const { id: authorId } = req.user;
@@ -94,7 +101,13 @@ exports.getObatById = async (req, res) => {
 // 4. Update Obat
 exports.updateObat = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  if (!errors.isEmpty()) {
+    console.error("Validation Errors (Update):", errors.array());
+    return res.status(400).json({
+      message: "Validasi gagal",
+      errors: errors.array()
+    });
+  }
 
   try {
     const obat = await Obat.findByPk(req.params.id);
