@@ -160,13 +160,13 @@ const KatalogObatPage = () => {
               </div>
             ) : (
               filtered.map(obat => (
-                <div key={obat.id} className="group glass-card-dark rounded-[24px] md:rounded-[40px] p-3 md:p-6 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col animate-fade-in">
+                <div key={obat.id} className="group glass-card-dark rounded-[24px] md:rounded-[40px] p-4 md:p-6 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col animate-fade-in">
                   <div className="relative h-32 md:h-56 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={obat.nama_obat} />
                     <div className="absolute top-2 left-2 md:top-4 md:left-4"><span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[7px] md:text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">{obat.kategori}</span></div>
                   </div>
                   <div className="flex-1 flex flex-col">
-                    <h4 className="font-black text-white text-xs md:text-lg mb-2 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
+                    <h4 className="font-black text-white text-sm md:text-xl mb-2 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
 
                     <div className="flex items-center gap-2 mb-4 md:mb-6">
                       <div className="flex gap-0.5 md:gap-1">
