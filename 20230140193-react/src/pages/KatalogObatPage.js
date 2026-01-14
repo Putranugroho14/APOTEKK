@@ -150,7 +150,7 @@ const KatalogObatPage = () => {
           </div>
 
           {/* PRODUCT GRID */}
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-5">
             {loading ? (
               [1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-64 md:h-96 bg-slate-900/50 rounded-[32px] md:rounded-[40px] animate-pulse"></div>)
             ) : filtered.length === 0 ? (
@@ -160,33 +160,32 @@ const KatalogObatPage = () => {
               </div>
             ) : (
               filtered.map(obat => (
-                <div key={obat.id} className="group glass-card-dark rounded-[24px] md:rounded-[32px] p-3 md:p-5 border border-white/5 shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col animate-fade-in">
-                  <div className="relative aspect-[4/5] mb-4 md:mb-6 overflow-hidden rounded-2xl md:rounded-[28px] cursor-pointer bg-white/5" onClick={() => setSelectedProduct(obat)}>
+                <div key={obat.id} className="group glass-card-dark rounded-2xl md:rounded-[28px] p-2.5 md:p-3.5 border border-white/5 shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col items-center text-center animate-fade-in max-w-[220px] mx-auto w-full">
+                  <div className="relative w-full aspect-[1/1.2] mb-3 md:mb-4 overflow-hidden rounded-xl md:rounded-[20px] cursor-pointer bg-white/5" onClick={() => setSelectedProduct(obat)}>
                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={obat.nama_obat} />
-                    <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[85%]">
-                      <span className="block text-center bg-slate-900/60 backdrop-blur-md px-2 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">{obat.kategori}</span>
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90%]">
+                      <span className="block text-center bg-slate-950/70 backdrop-blur-md px-1.5 py-1 rounded-full text-[6px] md:text-[8px] font-black text-cyan-400 uppercase tracking-[0.2em] shadow-xl border border-white/5">{obat.kategori}</span>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </div>
-                  <div className="flex-1 flex flex-col">
-                    <h4 className="font-black text-white text-sm md:text-lg mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
+                  <div className="flex-1 flex flex-col w-full">
+                    <h4 className="font-black text-white text-[11px] md:text-sm mb-1.5 md:mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer text-center" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
 
-                    <div className="flex items-center gap-2 mb-4 md:mb-6">
+                    <div className="flex items-center justify-center gap-1.5 mb-3 md:mb-4 w-full">
                       <div className="flex gap-0.5">
                         {[1, 2, 3, 4, 5].map(s => (
-                          <Star key={s} size={10} className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-3.5 md:h-3.5`} />
+                          <Star key={s} size={8} className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-2.5 md:h-2.5`} />
                         ))}
                       </div>
-                      <span className="text-[9px] md:text-xs font-black text-slate-400">{(obat.rating || 4.8).toFixed(1)} / 5.0</span>
+                      <span className="text-[7px] md:text-[9px] font-black text-slate-500">{(obat.rating || 4.8).toFixed(1)} / 5</span>
                     </div>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-white/5 mt-auto">
-                      <div className="flex-1">
-                        <p className="text-[7px] md:text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1.5 leading-none">HARGA TERBAIK</p>
-                        <p className="text-base md:text-2xl font-black text-cyan-400 tracking-tighter leading-none">Rp{Math.floor(obat.harga).toLocaleString()}</p>
+                    <div className="flex items-center justify-between pt-3 border-t border-white/5 mt-auto w-full">
+                      <div className="text-left">
+                        <p className="text-[6px] md:text-[7px] font-black text-slate-600 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
+                        <p className="text-xs md:text-lg font-black text-cyan-400 tracking-tighter leading-none">Rp{Math.floor(obat.harga).toLocaleString()}</p>
                       </div>
-                      <button onClick={() => addToCart(obat)} className="w-10 h-10 md:w-14 md:h-14 bg-white/5 text-white border border-white/10 rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-cyan-500 hover:rotate-6 active:scale-95 transition-all group-hover:bg-white/10 shadow-xl">
-                        <Plus size={18} className="md:w-7 md:h-7" />
+                      <button onClick={() => addToCart(obat)} className="w-7 h-7 md:w-9 md:h-9 bg-white/5 text-white border border-white/10 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-cyan-500 hover:rotate-6 active:scale-95 transition-all">
+                        <Plus size={14} className="md:w-5 md:h-5" />
                       </button>
                     </div>
                   </div>
