@@ -707,7 +707,18 @@ const PublicPage = () => {
                                         <p className="text-slate-400 font-black text-[7px] md:text-[11px] uppercase tracking-[0.3em]">Total Bayar</p>
                                         <p className="text-lg md:text-5xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
                                     </div>
-                                    <a href={`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-4 md:py-8 premium-gradient text-white text-center font-black rounded-xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all text-[10px] md:text-xs uppercase tracking-[0.4em]">Bayar Via WhatsApp</a>
+                                    <button
+                                        onClick={() => {
+                                            if (!address.trim()) {
+                                                alert("Mohon isi alamat pengiriman terlebih dahulu!");
+                                                return;
+                                            }
+                                            window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
+                                        }}
+                                        className={`block w-full py-4 md:py-8 text-white text-center font-black rounded-xl md:rounded-3xl text-[10px] md:text-xs uppercase tracking-[0.4em] shadow-2xl transition-all ${!address.trim() ? 'bg-slate-300 cursor-not-allowed' : 'premium-gradient shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98]'}`}
+                                    >
+                                        Bayar Via WhatsApp
+                                    </button>
                                 </div>
                             )}
                         </div>

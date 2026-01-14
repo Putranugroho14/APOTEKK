@@ -277,7 +277,18 @@ const KatalogObatPage = () => {
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Harga</p>
                   <p className="text-4xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
                 </div>
-                <a href={`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-8 bg-cyan-600 text-white text-center font-black rounded-3xl text-xs uppercase tracking-[0.4em] shadow-xl shadow-cyan-500/10 hover:bg-cyan-700 transition-all">Pesan Via WhatsApp</a>
+                <button
+                  onClick={() => {
+                    if (!address.trim()) {
+                      alert("Mohon isi alamat pengiriman terlebih dahulu!");
+                      return;
+                    }
+                    window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
+                  }}
+                  className={`block w-full py-8 text-white text-center font-black rounded-3xl text-xs uppercase tracking-[0.4em] shadow-xl shadow-cyan-500/10 transition-all ${!address.trim() ? 'bg-slate-300 cursor-not-allowed' : 'bg-cyan-600 hover:bg-cyan-700 hover:scale-[1.02] active:scale-[0.98]'}`}
+                >
+                  Pesan Via WhatsApp
+                </button>
               </div>
             )}
           </div>
