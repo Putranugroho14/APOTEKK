@@ -40,10 +40,10 @@ app.get("/", async (req, res) => {
 
     // Check Obat table structure specifically
     try {
-      const [columns] = await db.sequelize.query("DESCRIBE obats");
+      const [columns] = await db.sequelize.query("DESCRIBE Obats");
       db.obats_structure = columns;
     } catch (e) {
-      db.obats_structure = "Table 'obats' not found or error: " + e.message;
+      db.obats_structure = "Table 'Obats' not found or error: " + e.message;
     }
 
   } catch (err) {
@@ -74,12 +74,22 @@ app.use("/api/obat", obatRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/resep", resepRoutes);
 
-// Database Sync (Background)
-db.sequelize.sync({ alter: true }).then(() => {
-  console.log("Database synced (alter: true)");
-}).catch(err => {
-  console.error("Database sync background error:", err.message);
-});
+// Self-Healing Database Initialization
+const initDB = async () => {
+  try {
+    const [result] = await db.sequelize.query("SHOW COLUMNS FROM Obats LIKE 'rating'");
+    if (result.length === 0) {
+      console.log("Healing: Adding 'rating' column to Obats table...");
+      await db.sequelize.query("ALTER TABLE Obats ADD COLUMN rating FLOAT DEFAULT 4.5");
+    }
+    await db.sequelize.sync({ alter: true });
+    console.log("Database synced successfully.");
+  } catch (err) {
+    console.error("Self-healing error:", err.message);
+  }
+};
+
+initDB();
 
 // 6. 404 Handler
 app.use((req, res) => {
