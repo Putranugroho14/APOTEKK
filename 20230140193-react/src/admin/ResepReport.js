@@ -62,22 +62,25 @@ const ResepReport = () => {
     }, [searchQuery, reseps]);
 
     const handleUpdateStatus = async (id, status) => {
+        if (!window.confirm(`Apakah Anda yakin ingin mengubah status menjadi '${status}'?`)) return;
         try {
             const token = localStorage.getItem('token');
             await axios.patch(`${API_BASE_URL}/api/resep/status/${id}`, { status }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
+            alert("Status berhasil diperbarui!");
             fetchReseps();
         } catch (err) { alert("Gagal memperbarui status"); }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm("Hapus data resep ini?")) {
+        if (window.confirm("Apakah Anda yakin ingin menghapus data resep ini secara permanen?")) {
             try {
                 const token = localStorage.getItem('token');
                 await axios.delete(`${API_BASE_URL}/api/resep/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
+                alert("Data berhasil dihapus!");
                 fetchReseps();
             } catch (err) { alert("Gagal menghapus data"); }
         }
