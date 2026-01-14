@@ -12,53 +12,42 @@ const authRoutes = require("./routes/auth");
 const resepRoutes = require("./routes/resep");
 
 const app = express();
-const db = require("./models");
 
-// Sinkronisasi Database (Penting untuk pertama kali deploy)
-db.sequelize.sync({ alter: true })
-  .then(async () => {
-    console.log("Database synced successfully");
-
-    // Auto Create Default Admin: admin / admin123
-    try {
-      const { User } = db;
-      const adminExists = await User.findOne({ where: { username: 'admin' } });
-
-      if (!adminExists) {
-        const hashedPassword = await bcrypt.hash('admin123', 10);
-        await User.create({
-          nama: 'Administrator',
-          username: 'admin',
-          password: hashedPassword,
-          role: 'admin'
-        });
-        console.log("Default Admin created: admin / admin123");
-      }
-    } catch (adminErr) {
-      console.error("Failed to create default admin:", adminErr);
-    }
-  })
-  .catch(err => console.error("Database sync failed:", err));
-
+// 1. PRIORITY: CORS Configuration (Must be first)
 app.use(cors({
-  origin: function (origin, callback) {
-    callback(null, true);
-  },
+  origin: true, // Allow all origins dynamically
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
   credentials: true
 }));
 
-// Handle preflight requests specifically
+// Handle OPTIONS explicitly for Vercel
 app.options('*', (req, res) => {
-  res.status(200).send();
+  res.status(200).end();
 });
 
+// 2. Core Middleware
 app.use(express.json());
 app.use(morgan("dev"));
 
-// Penanganan folder uploads untuk Vercel (Serverless bersifat Read-Only)
-// Kita gunakan folder /tmp sebagai fallback untuk mencegah error sistem
+const db = require("./models");
+
+// 3. Database Sync (Non-blocking / Background)
+// In serverless, we generally avoid blocking startup for DB sync
+(async () => {
+  try {
+    // Only verify connection, don't auto-alter in standard production runs to avoid timeout
+    await db.sequelize.authenticate();
+    console.log("Database connected.");
+
+    // Lazy sync hook - check conditions before running heavy operations
+    // db.sequelize.sync({ alter: true }).catch(err => console.error("Sync error:", err)); 
+  } catch (err) {
+    console.error("DB Connection Failed (Server still running):", err.message);
+  }
+})();
+
+// Penanganan folder uploads
 const uploadDir = path.join(process.cwd(), 'uploads', 'resep');
 if (!fs.existsSync(uploadDir) && process.env.NODE_ENV !== 'production') {
   fs.mkdirSync(uploadDir, { recursive: true });
