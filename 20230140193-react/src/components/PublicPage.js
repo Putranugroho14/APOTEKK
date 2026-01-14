@@ -166,7 +166,7 @@ const PublicPage = () => {
                             <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-base md:text-2xl' : 'text-lg md:text-4xl'} text-white`}>
                                 APOTEK <span className="text-cyan-400">HADINATA</span>
                             </h1>
-                            <p className={`text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.6em] mt-3 md:mt-4 transition-all duration-500 ${scrolled ? 'opacity-0 h-0 hidden' : 'opacity-100'}`}>The Standard of Care</p>
+                            <p className={`text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.6em] mt-4 md:mt-6 transition-all duration-500 ${scrolled ? 'opacity-0 h-0 hidden' : 'opacity-100'}`}>The Standard of Care</p>
                         </div>
                     </div>
 
@@ -266,13 +266,13 @@ const PublicPage = () => {
             </header>
 
             {/* HERO SECTION */}
-            <section id="beranda" className="relative h-screen overflow-hidden flex items-center pt-24 md:pt-0">
+            <section id="beranda" className="relative h-screen overflow-hidden flex items-center pt-40 md:pt-48">
                 <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow"></div>
                 <div className="absolute bottom-[-10%] left-[10%] w-[60%] h-[60%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '-3s' }}></div>
 
-                <div className="container mx-auto px-6 relative z-10">
-                    <div className="max-w-4xl">
-                        <div className="relative h-[220px] md:h-[400px]">
+                <div className="container mx-auto px-6 relative z-10 flex flex-col justify-center">
+                    <div className="max-w-5xl">
+                        <div className="relative h-[280px] md:h-[450px]">
                             {missionSlides.map((slide, idx) => (
                                 <div
                                     key={idx}
