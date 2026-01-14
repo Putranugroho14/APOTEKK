@@ -379,7 +379,7 @@ const PublicPage = () => {
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[24px] md:rounded-[40px] p-4 md:p-6 border border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col`}
+                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[24px] md:rounded-[40px] p-3 md:p-6 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
                                         >
                                             <div className="relative h-32 md:h-56 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
@@ -395,7 +395,7 @@ const PublicPage = () => {
                                                 </div>
                                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                             </div>
-                                            <h4 className="font-black text-white text-sm md:text-xl mb-2 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <h4 className="font-black text-white text-lg md:text-xl mb-2 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 {obat.nama_obat}
                                             </h4>
 
@@ -413,15 +413,15 @@ const PublicPage = () => {
                                             </div>
 
                                             <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
-                                                <div className="relative pl-3 md:pl-5 border-l-2 md:border-l-4 border-cyan-500 py-0.5 md:py-1">
-                                                    <p className="text-[7px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] mb-0.5 md:mb-1">HARGA TERBAIK</p>
-                                                    <p className="text-base md:text-2xl font-black text-cyan-400 tracking-tight leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
+                                                <div>
+                                                    <p className="text-[8px] md:text-[9px] font-black text-slate-400 md:text-slate-300 uppercase tracking-widest mb-1">HARGA TERBAIK</p>
+                                                    <p className="text-xl md:text-2xl font-black text-cyan-400 tracking-tight">Rp{Number(obat.harga).toLocaleString()}</p>
                                                 </div>
                                                 <button
                                                     onClick={(e) => addToCart(obat, e)}
-                                                    className="w-10 h-10 md:w-14 md:h-14 bg-white/5 text-white rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl"
+                                                    className="w-12 h-12 md:w-14 md:h-14 bg-white/5 text-white rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10"
                                                 >
-                                                    <Plus size={18} className="md:w-6 md:h-6" />
+                                                    <Plus size={20} className="md:w-6 md:h-6" />
                                                 </button>
                                             </div>
                                         </div>
