@@ -23,7 +23,7 @@ function App() {
 
         {/* --- AUTHENTICATION --- */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        {/* Route register dihapus karena admin bersifat tetap */}
 
         {/* --- ADMIN ROUTES (DILINDUNGI) --- */}
         <Route element={<ProtectedRoute />}>

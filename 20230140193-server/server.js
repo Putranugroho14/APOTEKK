@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const cors = require("cors");
 const morgan = require("morgan");
@@ -15,7 +16,28 @@ const db = require("./models");
 
 // Sinkronisasi Database (Penting untuk pertama kali deploy)
 db.sequelize.sync({ alter: true })
-  .then(() => console.log("Database synced successfully"))
+  .then(async () => {
+    console.log("Database synced successfully");
+
+    // Auto Create Default Admin: admin / admin123
+    try {
+      const { User } = db;
+      const adminExists = await User.findOne({ where: { username: 'admin' } });
+
+      if (!adminExists) {
+        const hashedPassword = await bcrypt.hash('admin123', 10);
+        await User.create({
+          nama: 'Administrator',
+          username: 'admin',
+          password: hashedPassword,
+          role: 'admin'
+        });
+        console.log("Default Admin created: admin / admin123");
+      }
+    } catch (adminErr) {
+      console.error("Failed to create default admin:", adminErr);
+    }
+  })
   .catch(err => console.error("Database sync failed:", err));
 
 // Middleware

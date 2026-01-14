@@ -125,11 +125,8 @@ function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-12 pt-10 border-t border-slate-100 flex flex-col items-center gap-4">
-            <button onClick={() => navigate('/register')} className="text-xs font-black text-slate-400 hover:text-cyan-600 uppercase tracking-widest transition-colors flex items-center gap-2">
-              <Sparkles size={14} className="text-lime-500" /> Daftar Akun Admin Baru
-            </button>
-            <button onClick={() => navigate('/')} className="text-[10px] font-black text-slate-300 hover:text-slate-900 uppercase tracking-[0.2em] transition-colors">
+          <div className="mt-12 pt-10 border-t border-white/5 flex flex-col items-center gap-4">
+            <button onClick={() => navigate('/')} className="text-[10px] font-black text-slate-400 hover:text-white uppercase tracking-[0.2em] transition-colors">
               ← Kembali Ke Halaman Publik
             </button>
           </div>
