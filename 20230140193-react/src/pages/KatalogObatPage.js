@@ -150,7 +150,7 @@ const KatalogObatPage = () => {
           </div>
 
           {/* PRODUCT GRID */}
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-12 px-4 md:px-0">
             {loading ? (
               [1, 2, 3, 4, 5, 6].map(i => <div key={i} className="h-64 md:h-96 bg-slate-900/50 rounded-[32px] md:rounded-[40px] animate-pulse"></div>)
             ) : filtered.length === 0 ? (
@@ -160,7 +160,7 @@ const KatalogObatPage = () => {
               </div>
             ) : (
               filtered.map(obat => (
-                <div key={obat.id} className="group glass-card-dark rounded-[24px] md:rounded-[40px] p-4 md:p-8 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col animate-fade-in">
+                <div key={obat.id} className="group glass-card-dark rounded-[24px] md:rounded-[40px] p-6 md:p-8 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col animate-fade-in mx-auto w-full max-w-sm md:max-w-none">
                   <div className="relative h-32 md:h-56 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={obat.nama_obat} />
                     <div className="absolute top-2 left-2 md:top-4 md:left-4"><span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[7px] md:text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">{obat.kategori}</span></div>
