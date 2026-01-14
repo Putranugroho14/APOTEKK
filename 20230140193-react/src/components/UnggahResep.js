@@ -77,7 +77,7 @@ const UnggahResep = () => {
             </div>
 
             {/* NAV BAR */}
-            <header className="sticky top-0 z-[60] bg-white/80 border-b border-slate-100 shadow-xl backdrop-blur-md">
+            <header className="sticky top-0 z-[60] bg-slate-50/80 border-b border-slate-200/60 shadow-xl backdrop-blur-md">
                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                     <Link to="/" className="flex items-center gap-4 group">
                         <div className="w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center p-2 border border-slate-100 group-hover:rotate-6 transition-transform">
@@ -191,7 +191,7 @@ const UnggahResep = () => {
             </main>
 
             {/* QUICK FOOTER */}
-            <footer className="bg-white border-t border-slate-100 py-20 relative z-10">
+            <footer className="bg-slate-50/50 border-t border-slate-200/60 py-20 relative z-10">
                 <div className="container mx-auto px-6 text-center">
                     <div className="flex justify-center gap-10 mb-10">
                         <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-500 cursor-pointer transition-all hover:scale-125"><Instagram size={24} /></a>

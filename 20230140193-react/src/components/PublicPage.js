@@ -178,7 +178,7 @@ const PublicPage = () => {
             <div className="absolute inset-0 bg-dot-pattern opacity-5 pointer-events-none"></div>
 
             {/* NAV BAR */}
-            <header className={`fixed top-0 left-0 right-0 z-[80] transition-all duration-300 ${scrolled ? 'py-3 bg-white/90 border-b border-slate-100 shadow-xl backdrop-blur-md' : 'py-4 md:py-8 bg-transparent'}`}>
+            <header className={`fixed top-0 left-0 right-0 z-[80] transition-all duration-300 ${scrolled ? 'py-3 bg-slate-50/90 border-b border-slate-200/60 shadow-xl backdrop-blur-md' : 'py-4 md:py-8 bg-transparent'}`}>
                 <div className="container mx-auto px-6 flex justify-between items-center">
                     <div className="flex items-center gap-3 md:gap-5 group cursor-pointer" onClick={scrollToTop}>
                         <div className={`transition-all duration-500 ${scrolled ? 'w-8 h-8 md:w-10 h-10' : 'w-10 h-10 md:w-14 h-14'} bg-white rounded-xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-100 group-hover:rotate-6`}>
@@ -401,7 +401,7 @@ const PublicPage = () => {
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] sm:min-w-[calc(33.333%-1rem)] md:min-w-[calc(25%-1rem)] lg:min-w-[calc(20%-1.5rem)] xl:min-w-[calc(16.666%-1.5rem)]' : 'w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)] md:w-[calc(25%-1rem)]'} max-w-[240px] shrink-0 group glass-card-dark rounded-2xl md:rounded-[28px] p-2.5 md:p-3.5 border border-white/5 shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col items-center text-center`}
+                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] sm:min-w-[calc(33.333%-1rem)] md:min-w-[calc(25%-1rem)] lg:min-w-[calc(20%-1.5rem)] xl:min-w-[calc(16.666%-1.5rem)]' : 'w-[calc(50%-0.5rem)] sm:w-[calc(33.333%-1rem)] md:w-[calc(25%-1rem)]'} max-w-[240px] shrink-0 group bg-white rounded-2xl md:rounded-[28px] p-2.5 md:p-3.5 border border-slate-100 shadow-xl transition-all duration-500 hover:-translate-y-2 flex flex-col items-center text-center`}
                                         >
                                             <div className="relative w-full aspect-[1/1.2] mb-3 md:mb-4 overflow-hidden rounded-xl md:rounded-[20px] cursor-pointer bg-white/5" onClick={() => setSelectedProduct(obat)}>
                                                 <img
@@ -411,7 +411,7 @@ const PublicPage = () => {
                                                     onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"; }}
                                                 />
                                                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90%]">
-                                                    <span className="block text-center bg-slate-950/70 backdrop-blur-md px-1.5 py-1 rounded-full text-[6px] md:text-[8px] font-black text-cyan-400 uppercase tracking-[0.2em] shadow-xl border border-white/5">
+                                                    <span className="block text-center bg-white/95 backdrop-blur-md px-1.5 py-1 rounded-full text-[6px] md:text-[8px] font-black text-cyan-600 uppercase tracking-[0.2em] shadow-lg border border-slate-100">
                                                         {obat.kategori}
                                                     </span>
                                                 </div>
@@ -436,7 +436,7 @@ const PublicPage = () => {
 
                                             <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto w-full">
                                                 <div className="text-left">
-                                                    <p className="text-[6px] md:text-[7px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
+                                                    <p className="text-[6px] md:text-[7px] font-black text-slate-500 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
                                                     <p className="text-xs md:text-lg font-black text-cyan-600 tracking-tighter leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
                                                 </div>
                                                 <button
@@ -460,14 +460,14 @@ const PublicPage = () => {
                                                 const count = obats.slice(0, 10).length;
                                                 setProductSlideIndex(count * 2 + i);
                                             }}
-                                            className={`h-1.5 transition-all duration-500 rounded-full ${i === (productSlideIndex % (obats.slice(0, 10).length || 1)) ? 'w-10 bg-cyan-400' : 'w-2 bg-white/10 hover:bg-white/20'}`}
+                                            className={`h-1.5 transition-all duration-500 rounded-full ${i === (productSlideIndex % (obats.slice(0, 10).length || 1)) ? 'w-10 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.4)]' : 'w-2 bg-slate-200 hover:bg-slate-300'}`}
                                         />
                                     ))}
                                 </div>
 
-                                <Link to="/katalog" className="group flex items-center gap-4 md:gap-6 bg-white/5 hover:bg-white/10 border border-white/10 px-8 py-4 md:px-12 md:py-6 rounded-2xl md:rounded-[32px] transition-all transform hover:scale-[1.02] active:scale-[0.98]">
-                                    <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-slate-300 group-hover:text-white transition-colors">LIHAT SEMUA PRODUK</span>
-                                    <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-cyan-500/20 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white text-cyan-400 transition-all duration-500 shadow-xl">
+                                <Link to="/katalog" className="group flex items-center gap-4 md:gap-6 bg-slate-50 hover:bg-slate-100 border border-slate-200/60 px-8 py-4 md:px-12 md:py-6 rounded-2xl md:rounded-[32px] transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm">
+                                    <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-slate-600 group-hover:text-cyan-600 transition-colors">LIHAT SEMUA PRODUK</span>
+                                    <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-cyan-500/10 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white text-cyan-600 transition-all duration-500 shadow-xl shadow-cyan-500/5">
                                         <ArrowRight size={18} className="md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
                                     </div>
                                 </Link>
@@ -535,7 +535,7 @@ const PublicPage = () => {
             </section >
 
             {/* FOOTER */}
-            < footer id="kontak" className="bg-white border-t border-slate-100 pt-20 pb-12 md:pt-40 md:pb-20 relative overflow-hidden" >
+            < footer id="kontak" className="bg-slate-50/50 border-t border-slate-200/60 pt-20 pb-12 md:pt-40 md:pb-20 relative overflow-hidden" >
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 md:gap-20 mb-16 md:mb-32">
                         <div className="col-span-1 lg:col-span-2">
@@ -603,7 +603,7 @@ const PublicPage = () => {
                                 </div>
                             </div>
 
-                            <div className="md:w-1/2 p-8 md:p-16 bg-white overflow-y-auto custom-scrollbar flex flex-col justify-center">
+                            <div className="md:w-1/2 p-8 md:p-16 bg-slate-50/30 overflow-y-auto custom-scrollbar flex flex-col justify-center">
                                 <h3 className="text-2xl md:text-4xl font-black text-slate-900 mb-2 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
 
                                 <div className="flex items-center gap-1 mb-6">

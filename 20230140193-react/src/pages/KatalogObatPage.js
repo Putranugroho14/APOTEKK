@@ -85,7 +85,7 @@ const KatalogObatPage = () => {
 
       <Particles count={50} opacity={0.2} speed={0.4} color="#06b6d4" />
 
-      <header className={`sticky top-0 z-[60] bg-white/80 border-b border-slate-100 shadow-xl backdrop-blur-md transition-all duration-300`}>
+      <header className={`sticky top-0 z-[60] bg-slate-50/80 border-b border-slate-200/60 shadow-xl backdrop-blur-md transition-all duration-300`}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center gap-4 group">
             <div className="w-10 h-10 bg-white rounded-xl shadow-lg flex items-center justify-center p-2 border border-slate-100 group-hover:rotate-6 transition-transform shadow-cyan-500/5">
@@ -122,25 +122,25 @@ const KatalogObatPage = () => {
           </div>
 
           {/* SEARCH & FILTERS */}
-          <div className="bg-white/80 backdrop-blur-xl p-8 rounded-[40px] border border-slate-100 shadow-premium mb-16 flex flex-col md:flex-row gap-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="bg-slate-100/40 backdrop-blur-xl p-6 md:p-8 rounded-[40px] border border-slate-200/60 shadow-premium mb-16 flex flex-col lg:flex-row gap-6 md:gap-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="flex-1 relative">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 focus-within:text-cyan-500 transition-colors" size={20} />
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 focus-within:text-cyan-600 transition-colors" size={20} />
               <input
                 type="text" placeholder="Cari nama obat (contoh: Paracetamol, Vitamin...)"
                 value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-16 pr-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500/30 transition-all font-bold text-sm text-slate-800 placeholder:text-slate-400"
               />
             </div>
-            <div className="flex gap-4">
+            <div className="grid grid-cols-2 lg:flex gap-4">
               <select
                 value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[10px] uppercase tracking-widest text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none pr-12 relative"
+                className="w-full lg:w-auto px-6 md:px-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none pr-12 relative"
               >
                 {categories.map(c => <option key={c} value={c} className="bg-white text-slate-900">{c}</option>)}
               </select>
               <select
                 value={sortBy} onChange={(e) => setSortBy(e.target.value)}
-                className="px-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[10px] uppercase tracking-widest text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none pr-12 relative"
+                className="w-full lg:w-auto px-6 md:px-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none pr-12 relative"
               >
                 <option value="nama" className="bg-white text-slate-900">Urut Nama</option>
                 <option value="harga-asc" className="bg-white text-slate-900">Termurah</option>
@@ -181,7 +181,7 @@ const KatalogObatPage = () => {
 
                     <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto w-full">
                       <div className="text-left">
-                        <p className="text-[6px] md:text-[7px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
+                        <p className="text-[6px] md:text-[7px] font-black text-slate-500 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
                         <p className="text-xs md:text-lg font-black text-cyan-600 tracking-tighter leading-none">Rp{Math.floor(obat.harga).toLocaleString()}</p>
                       </div>
                       <button onClick={() => addToCart(obat)} className="w-7 h-7 md:w-9 md:h-9 bg-slate-50 text-cyan-600 border border-slate-100 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:rotate-6 active:scale-95 transition-all">
@@ -299,12 +299,12 @@ const KatalogObatPage = () => {
 
               <div className="flex flex-row gap-4 md:gap-6 mb-8">
                 <div className="bg-slate-50 p-5 md:p-6 rounded-[24px] border border-slate-100 flex-1 flex flex-row items-center justify-between min-w-0">
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Harga Unit</p>
-                  <p className="text-base md:text-xl font-black text-[#0097b2] tracking-tighter">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+                  <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Harga Unit</p>
+                  <p className="text-base md:text-xl font-black text-cyan-600 tracking-tighter">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                 </div>
                 <div className="bg-slate-50 p-5 md:p-6 rounded-[24px] border border-slate-100 flex-1 flex flex-row items-center justify-between min-w-0">
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Sedia Stok</p>
-                  <p className="text-base md:text-xl font-black text-slate-800 tracking-tighter">{selectedProduct.stok} <span className="text-[10px] text-slate-400 uppercase">Unit</span></p>
+                  <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Sedia Stok</p>
+                  <p className="text-base md:text-xl font-black text-slate-800 tracking-tighter">{selectedProduct.stok} <span className="text-[10px] text-slate-500 uppercase">Unit</span></p>
                 </div>
               </div>
 
