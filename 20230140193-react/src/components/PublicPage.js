@@ -156,17 +156,17 @@ const PublicPage = () => {
             <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none"></div>
 
             {/* NAV BAR */}
-            <header className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-500 ${scrolled ? 'py-5 bg-slate-900/90 backdrop-blur-2xl border-b border-white/5 shadow-2xl' : 'py-10 bg-transparent'}`}>
+            <header className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-500 ${scrolled ? 'py-3 md:py-4 bg-slate-900/90 backdrop-blur-2xl border-b border-white/5 shadow-2xl' : 'py-4 md:py-8 bg-transparent'}`}>
                 <div className="container mx-auto px-6 flex justify-between items-center">
-                    <div className="flex items-center gap-3 md:gap-6 group cursor-pointer" onClick={scrollToTop}>
-                        <div className={`transition-all duration-500 ${scrolled ? 'w-10 h-10' : 'w-12 h-12 md:w-16 h-16'} bg-white rounded-xl md:rounded-2xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-50 group-hover:rotate-6`}>
+                    <div className="flex items-center gap-3 md:gap-5 group cursor-pointer" onClick={scrollToTop}>
+                        <div className={`transition-all duration-500 ${scrolled ? 'w-8 h-8 md:w-10 h-10' : 'w-10 h-10 md:w-14 h-14'} bg-white rounded-xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-50 group-hover:rotate-6`}>
                             <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
                         </div>
                         <div>
-                            <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-lg md:text-2xl' : 'text-xl md:text-4xl'} text-white`}>
+                            <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-base md:text-2xl' : 'text-lg md:text-4xl'} text-white`}>
                                 APOTEK <span className="text-cyan-400">HADINATA</span>
                             </h1>
-                            <p className={`text-[9px] md:text-[11px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.5em] mt-1 md:mt-2 transition-all duration-500 ${scrolled ? 'opacity-0 h-0' : 'opacity-100'}`}>The Standard of Care</p>
+                            <p className={`text-[8px] md:text-[11px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.5em] mt-1 transition-all duration-500 ${scrolled ? 'opacity-0 h-0 hidden' : 'opacity-100'}`}>The Standard of Care</p>
                         </div>
                     </div>
 
@@ -203,9 +203,9 @@ const PublicPage = () => {
                 </div>
 
                 {/* MOBILE MENU DRAWER */}
-                <div className={`fixed inset-0 z-[80] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-md" onClick={() => setIsMenuOpen(false)}></div>
-                    <div className={`absolute top-0 right-0 w-[80%] h-full bg-slate-900 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-12 flex flex-col`}>
+                <div className={`fixed inset-0 z-[100] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                    <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)}></div>
+                    <div className={`absolute top-0 right-0 w-[75%] h-full bg-slate-900 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-10 flex flex-col z-[101]`}>
                         <div className="flex justify-between items-center mb-16">
                             <h2 className="text-xl font-black tracking-tighter text-white">MENU</h2>
                             <button onClick={() => setIsMenuOpen(false)} className="text-white"><X size={32} /></button>
@@ -229,40 +229,40 @@ const PublicPage = () => {
             </header>
 
             {/* HERO SECTION */}
-            <section id="beranda" className="relative h-screen overflow-hidden flex items-center">
+            <section id="beranda" className="relative h-[80vh] md:h-screen overflow-hidden flex items-center pt-20 md:pt-0">
                 <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow"></div>
-                <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '-3s' }}></div>
+                <div className="absolute bottom-[-10%] left-[10%] w-[60%] h-[60%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '-3s' }}></div>
 
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="max-w-4xl">
-                        <div className="relative h-[320px] md:h-[400px]">
+                        <div className="relative h-[220px] md:h-[400px]">
                             {missionSlides.map((slide, idx) => (
                                 <div
                                     key={idx}
                                     className={`absolute top-0 left-0 w-full transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] transform
                                         ${idx === currentMissionSlide ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
                                 >
-                                    <h2 className="text-3xl md:text-8xl font-black text-white leading-[1] md:leading-[0.9] mb-6 md:mb-8 tracking-tighter">
+                                    <h2 className="text-2xl md:text-8xl font-black text-white leading-[1.1] md:leading-[0.9] mb-4 md:mb-8 tracking-tighter">
                                         {slide.title} <br />
                                         <span className={`bg-gradient-to-r ${slide.accent} bg-clip-text text-transparent`}>
                                             {slide.subtitle}
                                         </span>
                                     </h2>
-                                    <p className="text-slate-400 text-sm md:text-xl max-w-2xl font-medium leading-relaxed">
+                                    <p className="text-slate-400 text-xs md:text-xl max-w-2xl font-medium leading-relaxed">
                                         {slide.content}
                                     </p>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="flex flex-wrap gap-6 mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                            <button onClick={() => scrollTo('produk')} className="px-12 py-5 premium-gradient text-white font-black rounded-2xl shadow-2xl shadow-cyan-900/40 hover:scale-105 active:scale-95 transition-all text-[11px] tracking-[0.2em] uppercase group">
-                                <span className="flex items-center gap-3">
-                                    Cari Produk <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                        <div className="flex flex-wrap gap-4 md:gap-6 mt-12 md:mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                            <button onClick={() => scrollTo('produk')} className="flex-1 md:flex-none px-8 md:px-12 py-4 md:py-5 premium-gradient text-white font-black rounded-2xl shadow-2xl shadow-cyan-900/40 hover:scale-105 active:scale-95 transition-all text-[10px] md:text-[11px] tracking-[0.2em] uppercase group">
+                                <span className="flex items-center gap-3 justify-center">
+                                    Cari Produk <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
                                 </span>
                             </button>
-                            <Link to="/unggah-resep" className="px-12 py-5 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black rounded-2xl hover:bg-white/20 transition-all text-[11px] tracking-[0.2em] uppercase">
-                                Kirim Resep Dokter
+                            <Link to="/unggah-resep" className="flex-1 md:flex-none px-8 md:px-12 py-4 md:py-5 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black rounded-2xl hover:bg-white/20 transition-all text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-center">
+                                Kirim Resep
                             </Link>
                         </div>
                     </div>
@@ -285,37 +285,34 @@ const PublicPage = () => {
             </section>
 
             {/* TRUST BAR */}
-            <section className="bg-white/5 backdrop-blur-md py-12 border-y border-white/5 relative z-10">
+            <section className="bg-white/5 backdrop-blur-md py-6 md:py-12 border-y border-white/5 relative z-10">
                 <div className="container mx-auto px-6">
-                    <div className="flex flex-wrap justify-between items-center gap-12 opacity-80 group hover:opacity-100 transition-all duration-700">
-                        <div className="flex items-center gap-3 font-black text-xl tracking-tighter text-white">
-                            <ShieldCheck size={32} className="text-cyan-400" /> DISTRIBUTOR RESMI
+                    <div className="flex flex-wrap justify-center md:justify-between items-center gap-6 md:gap-12 opacity-80 group hover:opacity-100 transition-all duration-700">
+                        <div className="flex items-center gap-2 md:gap-3 font-black text-sm md:text-xl tracking-tighter text-white">
+                            <ShieldCheck size={20} className="text-cyan-400 md:w-8 md:h-8" /> DISTRIBUTOR RESMI
                         </div>
-                        <div className="flex items-center gap-3 font-black text-xl tracking-tighter text-white">
-                            <Award size={32} className="text-lime-400" /> APOTEKER BERLISENSI
+                        <div className="flex items-center gap-2 md:gap-3 font-black text-sm md:text-xl tracking-tighter text-white">
+                            <Award size={20} className="text-lime-400 md:w-8 md:h-8" /> APOTEKER BERLISENSI
                         </div>
-                        <div className="flex items-center gap-3 font-black text-xl tracking-tighter text-white">
-                            <CheckCircle size={32} className="text-cyan-400" /> 100% PRODUK ASLI
-                        </div>
-                        <div className="flex items-center gap-3 font-black text-xl tracking-tighter text-white">
-                            <Zap size={32} className="text-lime-400" /> PENGIRIMAN INSTAN
+                        <div className="flex items-center gap-2 md:gap-3 font-black text-sm md:text-xl tracking-tighter text-white">
+                            <CheckCircle size={20} className="text-cyan-400 md:w-8 md:h-8" /> 100% PRODUK ASLI
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* CATALOG */}
-            <section id="produk" className="py-40 relative overflow-hidden">
+            <section id="produk" className="py-20 md:py-40 relative overflow-hidden">
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
                         <div className="max-w-3xl transform transition-all duration-1000">
-                            <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-cyan-400 text-xs font-black uppercase tracking-[0.3em] mb-10 shadow-sm">
-                                <Package size={18} /> Pharma Catalog
+                            <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-cyan-400 text-[10px] md:text-xs font-black uppercase tracking-[0.3em] mb-6 md:mb-10 shadow-sm">
+                                <Package size={16} /> APOTEK HADINATA
                             </div>
-                            <h2 className="text-4xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-8">
-                                Solusi <span className="text-cyan-400">Terpercaya</span> <br />Untuk Anda & Keluarga.
+                            <h2 className="text-3xl md:text-8xl font-black text-white tracking-tighter leading-[1] md:leading-[0.85] mb-6 md:mb-8">
+                                Solusi <span className="text-cyan-400">Terpercaya</span> <br className="hidden md:block" />Untuk Anda.
                             </h2>
-                            <p className="text-slate-400 font-medium text-xl md:text-2xl leading-relaxed max-w-2xl">Pilih kategori obat yang Anda butuhkan dengan jaminan keaslian 100%.</p>
+                            <p className="text-slate-400 font-medium text-sm md:text-2xl leading-relaxed max-w-2xl">Kesehatan keluarga Anda adalah prioritas kami dengan jaminan keaslian 100%.</p>
                         </div>
                         <Link to="/semua-obat" className="font-black text-sm uppercase tracking-[0.4em] text-slate-400 hover:text-white transition-all flex items-center gap-6 group mb-4">
                             Lihat Semua <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cyan-50 group-hover:text-white transition-all active:scale-90"><ArrowRight size={24} /></div>
@@ -372,11 +369,7 @@ const PublicPage = () => {
                                                         {obat.kategori}
                                                     </span>
                                                 </div>
-                                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                                                    <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-slate-900 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 shadow-2xl">
-                                                        <Zap size={24} />
-                                                    </div>
-                                                </div>
+                                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                             </div>
                                             <h4 className="font-black text-white text-xl mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 {obat.nama_obat}
@@ -426,78 +419,73 @@ const PublicPage = () => {
             </section>
 
             {/* CTA SECTION */}
-            <section id="layanan" className="py-40 relative overflow-hidden">
+            <section id="layanan" className="py-20 md:py-40 relative overflow-hidden">
                 <div className="absolute inset-0 bg-mesh opacity-40"></div>
                 <div className="absolute inset-0 bg-dot-pattern opacity-10"></div>
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-lime-500/10 rounded-full blur-[180px] animate-pulse-glow"></div>
 
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="max-w-5xl mx-auto glass-card-dark bg-slate-900/40 border-white/10 p-10 md:p-20 text-center shadow-[0_60px_120px_-20px_rgba(0,0,0,0.8)] rounded-[60px]">
-                        <div className="w-16 h-16 bg-gradient-to-br from-lime-400 to-lime-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-lime-500/30 transform hover:rotate-12 transition-transform duration-500">
-                            <FileText size={32} />
+                    <div className="max-w-5xl mx-auto glass-card-dark bg-slate-900/40 border-white/10 p-8 md:p-20 text-center shadow-[0_60px_120px_-20px_rgba(0,0,0,0.8)] rounded-[40px] md:rounded-[60px]">
+                        <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-lime-400 to-lime-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-lime-500/30 transform hover:rotate-12 transition-transform duration-500">
+                            <FileText size={28} />
                         </div>
-                        <h2 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-8">
-                            Penebusan Resep <br /><span className="bg-gradient-to-r from-lime-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">Lebih Mudah & Cepat.</span>
+                        <h2 className="text-2xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-6 md:mb-8">
+                            Penebusan Resep <br /><span className="bg-gradient-to-r from-lime-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">Lebih Praktis.</span>
                         </h2>
-                        <p className="text-slate-400 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-12 italic">
-                            Foto resep dokter Anda, kirim secara online, dan dapatkan konfirmasi instan dari tim apoteker profesional kami.
+                        <p className="text-slate-400 text-sm md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-10 italic">
+                            Foto resep Anda, kirim online, dan terima obat di rumah.
                         </p>
-                        <div className="flex flex-col md:flex-row justify-center gap-6">
-                            <Link to="/unggah-resep" className="px-10 py-5 bg-white text-slate-900 font-black rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:bg-lime-400 hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-black/40 group">
-                                <span className="flex items-center gap-3 justify-center">
-                                    Mulai Kirim Resep <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-                                </span>
+                        <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-6">
+                            <Link to="/unggah-resep" className="px-10 py-5 bg-white text-slate-900 font-black rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:bg-lime-400 transition-all shadow-2xl group text-center">
+                                Mulai Kirim Resep
                             </Link>
-                            <a href="https://wa.me/628981335197" className="px-10 py-5 bg-white/5 text-white font-black rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:bg-white/10 transition-all border border-white/10 flex items-center justify-center gap-4">
-                                <Phone size={18} className="text-lime-400" /> Konsultasi Gratis
-                            </a>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* SERVICES */}
-            <section className="py-40 relative overflow-hidden">
+            <section className="py-20 md:py-40 relative overflow-hidden">
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
-                        <div className="text-center group p-12 glass-card-dark rounded-[50px] border-white/5 shadow-xl hover-lift">
-                            <div className="w-24 h-24 bg-cyan-500/10 rounded-[40px] flex items-center justify-center mx-auto mb-10 text-cyan-400 transition-all duration-700 group-hover:rotate-12 group-hover:scale-110 shadow-inner">
-                                <Truck size={40} strokeWidth={2.5} />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20">
+                        <div className="text-center group p-8 md:p-12 glass-card-dark rounded-[40px] md:rounded-[50px] border-white/5 shadow-xl">
+                            <div className="w-16 h-16 md:w-24 md:h-24 bg-cyan-500/10 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-cyan-400 transition-all duration-700 shadow-inner">
+                                <Truck size={32} className="md:w-10 md:h-10" />
                             </div>
-                            <h3 className="text-2xl font-black text-white mb-4 tracking-tight">Kurir Prioritas</h3>
-                            <p className="text-slate-400 font-medium leading-relaxed italic">Kami menjamin obat sampai di tangan Anda dalam waktu kurang dari 60 menit untuk area lokal.</p>
+                            <h3 className="text-xl md:text-2xl font-black text-white mb-4 tracking-tight">Kurir Prioritas</h3>
+                            <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed italic">Pengiriman cepat di bawah 60 menit.</p>
                         </div>
-                        <div className="text-center group p-12 glass-card-dark rounded-[50px] border-white/5 shadow-xl hover-lift">
-                            <div className="w-24 h-24 bg-lime-500/10 rounded-[40px] flex items-center justify-center mx-auto mb-10 text-lime-400 transition-all duration-700 group-hover:rotate-12 group-hover:scale-110 shadow-inner">
-                                <ShieldCheck size={40} strokeWidth={2.5} />
+                        <div className="text-center group p-8 md:p-12 glass-card-dark rounded-[40px] md:rounded-[50px] border-white/5 shadow-xl">
+                            <div className="w-16 h-16 md:w-24 md:h-24 bg-lime-500/10 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-lime-400 transition-all duration-700 shadow-inner">
+                                <ShieldCheck size={32} className="md:w-10 md:h-10" />
                             </div>
-                            <h3 className="text-2xl font-black text-white mb-4 tracking-tight">Jaminan Kualitas</h3>
-                            <p className="text-slate-400 font-medium leading-relaxed italic">Seluruh produk memiliki izin BPOM dan bersumber dari distributor utama yang resmi.</p>
+                            <h3 className="text-xl md:text-2xl font-black text-white mb-4 tracking-tight">Kualitas Terjamin</h3>
+                            <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed italic">Produk asli dengan izin resmi BPOM.</p>
                         </div>
-                        <div className="text-center group p-12 glass-card-dark rounded-[50px] border-white/5 shadow-xl hover-lift">
-                            <div className="w-24 h-24 bg-white/5 rounded-[40px] flex items-center justify-center mx-auto mb-10 text-white transition-all duration-700 group-hover:rotate-12 group-hover:scale-110 shadow-inner">
-                                <Headphones size={40} strokeWidth={2.5} />
+                        <div className="text-center group p-8 md:p-12 glass-card-dark rounded-[40px] md:rounded-[50px] border-white/5 shadow-xl">
+                            <div className="w-16 h-16 md:w-24 md:h-24 bg-white/5 rounded-2xl md:rounded-[40px] flex items-center justify-center mx-auto mb-6 md:mb-10 text-white transition-all duration-700 shadow-inner">
+                                <Headphones size={32} className="md:w-10 md:h-10" />
                             </div>
-                            <h3 className="text-2xl font-black text-white mb-4 tracking-tight">Apoteker 24/7</h3>
-                            <p className="text-slate-400 font-medium leading-relaxed italic">Pertanyaan seputar kesehatan dan aturan pakai obat dapat didiskusikan setiap saat via chat.</p>
+                            <h3 className="text-xl md:text-2xl font-black text-white mb-4 tracking-tight">Layanan 24/7</h3>
+                            <p className="text-slate-400 text-sm md:text-base font-medium leading-relaxed italic">Siap melayani konsultasi obat kapan saja.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* FOOTER */}
-            <footer id="kontak" className="bg-slate-950 text-white pt-40 pb-20 relative overflow-hidden">
+            <footer id="kontak" className="bg-slate-950 text-white pt-20 pb-12 md:pt-40 md:pb-20 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-600 via-lime-400 to-cyan-600"></div>
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-20 mb-32">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 md:gap-20 mb-16 md:mb-32">
                         <div className="col-span-1 lg:col-span-2">
-                            <div className="flex items-center gap-6 mb-12">
-                                <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center p-3 shadow-2xl">
+                            <div className="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center p-2 shadow-2xl">
                                     <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" />
                                 </div>
                                 <div>
-                                    <h2 className="text-3xl font-black tracking-tighter">APOTEK <span className="text-cyan-500">HADINATA</span></h2>
-                                    <p className="text-xs font-bold text-slate-500 uppercase tracking-[0.4em] mt-2">The Standard of Care</p>
+                                    <h2 className="text-2xl md:text-3xl font-black tracking-tighter">APOTEK <span className="text-cyan-500">HADINATA</span></h2>
+                                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em] mt-1">The Standard of Care</p>
                                 </div>
                             </div>
                             <p className="text-slate-500 font-bold leading-loose text-lg max-w-xl mb-12 italic">
