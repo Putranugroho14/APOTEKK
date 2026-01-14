@@ -102,6 +102,7 @@ exports.getObatById = async (req, res) => {
 exports.updateObat = async (req, res) => {
   console.log("REQ.BODY:", JSON.stringify(req.body, null, 2));
   console.log("REQ.PARAMS:", JSON.stringify(req.params, null, 2));
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.error("SERVER-SIDE-DEBUG: Validation failed.");
     return res.status(400).json({
