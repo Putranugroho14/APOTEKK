@@ -98,7 +98,7 @@ const UnggahResep = () => {
                         {/* LEFT CONTENT: INFO */}
                         <div className="animate-fade-in">
                             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-cyan-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8">
-                                <ShieldCheck size={14} /> Official Pharmacy Service
+                                <Package size={14} /> APOTEK HADINATA
                             </div>
                             <h2 className="text-4xl md:text-6xl font-black text-white leading-tight mb-8 tracking-tighter">
                                 Layanan <span className="text-gradient">Resep Digital</span> Terpercaya.
@@ -194,9 +194,9 @@ const UnggahResep = () => {
             <footer className="bg-slate-900/40 border-t border-white/5 py-20 relative z-10">
                 <div className="container mx-auto px-6 text-center">
                     <div className="flex justify-center gap-10 mb-10">
-                        <Instagram className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125" size={24} />
-                        <Facebook className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125" size={24} />
-                        <Phone className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125" size={24} />
+                        <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"><Instagram size={24} /></a>
+                        <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"><Facebook size={24} /></a>
+                        <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"><Phone size={24} /></a>
                     </div>
                     <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em]">© 2026 APOTEK HADINATA • SECURE TELEPHARMACY SYSTEM</p>
                 </div>

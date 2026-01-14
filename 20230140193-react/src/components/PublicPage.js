@@ -211,19 +211,29 @@ const PublicPage = () => {
                         </div>
                         <nav className="flex flex-col gap-8">
                             {[
-                                { name: 'Beranda', path: '/' },
+                                { name: 'Beranda', path: '/', scrollId: 'beranda' },
                                 { name: 'Katalog', path: '/katalog' },
                                 { name: 'Unggah Resep', path: '/unggah-resep' },
-                                { name: 'Kontak', path: '/#kontak' }
+                                { name: 'Kontak', path: '/#kontak', scrollId: 'kontak' }
                             ].map((item) => (
-                                <Link
-                                    key={item.name}
-                                    to={item.path}
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="text-2xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all"
-                                >
-                                    {item.name}
-                                </Link>
+                                item.scrollId ? (
+                                    <button
+                                        key={item.name}
+                                        onClick={() => scrollTo(item.scrollId)}
+                                        className="text-left text-2xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all"
+                                    >
+                                        {item.name}
+                                    </button>
+                                ) : (
+                                    <Link
+                                        key={item.name}
+                                        to={item.path}
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-2xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                )
                             ))}
                         </nav>
                         <div className="mt-auto pt-10 border-t border-white/5 uppercase text-[8px] font-black tracking-[0.4em] text-slate-700">
@@ -500,9 +510,9 @@ const PublicPage = () => {
                                 "Membangun akses kesehatan digital yang lebih manusiawi, cepat, dan terpercaya untuk seluruh lapisan masyarakat."
                             </p>
                             <div className="flex gap-6">
-                                <a href="#" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-cyan-600 hover:-translate-y-2 transition-all duration-500"><Instagram size={24} /></a>
-                                <a href="#" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-blue-600 hover:-translate-y-2 transition-all duration-500"><Facebook size={24} /></a>
-                                <a href="#" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:-translate-y-2 transition-all duration-500"><Phone size={24} /></a>
+                                <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-cyan-600 hover:-translate-y-2 transition-all duration-500"><Instagram size={24} /></a>
+                                <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-blue-600 hover:-translate-y-2 transition-all duration-500"><Facebook size={24} /></a>
+                                <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:-translate-y-2 transition-all duration-500"><Phone size={24} /></a>
                             </div>
                         </div>
                         <div>
@@ -542,7 +552,7 @@ const PublicPage = () => {
                         <div className="md:w-1/2 relative h-48 sm:h-64 md:h-auto overflow-hidden">
                             <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover" alt={selectedProduct.nama_obat} />
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
-                            <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10"><span className="bg-cyan-600 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl">Official Stock</span></div>
+                            <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10"><span className="bg-cyan-600 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl">APOTEK HADINATA</span></div>
                         </div>
                         <div className="md:w-1/2 p-6 sm:p-8 md:p-20 overflow-y-auto bg-slate-50/30">
                             <div className="mb-8 md:mb-12">
@@ -615,7 +625,7 @@ const PublicPage = () => {
                                     <p className="text-slate-400 font-black text-[7px] md:text-[11px] uppercase tracking-[0.3em]">Total Bayar</p>
                                     <p className="text-lg md:text-5xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
                                 </div>
-                                <a href={`https://wa.me/628981335197?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-4 md:py-8 premium-gradient text-white text-center font-black rounded-xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all text-[10px] md:text-xs uppercase tracking-[0.4em]">Bayar Via WhatsApp</a>
+                                <a href={`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-4 md:py-8 premium-gradient text-white text-center font-black rounded-xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all text-[10px] md:text-xs uppercase tracking-[0.4em]">Bayar Via WhatsApp</a>
                             </div>
                         )}
                     </div>
@@ -631,7 +641,7 @@ const PublicPage = () => {
                             <div className="absolute inset-0 bg-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </button>
                     )}
-                    <a href={`https://wa.me/628981335197?text=Halo Apotek Hadinata, saya ingin konsultasi`} target="_blank" rel="noreferrer" className="w-14 h-14 md:w-20 md:h-20 bg-lime-500 text-white rounded-[24px] md:rounded-[32px] shadow-[0_20px_40px_-10px_rgba(132,204,22,0.4)] flex items-center justify-center hover:scale-110 hover:rotate-6 active:scale-95 transition-all group relative overflow-hidden">
+                    <a href={`https://wa.me/6281390807472?text=Halo Apotek Hadinata, saya ingin konsultasi`} target="_blank" rel="noreferrer" className="w-14 h-14 md:w-20 md:h-20 bg-lime-500 text-white rounded-[24px] md:rounded-[32px] shadow-[0_20px_40px_-10px_rgba(132,204,22,0.4)] flex items-center justify-center hover:scale-110 hover:rotate-6 active:scale-95 transition-all group relative overflow-hidden">
                         <Phone size={24} className="md:w-8 md:h-8" /><div className="absolute top-0 left-[-100%] w-full h-full bg-white/30 skew-x-[45deg] group-hover:animate-shine"></div>
                     </a>
                 </div>

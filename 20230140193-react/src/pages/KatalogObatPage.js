@@ -240,7 +240,7 @@ const KatalogObatPage = () => {
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Harga</p>
                   <p className="text-4xl font-black text-cyan-400">Rp{getTotalPrice().toLocaleString()}</p>
                 </div>
-                <a href={`https://wa.me/628981335197?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-8 premium-gradient text-white text-center font-black rounded-3xl text-xs uppercase tracking-[0.4em] shadow-xl shadow-cyan-500/20">Pesan Via WhatsApp</a>
+                <a href={`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-8 premium-gradient text-white text-center font-black rounded-3xl text-xs uppercase tracking-[0.4em] shadow-xl shadow-cyan-500/20">Pesan Via WhatsApp</a>
               </div>
             )}
           </div>
