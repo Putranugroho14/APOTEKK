@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     gambar_url: DataTypes.STRING,
     kategori: DataTypes.STRING,
     authorId: DataTypes.INTEGER,
-    is_published: DataTypes.BOOLEAN
+    is_published: DataTypes.BOOLEAN,
+    rating: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'Obat',

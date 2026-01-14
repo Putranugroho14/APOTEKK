@@ -25,7 +25,8 @@ exports.createObat = async (req, res) => {
       harga,
       gambar_url, // Bisa dari input manual
       kategori,
-      is_published
+      is_published,
+      rating
     } = req.body;
 
     let finalGambarUrl = gambar_url;
@@ -41,7 +42,8 @@ exports.createObat = async (req, res) => {
       gambar_url: finalGambarUrl,
       kategori,
       authorId,
-      is_published: is_published === 'true' || is_published === true // Handle string "true" from FormData
+      is_published: is_published === 'true' || is_published === true, // Handle string "true" from FormData
+      rating: parseFloat(rating) || 4.5
     };
 
     const newObat = await Obat.create(createPayload);
@@ -71,7 +73,8 @@ exports.updateObat = async (req, res) => {
       harga,
       gambar_url,
       kategori,
-      is_published
+      is_published,
+      rating
     } = req.body;
 
     let finalGambarUrl = gambar_url || obat.gambar_url; // Default to existing if not provided
@@ -86,7 +89,8 @@ exports.updateObat = async (req, res) => {
       harga,
       gambar_url: finalGambarUrl,
       kategori,
-      is_published: is_published === 'true' || is_published === true
+      is_published: is_published === 'true' || is_published === true,
+      rating: parseFloat(rating) || 4.5
     });
 
     res.json({ message: "Data obat berhasil diperbarui", data: obat });

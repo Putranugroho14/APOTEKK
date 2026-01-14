@@ -87,6 +87,7 @@ const ObatPage = () => {
             data.append("harga", formData.harga);
             data.append("kategori", formData.kategori);
             data.append("is_published", formData.is_published);
+            data.append("rating", formData.rating || 4.5);
 
             if (formData.gambar_file) {
                 data.append("gambar", formData.gambar_file);
@@ -365,6 +366,14 @@ const ObatPage = () => {
                                 </div>
                             </div>
                             <div className="space-y-3">
+                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Rating Produk (1.0 - 5.0)</label>
+                                <input
+                                    type="number" step="0.1" min="1" max="5" value={formData.rating || 4.5}
+                                    onChange={e => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
+                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
+                                />
+                            </div>
+                            <div className="space-y-3">
                                 <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Foto Produk</label>
                                 <div className="space-y-4">
                                     <div className="relative group">
@@ -406,9 +415,9 @@ const ObatPage = () => {
                             </button>
                         </form>
                     </div>
-                </div>
+                </div >
             )}
-        </div>
+        </div >
     );
 };
 

@@ -209,12 +209,12 @@ const KatalogObatPage = () => {
                 <h3 className="text-3xl font-black tracking-tight mb-2 text-white">Keranjang</h3>
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{getTotalItems()} Item terpilih</p>
               </div>
-              <button onClick={() => setShowCart(false)} className="w-14 h-14 bg-white/5 text-white border border-white/10 rounded-3xl flex items-center justify-center hover:bg-red-500/20 transition shadow-xl"><X size={24} /></button>
+              <button onClick={() => setShowCart(false)} className="w-14 h-14 bg-white/5 text-white border border-white/10 rounded-3xl flex items-center justify-center hover:bg-red-500 hover:text-white transition shadow-xl"><X size={24} /></button>
             </div>
             <div className="flex-1 overflow-y-auto p-12 space-y-8">
               {cart.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center">
-                  <ShoppingBag size={50} className="text-slate-800 mb-8" />
+                  <ShoppingBag size={50} className="text-slate-600 mb-8" />
                   <p className="text-slate-500 font-bold italic">Belum ada item terpilih.</p>
                 </div>
               ) : (
@@ -252,14 +252,15 @@ const KatalogObatPage = () => {
 
       {selectedProduct && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in" onClick={() => setSelectedProduct(null)}>
-          <div className="glass-card-dark w-full max-w-4xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[95vh] relative border border-white/10" onClick={e => e.stopPropagation()}>
+          <div className="glass-card-dark w-full max-w-6xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto max-h-[90vh] relative border border-white/10" onClick={e => e.stopPropagation()}>
             <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-10 h-10 md:w-12 md:h-12 bg-white/10 text-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-xl hover:rotate-90 transition-all border border-white/10 z-20"><X size={20} className="md:w-6 md:h-6" /></button>
-            <div className="md:w-1/2 h-48 sm:h-64 md:h-auto border-r border-white/5 overflow-hidden">
+            <div className="md:w-1/2 h-64 md:h-auto border-r border-white/5 overflow-hidden bg-slate-900 relative">
               <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"></div>
             </div>
-            <div className="md:w-1/2 p-8 md:p-16 overflow-y-auto">
-              <h3 className="text-2xl md:text-4xl font-black text-white mb-4 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
-              <div className="flex gap-1 mb-6 md:mb-8">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} className="fill-amber-400 text-amber-400 md:w-3.5 md:h-3.5" />)}</div>
+            <div className="md:w-1/2 p-8 md:p-14 overflow-y-auto custom-scrollbar">
+              <div className="flex gap-1 mb-4 md:mb-6">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} className={`${s <= (selectedProduct.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-5 md:h-5`} />)}</div>
+              <h3 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
               <p className="text-slate-400 text-sm md:text-lg font-medium leading-relaxed italic mb-8 md:mb-12 border-l-4 border-cyan-500 pl-6 md:pl-8">{selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi.'}</p>
               <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
                 <div className="bg-white/5 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-white/5">
