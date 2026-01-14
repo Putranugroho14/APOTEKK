@@ -63,7 +63,10 @@ const ResepReport = () => {
 
     const handleUpdateStatus = async (id, status) => {
         try {
-            await axios.patch(`${API_BASE_URL}/api/resep/status/${id}`, { status });
+            const token = localStorage.getItem('token');
+            await axios.patch(`${API_BASE_URL}/api/resep/status/${id}`, { status }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
             fetchReseps();
         } catch (err) { alert("Gagal memperbarui status"); }
     };
@@ -71,7 +74,10 @@ const ResepReport = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Hapus data resep ini?")) {
             try {
-                await axios.delete(`${API_BASE_URL}/api/resep/${id}`);
+                const token = localStorage.getItem('token');
+                await axios.delete(`${API_BASE_URL}/api/resep/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
                 fetchReseps();
             } catch (err) { alert("Gagal menghapus data"); }
         }
