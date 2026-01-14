@@ -263,13 +263,13 @@ const PublicPage = () => {
             </header>
 
             {/* HERO SECTION */}
-            <section id="beranda" className="relative h-screen overflow-hidden flex items-center pt-40 md:pt-48">
+            <section id="beranda" className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40">
                 <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow"></div>
                 <div className="absolute bottom-[-10%] left-[10%] w-[60%] h-[60%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '-3s' }}></div>
 
-                <div className="container mx-auto px-6 relative z-10 flex flex-col justify-center">
+                <div className="container mx-auto px-6 relative z-10 flex flex-col justify-center py-20 md:py-32">
                     <div className="max-w-5xl">
-                        <div className="relative h-[280px] md:h-[450px]">
+                        <div className="relative h-[200px] md:h-[350px]">
                             {missionSlides.map((slide, idx) => (
                                 <div
                                     key={idx}
@@ -289,16 +289,16 @@ const PublicPage = () => {
                             ))}
                         </div>
 
-                        <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-12 md:mt-20 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                        <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-8 md:mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                             <button
                                 onClick={() => scrollTo('produk')}
-                                className="w-full sm:w-auto px-10 md:px-16 py-6 liquid-glass-accent text-white font-black rounded-[32px] shadow-[0_0_50px_-10px_rgba(6,182,212,0.5)] hover:scale-105 active:scale-95 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase group flex items-center justify-center gap-4"
+                                className="w-full sm:w-auto px-10 md:px-16 py-5 liquid-glass-accent text-white font-black rounded-[32px] shadow-[0_0_50px_-10px_rgba(6,182,212,0.5)] hover:scale-105 active:scale-95 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase group flex items-center justify-center gap-4"
                             >
-                                Cari Produk <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform shadow-glow" />
+                                Cari Produk <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
                             </button>
                             <Link
                                 to="/unggah-resep"
-                                className="w-full sm:w-auto px-10 md:px-16 py-6 liquid-glass text-white font-black rounded-[32px] hover:bg-white/10 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase text-center flex items-center justify-center hover:scale-105 active:scale-95"
+                                className="w-full sm:w-auto px-10 md:px-16 py-5 liquid-glass text-white font-black rounded-[32px] hover:bg-white/10 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase text-center flex items-center justify-center hover:scale-105 active:scale-95"
                             >
                                 Kirim Resep
                             </Link>
@@ -690,7 +690,6 @@ const PublicPage = () => {
                 __html: `
                 @keyframes shine { 0% { transform: translateX(-100%) skewX(45deg); } 100% { transform: translateX(200%) skewX(45deg); } }
                 .animate-shine { animation: shine 1.5s infinite; }
-                .shadow-glow { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
                 .scrollbar-hide::-webkit-scrollbar { display: none; }
                 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
             ` }} />
