@@ -84,7 +84,7 @@ const PublicPage = () => {
     }, [obats, hasInitializedIndex]);
 
     useEffect(() => {
-        if (obats.length > 0) {
+        if (obats.length > 4) {
             const interval = setInterval(() => {
                 setProductSlideIndex((prev) => prev + 1);
             }, 5000);
@@ -201,6 +201,31 @@ const PublicPage = () => {
                         </button>
                     </div>
                 </div>
+
+                {/* MOBILE MENU DRAWER */}
+                <div className={`fixed inset-0 z-[80] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                    <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-md" onClick={() => setIsMenuOpen(false)}></div>
+                    <div className={`absolute top-0 right-0 w-[80%] h-full bg-slate-900 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-12 flex flex-col`}>
+                        <div className="flex justify-between items-center mb-16">
+                            <h2 className="text-xl font-black tracking-tighter text-white">MENU</h2>
+                            <button onClick={() => setIsMenuOpen(false)} className="text-white"><X size={32} /></button>
+                        </div>
+                        <nav className="flex flex-col gap-10">
+                            {['Beranda', 'Produk', 'Layanan', 'Kontak'].map((item) => (
+                                <button
+                                    key={item}
+                                    onClick={() => scrollTo(item.toLowerCase())}
+                                    className="text-2xl font-black uppercase tracking-[0.2em] text-left text-slate-400 hover:text-cyan-400 transition-all"
+                                >
+                                    {item}
+                                </button>
+                            ))}
+                        </nav>
+                        <div className="mt-auto pt-10 border-t border-white/5 uppercase text-[9px] font-black tracking-[0.5em] text-slate-500">
+                            Apotek Hadinata Hadir Untuk Anda
+                        </div>
+                    </div>
+                </div>
             </header>
 
             {/* HERO SECTION */}
@@ -217,7 +242,7 @@ const PublicPage = () => {
                                     className={`absolute top-0 left-0 w-full transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] transform
                                         ${idx === currentMissionSlide ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
                                 >
-                                    <h2 className="text-5xl md:text-8xl font-black text-white leading-[0.9] mb-8 tracking-tighter">
+                                    <h2 className="text-4xl md:text-8xl font-black text-white leading-[0.9] mb-8 tracking-tighter">
                                         {slide.title} <br />
                                         <span className={`bg-gradient-to-r ${slide.accent} bg-clip-text text-transparent`}>
                                             {slide.subtitle}
@@ -287,7 +312,7 @@ const PublicPage = () => {
                             <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-cyan-400 text-xs font-black uppercase tracking-[0.3em] mb-10 shadow-sm">
                                 <Package size={18} /> Pharma Catalog
                             </div>
-                            <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-8">
+                            <h2 className="text-4xl md:text-8xl font-black text-white tracking-tighter leading-[0.85] mb-8">
                                 Solusi <span className="text-cyan-400">Terpercaya</span> <br />Untuk Anda & Keluarga.
                             </h2>
                             <p className="text-slate-400 font-medium text-xl md:text-2xl leading-relaxed max-w-2xl">Pilih kategori obat yang Anda butuhkan dengan jaminan keaslian 100%.</p>
@@ -322,18 +347,18 @@ const PublicPage = () => {
                                 </button>
                             </div>
 
-                            <div className="overflow-visible lg:overflow-hidden px-4 -mx-4">
+                            <div className={`${obats.length > 4 ? 'overflow-visible lg:overflow-hidden' : ''} px-4 -mx-4`}>
                                 <div
                                     onTransitionEnd={handleTransitionEnd}
-                                    className={`flex gap-8 ${transitionEnabled ? 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]' : 'transition-none'}`}
-                                    style={{
+                                    className={`flex gap-8 ${obats.length > 4 ? (transitionEnabled ? 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]' : 'transition-none') : 'flex-wrap justify-center'}`}
+                                    style={obats.length > 4 ? {
                                         transform: `translateX(calc(-${productSlideIndex * 100}% / var(--visible-items, 1) - ${productSlideIndex * 2}rem))`
-                                    }}
+                                    } : {}}
                                 >
-                                    {[...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)].map((obat, idx) => (
+                                    {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className="min-w-full md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.333rem)] xl:min-w-[calc(25%-1.5rem)] shrink-0 group glass-card-dark rounded-[40px] p-6 border border-white/10 shadow-sm hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:-translate-y-4 flex flex-col"
+                                            className={`${obats.length > 4 ? 'min-w-full md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.333rem)] xl:min-w-[calc(25%-1.5rem)]' : 'w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[40px] p-6 border border-white/10 shadow-sm hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:-translate-y-4 flex flex-col`}
                                         >
                                             <div className="relative h-64 mb-8 overflow-hidden rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
@@ -411,7 +436,7 @@ const PublicPage = () => {
                         <div className="w-16 h-16 bg-gradient-to-br from-lime-400 to-lime-600 text-white rounded-2xl flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-lime-500/30 transform hover:rotate-12 transition-transform duration-500">
                             <FileText size={32} />
                         </div>
-                        <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-8">
+                        <h2 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-tight mb-8">
                             Penebusan Resep <br /><span className="bg-gradient-to-r from-lime-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent">Lebih Mudah & Cepat.</span>
                         </h2>
                         <p className="text-slate-400 text-lg md:text-xl font-medium max-w-2xl mx-auto leading-relaxed mb-12 italic">
