@@ -77,17 +77,17 @@ const UnggahResep = () => {
             </div>
 
             {/* NAV BAR */}
-            <header className="sticky top-0 z-[60] bg-slate-900/60 backdrop-blur-xl border-b border-white/10">
+            <header className="sticky top-0 z-[60] bg-slate-900 border-b border-white/10 shadow-2xl">
                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center gap-4 cursor-pointer group" onClick={() => navigate('/')}>
+                    <Link to="/" className="flex items-center gap-4 group">
                         <div className="w-10 h-10 bg-white rounded-xl shadow-xl flex items-center justify-center p-2 border border-slate-50 group-hover:rotate-6 transition-transform">
                             <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
                                 onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
                         </div>
                         <h1 className="text-xl font-black tracking-tight text-white">APOTEK <span className="text-cyan-400">HADINATA</span></h1>
-                    </div>
-                    <button onClick={() => navigate('/')} className="flex items-center gap-2 font-black text-xs uppercase tracking-widest text-slate-400 hover:text-white transition">
-                        <ArrowLeft size={16} /> Kembali
+                    </Link>
+                    <button onClick={() => navigate('/')} className="flex items-center gap-2 font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-400 hover:text-white transition bg-white/5 px-3 py-2 rounded-xl md:px-0 md:py-0 md:bg-transparent">
+                        <ArrowLeft size={14} className="md:w-4 md:h-4" /> <span className="hidden xs:inline">Kembali</span>
                     </button>
                 </div>
             </header>

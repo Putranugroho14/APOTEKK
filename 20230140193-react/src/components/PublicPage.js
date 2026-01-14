@@ -205,24 +205,29 @@ const PublicPage = () => {
                 {/* MOBILE MENU DRAWER */}
                 <div className={`fixed inset-0 z-[110] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                     <div className="absolute inset-0 bg-slate-950/98 backdrop-blur-3xl" onClick={() => setIsMenuOpen(false)}></div>
-                    <div className={`absolute top-0 right-0 w-full sm:w-[75%] h-full bg-slate-950 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-8 sm:p-10 flex flex-col z-[111]`}>
-                        <div className="flex justify-between items-center mb-10 sm:mb-16">
-                            <h2 className="text-sm font-black tracking-[0.3em] text-slate-500 uppercase">Navigasi</h2>
+                    <div className={`absolute top-0 right-0 w-[70%] h-full bg-slate-950 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-8 flex flex-col z-[111]`}>
+                        <div className="flex justify-end items-center mb-10">
                             <button onClick={() => setIsMenuOpen(false)} className="text-white w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl"><X size={24} /></button>
                         </div>
-                        <nav className="flex flex-col gap-6 sm:gap-10">
-                            {['Beranda', 'Produk', 'Layanan', 'Kontak'].map((item) => (
-                                <button
-                                    key={item}
-                                    onClick={() => scrollTo(item.toLowerCase())}
-                                    className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-left text-white hover:text-cyan-400 transition-all"
+                        <nav className="flex flex-col gap-8">
+                            {[
+                                { name: 'Beranda', path: '/' },
+                                { name: 'Katalog', path: '/katalog' },
+                                { name: 'Unggah Resep', path: '/unggah-resep' },
+                                { name: 'Kontak', path: '/#kontak' }
+                            ].map((item) => (
+                                <Link
+                                    key={item.name}
+                                    to={item.path}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="text-2xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all"
                                 >
-                                    {item}
-                                </button>
+                                    {item.name}
+                                </Link>
                             ))}
                         </nav>
-                        <div className="mt-auto pt-10 border-t border-white/5 uppercase text-[8px] font-black tracking-[0.5em] text-slate-600">
-                            Apotek Hadinata <br /> The Standard of Care
+                        <div className="mt-auto pt-10 border-t border-white/5 uppercase text-[8px] font-black tracking-[0.4em] text-slate-700">
+                            Apotek Hadinata <br /> Established 2026
                         </div>
                     </div>
                 </div>
@@ -581,19 +586,19 @@ const PublicPage = () => {
                                 </div>
                             ) : (
                                 cart.map(item => (
-                                    <div key={item.id} className="group flex gap-5 md:gap-8 p-4 md:p-6 rounded-[32px] md:rounded-[40px] hover:bg-slate-50 transition-all duration-500 border border-transparent hover:border-slate-100 relative">
-                                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-[24px] md:rounded-[32px] overflow-hidden shadow-lg shrink-0"><img src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.nama_obat} /></div>
+                                    <div key={item.id} className="group flex gap-4 md:gap-8 p-3 md:p-6 rounded-[24px] md:rounded-[40px] hover:bg-slate-50 transition-all duration-500 border border-transparent hover:border-slate-100 relative">
+                                        <div className="w-20 h-20 md:w-32 md:h-32 rounded-[20px] md:rounded-[32px] overflow-hidden shadow-lg shrink-0"><img src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.nama_obat} /></div>
                                         <div className="flex-1 py-1">
-                                            <div className="flex justify-between items-start mb-3 md:mb-4">
-                                                <h4 className="font-black text-slate-900 text-base md:text-lg">{item.nama_obat}</h4>
-                                                <button onClick={() => removeFromCart(item.id)} className="text-slate-200 hover:text-red-500 transition-colors"><Trash2 size={18} className="md:w-5 md:h-5" /></button>
+                                            <div className="flex justify-between items-start mb-2 md:mb-4">
+                                                <h4 className="font-black text-slate-900 text-sm md:text-lg">{item.nama_obat}</h4>
+                                                <button onClick={() => removeFromCart(item.id)} className="text-slate-200 hover:text-red-500 transition-colors"><Trash2 size={16} className="md:w-5 md:h-5" /></button>
                                             </div>
-                                            <p className="text-xl md:text-2xl font-black text-cyan-600 mb-4 md:mb-6 tracking-tight">Rp{item.harga.toLocaleString()}</p>
-                                            <div className="flex items-center gap-4 md:gap-6">
-                                                <div className="flex items-center bg-white border border-slate-100 rounded-xl md:rounded-2xl p-1.5 md:p-2 gap-4 md:gap-6 shadow-sm">
-                                                    <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center hover:bg-cyan-50 hover:text-cyan-600 rounded-lg md:rounded-xl transition-all"><Minus size={16} /></button>
-                                                    <span className="text-base md:text-lg font-black text-slate-900 min-w-[20px] md:min-w-[30px] text-center">{item.qty}</span>
-                                                    <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center hover:bg-cyan-50 hover:text-cyan-600 rounded-lg md:rounded-xl transition-all"><Plus size={16} /></button>
+                                            <p className="text-lg md:text-2xl font-black text-cyan-600 mb-3 md:mb-6 tracking-tight">Rp{item.harga.toLocaleString()}</p>
+                                            <div className="flex items-center gap-4">
+                                                <div className="flex items-center bg-white border border-slate-100 rounded-lg md:rounded-2xl p-1 md:p-2 gap-3 md:gap-6 shadow-sm">
+                                                    <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center hover:bg-cyan-50 hover:text-cyan-600 rounded-md md:rounded-xl transition-all"><Minus size={14} /></button>
+                                                    <span className="text-sm md:text-lg font-black text-slate-900 min-w-[15px] md:min-w-[30px] text-center">{item.qty}</span>
+                                                    <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center hover:bg-cyan-50 hover:text-cyan-600 rounded-md md:rounded-xl transition-all"><Plus size={14} /></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -602,12 +607,12 @@ const PublicPage = () => {
                             )}
                         </div>
                         {cart.length > 0 && (
-                            <div className="p-8 md:p-12 bg-white md:rounded-t-[60px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.1)] border-t border-slate-50">
-                                <div className="flex justify-between items-center mb-8 md:mb-10">
-                                    <p className="text-slate-400 font-black text-[9px] md:text-[11px] uppercase tracking-[0.3em]">Total Bayar</p>
-                                    <p className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
+                            <div className="p-6 md:p-12 bg-white md:rounded-t-[60px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.1)] border-t border-slate-50">
+                                <div className="flex justify-between items-center mb-6 md:mb-10">
+                                    <p className="text-slate-400 font-black text-[8px] md:text-[11px] uppercase tracking-[0.3em]">Total Bayar</p>
+                                    <p className="text-2xl md:text-5xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
                                 </div>
-                                <a href={`https://wa.me/628981335197?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-6 md:py-8 premium-gradient text-white text-center font-black rounded-2xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all text-[10px] md:text-xs uppercase tracking-[0.4em]">Bayar Via WhatsApp</a>
+                                <a href={`https://wa.me/628981335197?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-5 md:py-8 premium-gradient text-white text-center font-black rounded-xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all text-[10px] md:text-xs uppercase tracking-[0.4em]">Bayar Via WhatsApp</a>
                             </div>
                         )}
                     </div>

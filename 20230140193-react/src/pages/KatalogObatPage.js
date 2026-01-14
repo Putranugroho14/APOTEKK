@@ -94,16 +94,16 @@ const KatalogObatPage = () => {
             </div>
             <h1 className="text-xl font-black tracking-tight text-white">APOTEK <span className="text-cyan-400">HADINATA</span></h1>
           </Link>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <button
               onClick={() => setShowCart(true)}
-              className="relative w-12 h-12 bg-white/5 text-white border border-white/10 rounded-2xl flex items-center justify-center hover:bg-cyan-500/20 transition-all shadow-xl"
+              className="relative w-10 h-10 md:w-12 md:h-12 bg-white/5 text-white border border-white/10 rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-cyan-500/20 transition-all shadow-xl"
             >
-              <ShoppingCart size={20} />
-              {getTotalItems() > 0 && <span className="absolute -top-2 -right-2 w-6 h-6 bg-lime-500 text-white text-[10px] flex items-center justify-center rounded-full font-black animate-bounce shadow-lg">{getTotalItems()}</span>}
+              <ShoppingCart size={18} className="md:w-5 md:h-5" />
+              {getTotalItems() > 0 && <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-lime-500 text-white text-[9px] flex items-center justify-center rounded-full font-black animate-bounce shadow-lg">{getTotalItems()}</span>}
             </button>
-            <button onClick={() => navigate('/')} className="hidden md:flex items-center gap-2 font-black text-[10px] uppercase tracking-widest text-slate-400 hover:text-white transition bg-transparent">
-              <ArrowLeft size={16} /> Kembali
+            <button onClick={() => navigate('/')} className="flex items-center gap-2 font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-400 hover:text-white transition bg-white/5 px-3 py-2 rounded-xl md:px-0 md:py-0 md:bg-transparent">
+              <ArrowLeft size={14} className="md:w-4 md:h-4" /> <span className="hidden xs:inline">Kembali</span>
             </button>
           </div>
         </div>
