@@ -1,76 +1,61 @@
 const express = require("express");
-const bcrypt = require("bcryptjs");
-require("dotenv").config();
 const cors = require("cors");
 const morgan = require("morgan");
 const path = require("path");
-const fs = require("fs");
+require("dotenv").config();
 
-// Impor router
+const app = express();
+
+// 1. CORS - MUST BE FIRST
+// Using a permissive config to debug
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+  credentials: true
+}));
+
+// Handle Preflight
+app.options("*", cors());
+
+// 2. Body Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+
+// 3. Health Check (To verify the app is even booting)
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "Success",
+    message: "Apotek API is alive!",
+    env: process.env.NODE_ENV
+  });
+});
+
+// 4. Routes
 const obatRoutes = require("./routes/obat");
 const authRoutes = require("./routes/auth");
 const resepRoutes = require("./routes/resep");
 
-const app = express();
-
-// 1. CORS (Kembali ke versi paling dasar yang sebelumnya jalan)
-app.use(cors());
-
-// 2. Middleware Dasar
-app.use(express.json());
-app.use(morgan("dev"));
-
-// Database model
-const db = require("./models");
-
-// Sinkronisasi Database (Penting untuk pertama kali/perubahan skema)
-// Kita gunakan sync() biasa, dan handle error agar tidak membunuh main process
-db.sequelize.sync({ alter: true }).catch(err => {
-  console.error("Database sync failed, but server continues:", err);
-});
-
-// Routing API
 app.use("/api/obat", obatRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/resep", resepRoutes);
 
-// Route testing untuk cek status server
-app.get("/", async (req, res) => {
-  let dbStatus = "Unknown";
-  let dbError = null;
-
-  try {
-    await db.sequelize.authenticate();
-    dbStatus = "Connected";
-  } catch (err) {
-    dbStatus = "Failed";
-    dbError = err.message;
-  }
-
-  res.status(200).json({
-    status: "Success",
-    message: "Server Apotek Online Berjalan!",
-    database: dbStatus,
-    database_error: dbError
+// 5. Database Initialization (Non-blocking)
+const db = require("./models");
+db.sequelize.authenticate()
+  .then(() => {
+    console.log("Database connected.");
+    // Sync only if needed, don't let it crash the boot
+    db.sequelize.sync({ alter: true }).catch(err => console.error("Sync error:", err));
+  })
+  .catch(err => {
+    console.error("Database connection error:", err.message);
   });
-});
 
-// Penanganan Error 404
+// 6. 404 Handler
 app.use((req, res) => {
   res.status(404).json({ message: "Endpoint tidak ditemukan" });
 });
 
-// Konfigurasi Port
-const PORT = process.env.PORT || 3001;
-
-// Jangan panggil app.listen di Vercel jika diekspor, 
-// tapi biasanya aman (Vercel mengabaikannya). 
-// Namun untuk keamanan, kita cek jika tidak dideploy di Vercel.
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
-
-// Ekspor app untuk digunakan oleh runtime Vercel
 module.exports = app;
