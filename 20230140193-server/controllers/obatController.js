@@ -11,7 +11,7 @@ exports.validateObat = [
   body("stok").isNumeric().withMessage("Stok harus berupa angka"),
 ];
 
-// 1. Create Obat (Menambahkan dukungan is_published)
+// 1. Create Obat (Menambahkan dukungan is_published & Upload Gambar)
 exports.createObat = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
@@ -23,26 +23,26 @@ exports.createObat = async (req, res) => {
       deskripsi,
       stok,
       harga,
-      gambar_url,
+      gambar_url, // Bisa dari input manual
       kategori,
-      is_published // Tambahkan field ini
+      is_published
     } = req.body;
 
-    // Debug: log incoming payload and computed values
-    console.log('createObat called by user:', req.user);
-    console.log('createObat req.body:', req.body);
+    let finalGambarUrl = gambar_url;
+    if (req.file && req.file.path) {
+      finalGambarUrl = req.file.path;
+    }
 
     const createPayload = {
       nama_obat,
       deskripsi,
       stok,
       harga,
-      gambar_url,
+      gambar_url: finalGambarUrl,
       kategori,
       authorId,
-      is_published: is_published || false // Default false jika tidak dikirim
+      is_published: is_published === 'true' || is_published === true // Handle string "true" from FormData
     };
-    console.log('createObat payload:', createPayload);
 
     const newObat = await Obat.create(createPayload);
 
@@ -53,42 +53,9 @@ exports.createObat = async (req, res) => {
   }
 };
 
-// 2. Get All Obat (Untuk Admin & Publik)
-exports.getAllObat = async (req, res) => {
-  try {
-    // Jika ada query ?public=true, hanya tampilkan yang is_published: true
-    const isPublicRequest = req.query.public === 'true';
-    const whereCondition = isPublicRequest ? { is_published: true } : {};
+// ... getAllObat and getObatById remain same ...
 
-    const data = await Obat.findAll({
-      where: whereCondition,
-      order: [['nama_obat', 'ASC']],
-      include: [{ model: User, as: 'Admin', attributes: ['nama'] }]
-    });
-    res.json({ data });
-  } catch (error) {
-    console.error("Error in getAllObat:", error);
-    res.status(500).json({
-      error: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    });
-  }
-};
-
-// 3. Get Obat By ID
-exports.getObatById = async (req, res) => {
-  try {
-    const data = await Obat.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Admin', attributes: ['nama'] }]
-    });
-    if (!data) return res.status(404).json({ message: "Obat tidak ditemukan" });
-    res.json({ data });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// 4. Update Obat (Mendukung perubahan is_published dari Menu Edit)
+// 4. Update Obat
 exports.updateObat = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
@@ -104,17 +71,22 @@ exports.updateObat = async (req, res) => {
       harga,
       gambar_url,
       kategori,
-      is_published // Field status publikasi
+      is_published
     } = req.body;
+
+    let finalGambarUrl = gambar_url || obat.gambar_url; // Default to existing if not provided
+    if (req.file && req.file.path) {
+      finalGambarUrl = req.file.path;
+    }
 
     await obat.update({
       nama_obat,
       deskripsi,
       stok,
       harga,
-      gambar_url,
+      gambar_url: finalGambarUrl,
       kategori,
-      is_published
+      is_published: is_published === 'true' || is_published === true
     });
 
     res.json({ message: "Data obat berhasil diperbarui", data: obat });

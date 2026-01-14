@@ -4,7 +4,7 @@ import axios from "axios";
 import {
     Trash2, Edit3, Plus, X, Package, Image as ImageIcon, Layers,
     ArrowLeft, Pill, Search, Filter, RefreshCw, LayoutDashboard,
-    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff, Menu
+    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff, Menu, Upload
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
@@ -41,7 +41,7 @@ const ObatPage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [editingObat, setEditingObat] = useState(null);
     const [formData, setFormData] = useState({
-        nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", is_published: true
+        nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", gambar_file: null, is_published: true
     });
 
     const user = decodeTokenPayload(getToken());
@@ -80,14 +80,36 @@ const ObatPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const data = new FormData();
+            data.append("nama_obat", formData.nama_obat);
+            data.append("deskripsi", formData.deskripsi);
+            data.append("stok", formData.stok);
+            data.append("harga", formData.harga);
+            data.append("kategori", formData.kategori);
+            data.append("is_published", formData.is_published);
+
+            if (formData.gambar_file) {
+                data.append("gambar", formData.gambar_file);
+            }
+            if (formData.gambar_url) {
+                data.append("gambar_url", formData.gambar_url);
+            }
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`,
+                    "Content-Type": "multipart/form-data"
+                }
+            };
+
             if (editingObat) {
-                await axios.put(`${API_URL}/${editingObat.id}`, formData, getHeaders());
+                await axios.put(`${API_URL}/${editingObat.id}`, data, config);
             } else {
-                await axios.post(API_URL, formData, getHeaders());
+                await axios.post(API_URL, data, config);
             }
             setShowAddForm(false);
             setEditingObat(null);
-            setFormData({ nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", is_published: true });
+            setFormData({ nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", gambar_file: null, is_published: true });
             fetchObats();
         } catch (err) { alert("Gagal menyimpan data"); }
     };
@@ -343,13 +365,29 @@ const ObatPage = () => {
                                 </div>
                             </div>
                             <div className="space-y-3">
-                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Tautan Gambar (External)</label>
-                                <input
-                                    type="url" value={formData.gambar_url}
-                                    onChange={e => setFormData({ ...formData, gambar_url: e.target.value })}
-                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white placeholder-slate-700 font-mono text-sm"
-                                    placeholder="https://images.unsplash.com/..."
-                                />
+                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Foto Produk</label>
+                                <div className="space-y-4">
+                                    <div className="relative group">
+                                        <input
+                                            type="file" accept="image/*"
+                                            onChange={e => setFormData({ ...formData, gambar_file: e.target.files[0] })}
+                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                        />
+                                        <div className="w-full px-8 py-5 bg-white/5 border border-dashed border-white/10 rounded-[25px] flex items-center justify-center gap-3 group-hover:bg-white/10 transition-all">
+                                            <Upload size={20} className="text-cyan-400" />
+                                            <span className="text-xs font-bold text-slate-400 group-hover:text-white transition-colors">
+                                                {formData.gambar_file ? formData.gambar_file.name : "Klik untuk unggah foto dari galeri"}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="text-center text-[10px] font-black text-slate-600 uppercase tracking-widest">- ATAU GUNAKAN URL -</div>
+                                    <input
+                                        type="url" value={formData.gambar_url}
+                                        onChange={e => setFormData({ ...formData, gambar_url: e.target.value })}
+                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white placeholder-slate-700 font-mono text-sm"
+                                        placeholder="https://images.unsplash.com/..."
+                                    />
+                                </div>
                             </div>
                             <div className="space-y-3">
                                 <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Detail Deskripsi</label>
