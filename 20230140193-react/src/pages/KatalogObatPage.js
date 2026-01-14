@@ -124,28 +124,35 @@ const KatalogObatPage = () => {
           {/* SEARCH & FILTERS */}
           <div className="bg-slate-100/40 backdrop-blur-xl p-6 md:p-8 rounded-[40px] border border-slate-200/60 shadow-premium mb-16 flex flex-col lg:flex-row gap-6 md:gap-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="flex-1 relative">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 focus-within:text-cyan-600 transition-colors" size={20} />
+              <Search className="absolute left-5 md:left-6 top-1/2 -translate-y-1/2 text-slate-400 focus-within:text-cyan-600 transition-colors" size={20} />
               <input
-                type="text" placeholder="Cari nama obat (contoh: Paracetamol, Vitamin...)"
+                type="text" placeholder="Cari obat..."
                 value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-16 pr-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500/30 transition-all font-bold text-sm text-slate-800 placeholder:text-slate-400"
+                className="w-full pl-12 md:pl-16 pr-6 md:pr-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500/30 transition-all font-bold text-xs md:text-sm text-slate-800 placeholder:text-slate-400"
               />
             </div>
-            <div className="grid grid-cols-2 lg:flex gap-4">
-              <select
-                value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full lg:w-auto px-6 md:px-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none pr-12 relative"
-              >
-                {categories.map(c => <option key={c} value={c} className="bg-white text-slate-900">{c}</option>)}
-              </select>
-              <select
-                value={sortBy} onChange={(e) => setSortBy(e.target.value)}
-                className="w-full lg:w-auto px-6 md:px-8 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none pr-12 relative"
-              >
-                <option value="nama" className="bg-white text-slate-900">Urut Nama</option>
-                <option value="harga-asc" className="bg-white text-slate-900">Termurah</option>
-                <option value="harga-desc" className="bg-white text-slate-900">Termahal</option>
-              </select>
+            <div className="grid grid-cols-2 lg:flex gap-3 md:gap-4">
+              <div className="relative">
+                <select
+                  value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full lg:w-auto pl-4 pr-10 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[8px] md:text-[10px] uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none relative"
+                >
+                  {categories.map(c => <option key={c} value={c} className="bg-white text-slate-900">{c}</option>)}
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+              </div>
+
+              <div className="relative">
+                <select
+                  value={sortBy} onChange={(e) => setSortBy(e.target.value)}
+                  className="w-full lg:w-auto pl-4 pr-10 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[8px] md:text-[10px] uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none relative"
+                >
+                  <option value="nama" className="bg-white text-slate-900">Urut Nama</option>
+                  <option value="harga-asc" className="bg-white text-slate-900">Termurah</option>
+                  <option value="harga-desc" className="bg-white text-slate-900">Termahal</option>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+              </div>
             </div>
           </div>
 
