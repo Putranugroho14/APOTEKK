@@ -112,13 +112,13 @@ const KatalogObatPage = () => {
       <main className="relative z-10 pt-16 pb-32">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mb-20 animate-fade-in">
-            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-cyan-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8">
+            <div className="inline-flex items-center gap-3 bg-cyan-50 backdrop-blur-md px-4 py-1.5 rounded-full border border-cyan-100/50 text-cyan-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8 shadow-sm">
               <Package size={14} /> APOTEK HADINATA
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-none mb-6">
+            <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none mb-6">
               Temukan Produk <br /><span className="text-gradient">Kesehatan Terbaik.</span>
             </h2>
-            <p className="text-lg text-slate-400 font-medium max-w-2xl leading-relaxed">Pencarian obat lengkap dengan jaminan keaslian 100% dan pengiriman instan langsung ke rumah Anda.</p>
+            <p className="text-lg text-slate-600 font-bold max-w-2xl leading-relaxed">Pencarian obat lengkap dengan jaminan keaslian 100% dan pengiriman instan langsung ke rumah Anda.</p>
           </div>
 
           {/* SEARCH & FILTERS */}
@@ -160,11 +160,11 @@ const KatalogObatPage = () => {
               </div>
             ) : (
               filtered.map(obat => (
-                <div key={obat.id} className="group glass-card-dark rounded-2xl md:rounded-[28px] p-2.5 md:p-3.5 border border-white/5 shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col items-center text-center animate-fade-in max-w-[220px] mx-auto w-full">
-                  <div className="relative w-full aspect-[1/1.2] mb-3 md:mb-4 overflow-hidden rounded-xl md:rounded-[20px] cursor-pointer bg-white/5" onClick={() => setSelectedProduct(obat)}>
+                <div key={obat.id} className="group bg-white rounded-2xl md:rounded-[28px] p-2.5 md:p-3.5 border border-slate-100 shadow-xl transition-all duration-500 hover:-translate-y-2 flex flex-col items-center text-center animate-fade-in max-w-[220px] mx-auto w-full">
+                  <div className="relative w-full aspect-[1/1.2] mb-3 md:mb-4 overflow-hidden rounded-xl md:rounded-[20px] cursor-pointer bg-slate-50" onClick={() => setSelectedProduct(obat)}>
                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={obat.nama_obat} />
                     <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90%]">
-                      <span className="block text-center bg-slate-950/70 backdrop-blur-md px-1.5 py-1 rounded-full text-[6px] md:text-[8px] font-black text-cyan-400 uppercase tracking-[0.2em] shadow-xl border border-white/5">{obat.kategori}</span>
+                      <span className="block text-center bg-white/95 backdrop-blur-md px-1.5 py-1 rounded-full text-[6px] md:text-[8px] font-black text-cyan-600 uppercase tracking-[0.2em] shadow-lg border border-slate-100">{obat.kategori}</span>
                     </div>
                   </div>
                   <div className="flex-1 flex flex-col w-full">
@@ -203,11 +203,11 @@ const KatalogObatPage = () => {
             <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer"><Instagram className="text-slate-400 hover:text-cyan-500 transition cursor-pointer" size={24} /></a>
             <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer"><Facebook className="text-slate-400 hover:text-cyan-500 transition cursor-pointer" size={24} /></a>
             <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-2 group decoration-transparent">
-              <Phone className="text-slate-400 group-hover:text-cyan-500 transition cursor-pointer" size={24} />
-              <span className="text-slate-400 group-hover:text-cyan-500 font-black transition text-sm">0813-9080-7472</span>
+              <Phone className="text-slate-600 group-hover:text-cyan-500 transition cursor-pointer" size={24} />
+              <span className="text-slate-600 group-hover:text-cyan-500 font-black transition text-sm">0813-9080-7472</span>
             </a>
           </div>
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">© 2026 HADINATA PHARMACY GROUP • ALL RIGHTS RESERVED</p>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">© 2026 HADINATA PHARMACY GROUP • ALL RIGHTS RESERVED</p>
         </div>
       </footer>
 

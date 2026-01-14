@@ -194,14 +194,14 @@ const UnggahResep = () => {
             <footer className="bg-white border-t border-slate-100 py-20 relative z-10">
                 <div className="container mx-auto px-6 text-center">
                     <div className="flex justify-center gap-10 mb-10">
-                        <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-500 cursor-pointer transition-all hover:scale-125"><Instagram size={24} /></a>
-                        <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-500 cursor-pointer transition-all hover:scale-125"><Facebook size={24} /></a>
-                        <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-2 group text-slate-400 hover:text-cyan-600 transition-all font-black">
+                        <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-500 cursor-pointer transition-all hover:scale-125"><Instagram size={24} /></a>
+                        <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-500 cursor-pointer transition-all hover:scale-125"><Facebook size={24} /></a>
+                        <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-2 group text-slate-600 hover:text-cyan-600 transition-all font-black">
                             <Phone size={24} className="group-hover:scale-110 transition-transform" />
                             <span className="font-bold text-sm">0813-9080-7472</span>
                         </a>
                     </div>
-                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">© 2026 APOTEK HADINATA • SECURE TELEPHARMACY SYSTEM</p>
+                    <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">© 2026 APOTEK HADINATA • SECURE TELEPHARMACY SYSTEM</p>
                 </div>
             </footer>
         </div>

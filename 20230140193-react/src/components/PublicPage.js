@@ -200,19 +200,19 @@ const PublicPage = () => {
                                 <button
                                     key={item.name}
                                     onClick={() => scrollTo(item.target)}
-                                    className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-white transition-all relative group"
+                                    className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-cyan-600 transition-all relative group"
                                 >
                                     {item.name}
-                                    <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-500 group-hover:w-full"></span>
+                                    <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-500 group-hover:w-full"></span>
                                 </button>
                             ) : (
                                 <Link
                                     key={item.name}
                                     to={item.path}
-                                    className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-white transition-all relative group"
+                                    className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-600 hover:text-cyan-600 transition-all relative group"
                                 >
                                     {item.name}
-                                    <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-500 group-hover:w-full"></span>
+                                    <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-cyan-500 transition-all duration-500 group-hover:w-full"></span>
                                 </Link>
                             )
                         ))}
@@ -239,11 +239,11 @@ const PublicPage = () => {
 
                 {/* MOBILE MENU DRAWER */}
                 <div className={`fixed inset-0 z-[110] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)}></div>
-                    <div className={`absolute top-0 right-0 w-[65%] sm:w-[50%] h-full bg-slate-950 border-l border-white/5 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-6 md:p-10 flex flex-col z-[111]`}>
-                        <div className="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
-                            <span className="font-black text-white text-[10px] tracking-widest uppercase opacity-40">Menu</span>
-                            <button onClick={() => setIsMenuOpen(false)} className="text-white w-10 h-10 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all"><X size={18} /></button>
+                    <div className="absolute inset-0 bg-slate-900/10 backdrop-blur-md" onClick={() => setIsMenuOpen(false)}></div>
+                    <div className={`absolute top-0 right-0 w-[65%] sm:w-[50%] h-full bg-white border-l border-slate-100 shadow-premium transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-6 md:p-10 flex flex-col z-[111]`}>
+                        <div className="flex justify-between items-center mb-10 border-b border-slate-50 pb-6">
+                            <span className="font-black text-slate-900 text-[10px] tracking-widest uppercase opacity-40">Menu Navigasi</span>
+                            <button onClick={() => setIsMenuOpen(false)} className="text-slate-400 w-10 h-10 flex items-center justify-center bg-slate-50 rounded-2xl border border-slate-100 hover:bg-slate-100 transition-all shadow-sm"><X size={18} /></button>
                         </div>
                         <nav className="flex flex-col gap-6">
                             {[
@@ -255,8 +255,8 @@ const PublicPage = () => {
                                 item.type === 'scroll' ? (
                                     <button
                                         key={item.name}
-                                        onClick={() => scrollTo(item.target)}
-                                        className="text-left text-xl font-bold uppercase tracking-tight text-slate-300 hover:text-cyan-400 transition-all flex items-center justify-between group"
+                                        onClick={() => { scrollTo(item.target); setIsMenuOpen(false); }}
+                                        className="text-left text-xl font-black uppercase tracking-tighter text-slate-800 hover:text-cyan-600 transition-all flex items-center justify-between group"
                                     >
                                         {item.name}
                                         <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-cyan-500" size={18} />
@@ -266,7 +266,7 @@ const PublicPage = () => {
                                         key={item.name}
                                         to={item.path}
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="text-left text-xl font-bold uppercase tracking-tight text-slate-300 hover:text-cyan-400 transition-all flex items-center justify-between group"
+                                        className="text-left text-xl font-black uppercase tracking-tighter text-slate-800 hover:text-cyan-600 transition-all flex items-center justify-between group"
                                     >
                                         {item.name}
                                         <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-cyan-500" size={18} />
@@ -274,7 +274,7 @@ const PublicPage = () => {
                                 )
                             ))}
                         </nav>
-                        <div className="mt-auto pt-8 border-t border-white/5 text-[7px] font-bold uppercase tracking-[0.4em] text-slate-600">
+                        <div className="mt-auto pt-8 border-t border-slate-50 text-[7px] font-black uppercase tracking-[0.4em] text-slate-400">
                             Apotek Hadinata <br /> &copy; 2026
                         </div>
                     </div>
@@ -311,13 +311,13 @@ const PublicPage = () => {
                         <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-8 md:mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                             <button
                                 onClick={() => scrollTo('produk')}
-                                className="w-full sm:w-auto px-10 md:px-16 py-5 liquid-glass-accent text-white font-black rounded-[32px] shadow-[0_0_50px_-10px_rgba(6,182,212,0.5)] hover:scale-105 active:scale-95 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase group flex items-center justify-center gap-4"
+                                className="w-full sm:w-auto px-10 md:px-16 py-5 bg-cyan-500 text-white font-black rounded-[32px] shadow-[0_20px_40px_-10px_rgba(6,182,212,0.4)] hover:scale-105 active:scale-95 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase group flex items-center justify-center gap-4"
                             >
-                                Cari Produk <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+                                Cari Produk <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                             </button>
                             <Link
                                 to="/unggah-resep"
-                                className="w-full sm:w-auto px-10 md:px-16 py-5 liquid-glass text-white font-black rounded-[32px] hover:bg-white/10 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase text-center flex items-center justify-center hover:scale-105 active:scale-95"
+                                className="w-full sm:w-auto px-10 md:px-16 py-5 bg-white text-slate-900 border border-slate-100 font-black rounded-[32px] hover:bg-slate-50 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase text-center flex items-center justify-center hover:scale-105 active:scale-95 shadow-xl"
                             >
                                 Kirim Resep
                             </Link>
@@ -535,49 +535,48 @@ const PublicPage = () => {
             </section >
 
             {/* FOOTER */}
-            < footer id="kontak" className="bg-slate-950 text-white pt-20 pb-12 md:pt-40 md:pb-20 relative overflow-hidden" >
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-600 via-lime-400 to-cyan-600"></div>
+            < footer id="kontak" className="bg-white border-t border-slate-100 pt-20 pb-12 md:pt-40 md:pb-20 relative overflow-hidden" >
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 md:gap-20 mb-16 md:mb-32">
                         <div className="col-span-1 lg:col-span-2">
                             <div className="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
-                                <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center p-2 shadow-2xl">
+                                <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center p-2 shadow-xl border border-slate-100">
                                     <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" />
                                 </div>
-                                <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-white">APOTEK <span className="text-cyan-500">HADINATA</span></h2>
+                                <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900">APOTEK <span className="text-cyan-500">HADINATA</span></h2>
                             </div>
-                            <p className="text-slate-500 font-bold leading-loose text-lg max-w-xl mb-12 italic">
+                            <p className="text-slate-600 font-bold leading-loose text-lg max-w-xl mb-12 italic">
                                 "Membangun akses kesehatan digital yang lebih manusiawi, cepat, dan terpercaya untuk seluruh lapisan masyarakat."
                             </p>
                             <div className="flex gap-6">
-                                <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-cyan-600 hover:-translate-y-2 transition-all duration-500"><Instagram size={24} /></a>
-                                <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-blue-600 hover:-translate-y-2 transition-all duration-500"><Facebook size={24} /></a>
-                                <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-white/5 px-5 py-4 rounded-2xl hover:bg-lime-500 hover:-translate-y-2 transition-all duration-500 group">
-                                    <Phone size={24} />
-                                    <span className="font-bold text-sm text-slate-300 group-hover:text-white transition-colors hidden md:block tracking-widest">0813-9080-7472</span>
+                                <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white hover:-translate-y-2 transition-all duration-500 shadow-sm"><Instagram size={24} /></a>
+                                <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white hover:-translate-y-2 transition-all duration-500 shadow-sm"><Facebook size={24} /></a>
+                                <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-slate-50 border border-slate-100 px-5 py-4 rounded-2xl hover:bg-lime-500 hover:text-white hover:-translate-y-2 transition-all duration-500 group shadow-sm">
+                                    <Phone size={24} className="text-slate-400 group-hover:text-white" />
+                                    <span className="font-bold text-sm text-slate-600 group-hover:text-white transition-colors hidden md:block tracking-widest">0813-9080-7472</span>
                                 </a>
                             </div>
                         </div>
                         <div>
-                            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-600 mb-12">Navigasi</h4>
-                            <ul className="space-y-6 text-sm font-bold uppercase tracking-widest text-slate-400">
-                                <li><button onClick={scrollToTop} className="hover:text-white transition-colors">Beranda</button></li>
-                                <li><button onClick={() => scrollTo('produk')} className="hover:text-white transition-colors">Katalog Obat</button></li>
-                                <li><button onClick={() => scrollTo('layanan')} className="hover:text-white transition-colors">Layanan Resep</button></li>
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-600 mb-12">Navigasi</h4>
+                            <ul className="space-y-6 text-sm font-black uppercase tracking-widest text-slate-500">
+                                <li><button onClick={scrollToTop} className="hover:text-cyan-600 transition-colors">Beranda</button></li>
+                                <li><button onClick={() => scrollTo('produk')} className="hover:text-cyan-600 transition-colors">Katalog Obat</button></li>
+                                <li><button onClick={() => scrollTo('layanan')} className="hover:text-cyan-600 transition-colors">Layanan Resep</button></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-600 mb-12">Lokasi Utama</h4>
-                            <div className="relative glass-card-dark bg-white/5 border-white/10 rounded-[40px] overflow-hidden group shadow-2xl">
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-lime-600 mb-12">Lokasi Utama</h4>
+                            <div className="relative glass-card bg-white border-slate-100 rounded-[40px] overflow-hidden group shadow-premium">
                                 <div className="h-64 w-full opacity-80 group-hover:opacity-100 transition-opacity duration-700">
                                     <iframe
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15951.713568858276!2d112.964522!3d-2.529845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dfcc159f8c679b3%3A0x67347a504ead2e!2sApotek%20Hadinata!5e0!3m2!1sid!2sid!4v1704987654321!5m2!1sid!2sid"
-                                        width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Lokasi Apotek Hadinata" className="grayscale hover:grayscale-0 transition-all duration-700"
+                                        width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Lokasi Apotek Hadinata" className="hover:grayscale-0 transition-all duration-700"
                                     ></iframe>
                                 </div>
                                 <div className="p-8">
-                                    <p className="text-sm font-bold leading-relaxed mb-6 text-slate-300">Jl. Kopi Selatan, RT.013/RW.004 <br />Sampit, Kalimantan Tengah 74322</p>
-                                    <a href="https://maps.app.goo.gl/9yG4N3v2XU3FmC4f6" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-cyan-400 hover:text-white transition-colors">
+                                    <p className="text-sm font-bold leading-relaxed mb-6 text-slate-600">Jl. Kopi Selatan, RT.013/RW.004 <br />Sampit, Kalimantan Tengah 74322</p>
+                                    <a href="https://maps.app.goo.gl/9yG4N3v2XU3FmC4f6" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-cyan-600 hover:text-cyan-800 transition-colors">
                                         Buka di Google Maps <ArrowRight size={14} />
                                     </a>
                                 </div>
@@ -704,11 +703,11 @@ const PublicPage = () => {
             {
                 !isMenuOpen && (
                     <div className="fixed bottom-6 right-6 md:bottom-10 md:right-10 flex flex-col gap-4 md:gap-6 z-[60]">
-                        <a href={`https://wa.me/6281390807472?text=Halo Apotek Hadinata, saya ingin konsultasi`} target="_blank" rel="noreferrer" className="w-14 h-14 md:w-20 md:h-20 bg-lime-500 text-white rounded-[24px] md:rounded-[32px] shadow-[0_20px_40px_-10px_rgba(132,204,22,0.4)] flex items-center justify-center hover:scale-110 hover:rotate-6 active:scale-95 transition-all group relative overflow-hidden">
+                        <a href={`https://wa.me/6281390807472?text=Halo Apotek Hadinata, saya ingin konsultasi`} target="_blank" rel="noreferrer" className="w-14 h-14 md:w-20 md:h-20 bg-lime-500 text-white rounded-[24px] md:rounded-[32px] shadow-premium flex items-center justify-center hover:scale-110 hover:rotate-6 active:scale-95 transition-all group relative overflow-hidden">
                             <Phone size={24} className="md:w-8 md:h-8" /><div className="absolute top-0 left-[-100%] w-full h-full bg-white/30 skew-x-[45deg] group-hover:animate-shine"></div>
                         </a>
                         {showBackToTop && (
-                            <button onClick={scrollToTop} className="w-14 h-14 md:w-20 md:h-20 bg-white/10 backdrop-blur-xl rounded-[24px] md:rounded-[32px] shadow-2xl border border-white/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-all text-white group overflow-hidden">
+                            <button onClick={scrollToTop} className="w-14 h-14 md:w-20 md:h-20 bg-white shadow-2xl rounded-[24px] md:rounded-[32px] border border-slate-100 flex items-center justify-center hover:scale-110 active:scale-95 transition-all text-cyan-600 group overflow-hidden">
                                 <ArrowUp size={24} className="md:w-8 md:h-8 group-hover:-translate-y-1 transition-transform" />
                             </button>
                         )}
