@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
-import RegisterPage from "./components/RegisterPage";
 import DashboardPage from "./components/DashboardPage";
 import ObatPage from "./components/ObatPage";
 import PublicPage from "./components/PublicPage";
@@ -18,8 +17,8 @@ function App() {
         <Route path="/" element={<PublicPage />} />
         <Route path="/unggah-resep" element={<UnggahResep />} />
 
-        {/* Pastikan path ini sesuai dengan "to='/semua-obat'" di PublicPage */}
-        <Route path="/semua-obat" element={<KatalogObatPage />} />
+        {/* Katalog Obat */}
+        <Route path="/katalog" element={<KatalogObatPage />} />
 
         {/* --- AUTHENTICATION --- */}
         <Route path="/login" element={<LoginPage />} />

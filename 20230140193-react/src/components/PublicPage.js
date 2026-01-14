@@ -1,5 +1,5 @@
 // src/components/PublicPage.js
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
     Star, ShoppingCart, Plus, Minus, Search, Menu, X, ChevronRight, ChevronLeft, Zap,
@@ -307,7 +307,10 @@ const PublicPage = () => {
             </section>
 
             {/* CATALOG */}
-            <section id="produk" className="py-20 md:py-40 relative overflow-hidden">
+            <section id="produk" className="py-20 md:py-40 relative overflow-hidden"
+                style={{
+                    '--visible-items': window.innerWidth >= 1280 ? 4 : (window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 768 ? 2 : 1))
+                }}>
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
                         <div className="max-w-3xl transform transition-all duration-1000">
@@ -359,7 +362,7 @@ const PublicPage = () => {
                                             key={`${obat.id}-${idx}`}
                                             className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.333rem)] xl:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[24px] md:rounded-[40px] p-3 md:p-6 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
                                         >
-                                            <div className="relative h-32 md:h-64 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <div className="relative h-32 md:h-56 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
                                                     src={obat.gambar_url || "https://images.unsplash.com/photo-1576091160550-217359f48f4c?w=500"}
                                                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
@@ -421,12 +424,6 @@ const PublicPage = () => {
                         </div>
                     )}
                 </div>
-                <style jsx>{`
-                    #produk { --visible-items: 1; }
-                    @media(min-width: 768px) { #produk { --visible-items: 2; } }
-                    @media(min-width: 1024px) { #produk { --visible-items: 3; } }
-                    @media(min-width: 1280px) { #produk { --visible-items: 4; } }
-                `}</style>
             </section>
 
             {/* CTA SECTION */}
@@ -593,13 +590,13 @@ const PublicPage = () => {
                             ) : (
                                 cart.map(item => (
                                     <div key={item.id} className="group flex gap-4 md:gap-8 p-3 md:p-6 rounded-[24px] md:rounded-[40px] hover:bg-slate-50 transition-all duration-500 border border-transparent hover:border-slate-100 relative">
-                                        <div className="w-20 h-20 md:w-32 md:h-32 rounded-[20px] md:rounded-[32px] overflow-hidden shadow-lg shrink-0"><img src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.nama_obat} /></div>
+                                        <div className="w-16 h-16 md:w-32 md:h-32 rounded-[20px] md:rounded-[32px] overflow-hidden shadow-lg shrink-0"><img src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={item.nama_obat} /></div>
                                         <div className="flex-1 py-1">
                                             <div className="flex justify-between items-start mb-2 md:mb-4">
-                                                <h4 className="font-black text-slate-900 text-sm md:text-lg">{item.nama_obat}</h4>
+                                                <h4 className="font-black text-slate-900 text-xs md:text-lg">{item.nama_obat}</h4>
                                                 <button onClick={() => removeFromCart(item.id)} className="text-slate-200 hover:text-red-500 transition-colors"><Trash2 size={16} className="md:w-5 md:h-5" /></button>
                                             </div>
-                                            <p className="text-lg md:text-2xl font-black text-cyan-600 mb-3 md:mb-6 tracking-tight">Rp{item.harga.toLocaleString()}</p>
+                                            <p className="text-base md:text-2xl font-black text-cyan-600 mb-3 md:mb-6 tracking-tight">Rp{item.harga.toLocaleString()}</p>
                                             <div className="flex items-center gap-4">
                                                 <div className="flex items-center bg-white border border-slate-100 rounded-lg md:rounded-2xl p-1 md:p-2 gap-3 md:gap-6 shadow-sm">
                                                     <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center hover:bg-cyan-50 hover:text-cyan-600 rounded-md md:rounded-xl transition-all"><Minus size={14} /></button>
@@ -615,10 +612,10 @@ const PublicPage = () => {
                         {cart.length > 0 && (
                             <div className="p-6 md:p-12 bg-white md:rounded-t-[60px] shadow-[0_-40px_80px_-20px_rgba(0,0,0,0.1)] border-t border-slate-50">
                                 <div className="flex justify-between items-center mb-6 md:mb-10">
-                                    <p className="text-slate-400 font-black text-[8px] md:text-[11px] uppercase tracking-[0.3em]">Total Bayar</p>
-                                    <p className="text-2xl md:text-5xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
+                                    <p className="text-slate-400 font-black text-[7px] md:text-[11px] uppercase tracking-[0.3em]">Total Bayar</p>
+                                    <p className="text-lg md:text-5xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
                                 </div>
-                                <a href={`https://wa.me/628981335197?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-5 md:py-8 premium-gradient text-white text-center font-black rounded-xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all text-[10px] md:text-xs uppercase tracking-[0.4em]">Bayar Via WhatsApp</a>
+                                <a href={`https://wa.me/628981335197?text=${generateWhatsAppMessage()}`} target="_blank" rel="noreferrer" className="block w-full py-4 md:py-8 premium-gradient text-white text-center font-black rounded-xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all text-[10px] md:text-xs uppercase tracking-[0.4em]">Bayar Via WhatsApp</a>
                             </div>
                         )}
                     </div>
@@ -640,13 +637,14 @@ const PublicPage = () => {
                 </div>
             )}
 
-            <style jsx>{`
+            <style dangerouslySetInnerHTML={{
+                __html: `
                 @keyframes shine { 0% { transform: translateX(-100%) skewX(45deg); } 100% { transform: translateX(200%) skewX(45deg); } }
                 .animate-shine { animation: shine 1.5s infinite; }
                 .shadow-glow { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
                 .scrollbar-hide::-webkit-scrollbar { display: none; }
                 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-            `}</style>
+            ` }} />
         </div>
     );
 };

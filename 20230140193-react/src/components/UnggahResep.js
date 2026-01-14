@@ -6,7 +6,7 @@ import {
     Facebook, Instagram, Clock, ShieldCheck, Award, FileText,
     Camera, BadgeCheck, Loader2
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import API_BASE_URL from '../config';
 import Particles from './Particles';
 

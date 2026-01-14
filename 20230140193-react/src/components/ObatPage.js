@@ -227,7 +227,7 @@ const ObatPage = () => {
                     ) : (
                         filteredObats.map(obat => (
                             <div key={obat.id} className="glass-card-dark rounded-[24px] md:rounded-[40px] border border-white/5 overflow-hidden shadow-2xl transition-all duration-500 group flex flex-col">
-                                <div className="h-32 md:h-52 relative overflow-hidden bg-slate-900">
+                                <div className="h-32 md:h-56 relative overflow-hidden bg-slate-900">
                                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
                                         className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
@@ -243,7 +243,7 @@ const ObatPage = () => {
                                         }
                                     </div>
                                 </div>
-                                <div className="p-6 md:p-8 flex flex-col flex-1 relative">
+                                <div className="p-3 md:p-6 flex flex-col flex-1 relative">
                                     <h4 className="font-black text-white mb-2 md:mb-3 truncate text-sm md:text-base tracking-tight" title={obat.nama_obat}>{obat.nama_obat}</h4>
                                     <p className="text-[10px] md:text-[11px] text-slate-500 font-medium line-clamp-2 mb-4 md:mb-6 italic leading-relaxed">"{obat.deskripsi}"</p>
 
