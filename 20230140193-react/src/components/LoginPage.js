@@ -77,6 +77,7 @@ function LoginPage() {
                   value={username} onChange={(e) => setUsername(e.target.value)}
                   className="w-full pl-16 pr-8 py-5 bg-white/5 border border-white/10 rounded-2xl outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all font-bold text-sm text-white placeholder:text-slate-600"
                   placeholder="Masukkan username"
+                  autoComplete="username"
                 />
               </div>
             </div>
@@ -90,6 +91,7 @@ function LoginPage() {
                   value={password} onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-16 pr-14 py-5 bg-white/5 border border-white/10 rounded-2xl outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all font-bold text-sm text-white placeholder:text-slate-600"
                   placeholder="••••••••"
+                  autoComplete="current-password"
                 />
                 <button
                   type="button" onClick={() => setShowPassword(!showPassword)}
