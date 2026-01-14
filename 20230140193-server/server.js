@@ -17,9 +17,6 @@ app.use(cors({
   credentials: true
 }));
 
-// Handle Preflight - Fix for Express 5 wildcard syntax
-app.options("(.*)", cors());
-
 // 2. Body Parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
