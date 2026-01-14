@@ -64,10 +64,28 @@ app.use("/api/resep", resepRoutes);
 app.get("/", async (req, res) => {
   let dbStatus = "Unknown";
   let dbError = null;
+  let adminStatus = "Checking...";
 
   try {
     await db.sequelize.authenticate();
     dbStatus = "Connected";
+
+    // Pastikan admin ada (Seringkali cold start vercel melewati blok .then di atas)
+    const { User } = db;
+    const adminUser = await User.findOne({ where: { username: 'admin' } });
+    if (!adminUser) {
+      const hashedPassword = await bcrypt.hash('admin123', 10);
+      await User.create({
+        nama: 'Administrator',
+        username: 'admin',
+        password: hashedPassword,
+        role: 'admin'
+      });
+      adminStatus = "Default created (admin/admin123)";
+    } else {
+      adminStatus = "Ready";
+    }
+
   } catch (err) {
     dbStatus = "Failed";
     dbError = err.message;
@@ -76,9 +94,9 @@ app.get("/", async (req, res) => {
   res.status(200).json({
     status: "Success",
     message: "Server Apotek Online Berjalan!",
-    environment: process.env.NODE_ENV || "development",
     database: dbStatus,
-    database_error: dbError
+    database_error: dbError,
+    admin_system: adminStatus
   });
 });
 
