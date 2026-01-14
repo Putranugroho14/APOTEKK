@@ -66,3 +66,11 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
+// Start server if run directly (e.g. locally or on Render)
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}

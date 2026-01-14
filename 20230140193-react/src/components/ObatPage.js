@@ -84,11 +84,11 @@ const ObatPage = () => {
         e.preventDefault();
         try {
             const data = new FormData();
-            data.append("nama_obat", formData.nama_obat);
-            data.append("deskripsi", formData.deskripsi);
-            data.append("stok", formData.stok);
-            data.append("harga", formData.harga);
-            data.append("kategori", formData.kategori);
+            data.append("nama_obat", formData.nama_obat || "");
+            data.append("deskripsi", formData.deskripsi || "");
+            data.append("stok", formData.stok || 0);
+            data.append("harga", formData.harga || 0);
+            data.append("kategori", formData.kategori || "Obat Bebas");
             data.append("is_published", formData.is_published);
             data.append("rating", formData.rating || 4.5);
 
@@ -116,8 +116,16 @@ const ObatPage = () => {
             fetchObats();
         } catch (err) {
             console.error("Submit Error:", err);
-            const msg = err.response?.data?.message || "Gagal menyimpan data. Pastikan Anda masih login sebagai Admin.";
-            alert(msg);
+            let msg = "Gagal menyimpan data.";
+            if (err.response && err.response.data) {
+                if (err.response.data.errors) {
+                    // Handle express-validator errors
+                    msg = err.response.data.errors.map(e => e.msg).join("\n");
+                } else if (err.response.data.message) {
+                    msg = err.response.data.message;
+                }
+            }
+            alert("Error: \n" + msg);
         }
     };
 
