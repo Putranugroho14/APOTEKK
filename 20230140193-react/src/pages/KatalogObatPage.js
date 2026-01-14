@@ -251,32 +251,55 @@ const KatalogObatPage = () => {
       )}
 
       {selectedProduct && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-fade-in" onClick={() => setSelectedProduct(null)}>
-          <div className="glass-card-dark w-full max-w-6xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row h-auto max-h-[90vh] relative border border-white/10" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-10 h-10 md:w-12 md:h-12 bg-white/10 text-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-xl hover:rotate-90 transition-all border border-white/10 z-20"><X size={20} className="md:w-6 md:h-6" /></button>
-            <div className="md:w-1/2 h-64 md:h-auto border-r border-white/5 overflow-hidden bg-slate-900 relative">
-              <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent"></div>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xl animate-fade-in" onClick={() => setSelectedProduct(null)}>
+          <div className="bg-white w-full max-w-6xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] flex flex-col md:flex-row h-auto max-h-[90vh] relative animate-scale-in" onClick={e => e.stopPropagation()}>
+            {/* CLOSE BUTTON */}
+            <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 md:w-16 md:h-16 bg-white text-slate-900 rounded-full flex items-center justify-center shadow-2xl hover:bg-red-50 hover:text-red-500 transition-all z-20 border border-slate-100"><X size={28} /></button>
+
+            {/* LEFT SIDE: IMAGE CONTAINER */}
+            <div className="md:w-1/2 h-80 md:h-auto bg-[#f1f5f9] relative flex items-center justify-center p-12">
+              <div className="relative w-full h-full flex items-center justify-center animate-float">
+                <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
+                  className="max-w-full max-h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)]" alt={selectedProduct.nama_obat} />
+              </div>
+              <div className="absolute bottom-10 left-10">
+                <span className="bg-[#0097b2] text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg">Apotek Hadinata</span>
+              </div>
             </div>
-            <div className="md:w-1/2 p-8 md:p-14 overflow-y-auto custom-scrollbar">
-              <div className="flex gap-1 mb-4 md:mb-6">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} className={`${s <= (selectedProduct.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-5 md:h-5`} />)}</div>
-              <h3 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
-              <p className="text-slate-400 text-sm md:text-lg font-medium leading-relaxed italic mb-8 md:mb-12 border-l-4 border-cyan-500 pl-6 md:pl-8">{selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi.'}</p>
-              <div className="grid grid-cols-2 gap-4 md:gap-6 mb-8 md:mb-12">
-                <div className="bg-white/5 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-white/5">
-                  <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Harga</p>
-                  <p className="text-lg md:text-3xl font-black text-cyan-400">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+
+            {/* RIGHT SIDE: INFO SECTION */}
+            <div className="md:w-1/2 p-8 md:p-16 bg-white overflow-y-auto custom-scrollbar flex flex-col justify-center">
+              <div className="flex gap-1 mb-6">
+                {[1, 2, 3, 4, 5].map(s => (
+                  <Star key={s} size={18} className={`${s <= (selectedProduct.rating || 4.5) ? "fill-[#ffc107] text-[#ffc107]" : "fill-slate-200 text-slate-200"}`} />
+                ))}
+                <span className="ml-3 text-slate-400 font-bold text-sm tracking-widest">({selectedProduct.rating || 4.5})</span>
+              </div>
+
+              <h3 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter leading-tight drop-shadow-sm">{selectedProduct.nama_obat}</h3>
+
+              <div className="relative pl-8 border-l-4 border-[#0097b2] mb-12">
+                <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed italic pr-4">
+                  {selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi dikembangkan untuk pemulihan yang efektif dan aman.'}
+                </p>
+              </div>
+
+              <div className="flex flex-row gap-4 md:gap-8 mb-12">
+                <div className="bg-white p-6 md:p-8 rounded-[30px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Harga Unit</p>
+                  <p className="text-2xl md:text-4xl font-black text-[#0097b2] tracking-tighter truncate w-full">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                 </div>
-                <div className="bg-white/5 p-4 md:p-6 rounded-2xl md:rounded-3xl border border-white/5">
-                  <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Stok</p>
-                  <p className="text-lg md:text-3xl font-black text-white">{selectedProduct.stok} <span className="text-[8px] md:text-xs">UNIT</span></p>
+                <div className="bg-white p-6 md:p-8 rounded-[30px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Sedia Stok</p>
+                  <p className="text-2xl md:text-4xl font-black text-slate-800 tracking-tighter truncate w-full">{selectedProduct.stok} <span className="text-xs text-slate-400 uppercase">Unit</span></p>
                 </div>
               </div>
+
               <button
                 onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}
-                className="w-full py-4 md:py-6 premium-gradient text-white font-black rounded-2xl md:rounded-3xl text-[10px] md:text-sm uppercase tracking-widest flex items-center justify-center gap-4 shadow-xl shadow-cyan-500/20"
+                className="w-full py-6 md:py-8 bg-[#0097b2] hover:bg-[#00829a] text-white font-black rounded-3xl text-sm md:text-base uppercase tracking-[0.2em] flex items-center justify-center gap-4 shadow-xl shadow-cyan-500/30 transition-all hover:scale-[1.02] active:scale-95 group"
               >
-                <Plus size={18} className="md:w-5 md:h-5" /> Tambah Ke Keranjang
+                <ShoppingBag size={24} className="group-hover:-rotate-12 transition-transform" /> Masukkan Keranjang
               </button>
             </div>
           </div>

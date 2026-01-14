@@ -166,20 +166,36 @@ const PublicPage = () => {
                             <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-base md:text-2xl' : 'text-lg md:text-4xl'} text-white`}>
                                 APOTEK <span className="text-cyan-400">HADINATA</span>
                             </h1>
-                            <p className={`text-[8px] md:text-[11px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.5em] mt-1 transition-all duration-500 ${scrolled ? 'opacity-0 h-0 hidden' : 'opacity-100'}`}>The Standard of Care</p>
+                            <p className={`text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.6em] mt-3 md:mt-4 transition-all duration-500 ${scrolled ? 'opacity-0 h-0 hidden' : 'opacity-100'}`}>The Standard of Care</p>
                         </div>
                     </div>
 
                     <nav className="hidden lg:flex items-center gap-12">
-                        {['Beranda', 'Produk', 'Layanan', 'Kontak'].map((item) => (
-                            <button
-                                key={item}
-                                onClick={() => scrollTo(item.toLowerCase())}
-                                className="text-sm font-black uppercase tracking-[0.2em] text-slate-400 hover:text-white transition-all relative group"
-                            >
-                                {item}
-                                <span className="absolute -bottom-2 left-0 w-0 h-1 bg-cyan-400 rounded-full transition-all duration-500 group-hover:w-full"></span>
-                            </button>
+                        {[
+                            { name: 'Beranda', type: 'scroll', target: 'beranda' },
+                            { name: 'Produk', type: 'link', path: '/katalog' },
+                            { name: 'Layanan', type: 'link', path: '/unggah-resep' },
+                            { name: 'Kontak', type: 'scroll', target: 'kontak' }
+                        ].map((item) => (
+                            item.type === 'scroll' ? (
+                                <button
+                                    key={item.name}
+                                    onClick={() => scrollTo(item.target)}
+                                    className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-white transition-all relative group"
+                                >
+                                    {item.name}
+                                    <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-500 group-hover:w-full"></span>
+                                </button>
+                            ) : (
+                                <Link
+                                    key={item.name}
+                                    to={item.path}
+                                    className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-white transition-all relative group"
+                                >
+                                    {item.name}
+                                    <span className="absolute -bottom-2 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-500 group-hover:w-full"></span>
+                                </Link>
+                            )
                         ))}
                     </nav>
 
@@ -205,33 +221,39 @@ const PublicPage = () => {
                 {/* MOBILE MENU DRAWER */}
                 <div className={`fixed inset-0 z-[110] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                     <div className="absolute inset-0 bg-slate-950/98 backdrop-blur-3xl" onClick={() => setIsMenuOpen(false)}></div>
-                    <div className={`absolute top-0 right-0 w-[70%] h-full bg-slate-950 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-8 flex flex-col z-[111]`}>
-                        <div className="flex justify-end items-center mb-10">
-                            <button onClick={() => setIsMenuOpen(false)} className="text-white w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl"><X size={24} /></button>
+                    <div className={`absolute top-0 right-0 w-[80%] h-full bg-slate-950 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-8 flex flex-col z-[111]`}>
+                        <div className="flex justify-between items-center mb-16 border-b border-white/5 pb-8">
+                            <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 bg-white rounded-lg p-1.5"><img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" /></div>
+                                <span className="font-black text-white text-xs tracking-tighter uppercase">Menu Navigasi</span>
+                            </div>
+                            <button onClick={() => setIsMenuOpen(false)} className="text-white w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl"><X size={20} /></button>
                         </div>
-                        <nav className="flex flex-col gap-8">
+                        <nav className="flex flex-col gap-10">
                             {[
-                                { name: 'Beranda', path: '/', scrollId: 'beranda' },
-                                { name: 'Katalog', path: '/katalog' },
-                                { name: 'Unggah Resep', path: '/unggah-resep' },
-                                { name: 'Kontak', path: '/#kontak', scrollId: 'kontak' }
+                                { name: 'Beranda', type: 'scroll', target: 'beranda' },
+                                { name: 'Katalog Produk', type: 'link', path: '/katalog' },
+                                { name: 'Kirim Resep', type: 'link', path: '/unggah-resep' },
+                                { name: 'Kontak Apotek', type: 'scroll', target: 'kontak' }
                             ].map((item) => (
-                                item.scrollId ? (
+                                item.type === 'scroll' ? (
                                     <button
                                         key={item.name}
-                                        onClick={() => scrollTo(item.scrollId)}
-                                        className="text-left text-2xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all"
+                                        onClick={() => scrollTo(item.target)}
+                                        className="text-left text-3xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all flex items-center justify-between group"
                                     >
                                         {item.name}
+                                        <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all text-cyan-500" size={24} />
                                     </button>
                                 ) : (
                                     <Link
                                         key={item.name}
                                         to={item.path}
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="text-2xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all"
+                                        className="text-left text-3xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all flex items-center justify-between group"
                                     >
                                         {item.name}
+                                        <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all text-cyan-500" size={24} />
                                     </Link>
                                 )
                             ))}
@@ -244,7 +266,7 @@ const PublicPage = () => {
             </header>
 
             {/* HERO SECTION */}
-            <section id="beranda" className="relative h-[80vh] md:h-screen overflow-hidden flex items-center pt-20 md:pt-0">
+            <section id="beranda" className="relative h-screen overflow-hidden flex items-center pt-24 md:pt-0">
                 <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow"></div>
                 <div className="absolute bottom-[-10%] left-[10%] w-[60%] h-[60%] bg-lime-500/10 rounded-full blur-[150px] animate-pulse-glow" style={{ animationDelay: '-3s' }}></div>
 
@@ -359,12 +381,12 @@ const PublicPage = () => {
                                 </button>
                             </div>
 
-                            <div className={`${obats.length > 4 ? 'overflow-visible lg:overflow-hidden' : ''} px-4 -mx-4`}>
+                            <div className={`${obats.length > 4 ? 'overflow-visible lg:overflow-hidden' : ''} px-2 md:px-4 -mx-2 md:-mx-4`}>
                                 <div
                                     onTransitionEnd={handleTransitionEnd}
-                                    className={`flex gap-8 ${obats.length > 4 ? (transitionEnabled ? 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]' : 'transition-none') : 'flex-wrap justify-center'}`}
+                                    className={`flex gap-4 md:gap-8 ${obats.length > 4 ? (transitionEnabled ? 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]' : 'transition-none') : 'flex-wrap justify-center'}`}
                                     style={obats.length > 4 ? {
-                                        transform: `translateX(calc(-${productSlideIndex * 100}% / var(--visible-items, 1) - ${productSlideIndex * 2}rem))`
+                                        transform: `translateX(calc(-${productSlideIndex * 100}% / var(--visible-items, 1) - ${productSlideIndex * (window.innerWidth < 768 ? 1 : 2)}rem))`
                                     } : {}}
                                 >
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
@@ -390,8 +412,16 @@ const PublicPage = () => {
                                                 {obat.nama_obat}
                                             </h4>
                                             <div className="flex items-center gap-2 mb-4 md:mb-6">
-                                                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={10} className="fill-amber-400 text-amber-400" />)}
-                                                <span className="text-[9px] md:text-[10px] font-black text-slate-400 ml-1">4.9 / 5.0</span>
+                                                <div className="flex gap-1">
+                                                    {[1, 2, 3, 4, 5].map(s => (
+                                                        <Star
+                                                            key={s}
+                                                            size={10}
+                                                            className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-3 md:h-3`}
+                                                        />
+                                                    ))}
+                                                </div>
+                                                <span className="text-[9px] md:text-[10px] font-black text-slate-400 ml-1">{(obat.rating || 4.5).toFixed(1)} / 5.0</span>
                                             </div>
                                             <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
                                                 <div>
@@ -549,34 +579,53 @@ const PublicPage = () => {
 
             {/* PRODUCT MODAL */}
             {selectedProduct && (
-                <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in" onClick={() => setSelectedProduct(null)}>
-                    <div className="bg-white w-full max-w-4xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[95vh] relative" onClick={e => e.stopPropagation()}>
-                        <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-10 h-10 md:w-14 md:h-14 bg-white/90 backdrop-blur-md rounded-2xl md:rounded-3xl flex items-center justify-center shadow-2xl z-20 hover:rotate-90 transition-all duration-500"><X size={24} className="md:w-7 md:h-7" /></button>
-                        <div className="md:w-1/2 relative h-48 sm:h-64 md:h-auto overflow-hidden">
-                            <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover" alt={selectedProduct.nama_obat} />
-                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
-                            <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10"><span className="bg-cyan-600 text-white px-4 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl">APOTEK HADINATA</span></div>
+                <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xl animate-fade-in" onClick={() => setSelectedProduct(null)}>
+                    <div className="bg-white w-full max-w-6xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] flex flex-col md:flex-row h-auto max-h-[90vh] relative animate-scale-in" onClick={e => e.stopPropagation()}>
+                        <button onClick={() => setSelectedProduct(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 md:w-16 md:h-16 bg-white text-slate-900 rounded-full flex items-center justify-center shadow-2xl hover:bg-red-50 hover:text-red-500 transition-all z-20 border border-slate-100"><X size={28} /></button>
+
+                        <div className="md:w-1/2 h-80 md:h-auto bg-[#f1f5f9] relative flex items-center justify-center p-12">
+                            <div className="relative w-full h-full flex items-center justify-center animate-float">
+                                <img src={selectedProduct.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
+                                    className="max-w-full max-h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)]" alt={selectedProduct.nama_obat} />
+                            </div>
+                            <div className="absolute bottom-10 left-10">
+                                <span className="bg-[#0097b2] text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg">Apotek Hadinata</span>
+                            </div>
                         </div>
-                        <div className="md:w-1/2 p-6 sm:p-8 md:p-20 overflow-y-auto bg-slate-50/30">
-                            <div className="mb-8 md:mb-12">
-                                <h3 className="text-2xl md:text-5xl font-black tracking-tight mb-4 md:mb-6 text-slate-900">{selectedProduct.nama_obat}</h3>
-                                <div className="inline-flex items-center gap-2 md:gap-3 bg-white px-4 py-1.5 md:px-6 md:py-2 rounded-xl md:rounded-2xl shadow-sm border border-slate-100 mb-6 md:mb-10">
-                                    <div className="flex gap-1">{[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} className="fill-amber-400 text-amber-400 md:w-3.5 md:h-3.5" />)}</div>
-                                    <span className="text-[9px] md:text-[11px] font-black text-slate-400">Trusted Product</span>
-                                </div>
-                                <p className="text-slate-500 text-sm md:text-lg font-medium leading-relaxed md:leading-loose mb-8 md:mb-12 italic border-l-4 border-cyan-500 pl-6 md:pl-8">{selectedProduct.deskripsi || 'Produk farmasi berkualitas premium untuk menunjang kesehatan optimal Anda.'}</p>
+
+                        <div className="md:w-1/2 p-8 md:p-16 bg-white overflow-y-auto custom-scrollbar flex flex-col justify-center">
+                            <div className="flex gap-1 mb-6">
+                                {[1, 2, 3, 4, 5].map(s => (
+                                    <Star key={s} size={18} className={`${s <= (selectedProduct.rating || 4.5) ? "fill-[#ffc107] text-[#ffc107]" : "fill-slate-200 text-slate-200"}`} />
+                                ))}
+                                <span className="ml-3 text-slate-400 font-bold text-sm tracking-widest">({(selectedProduct.rating || 4.5).toFixed(1)})</span>
                             </div>
-                            <div className="grid grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12">
-                                <div className="bg-white p-5 md:p-8 rounded-[24px] md:rounded-[40px] shadow-xl shadow-slate-200/40 border border-slate-50">
-                                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 md:mb-4">Harga Unit</p>
-                                    <p className="text-xl md:text-4xl font-black text-cyan-600 tracking-tight">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+
+                            <h3 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
+
+                            <div className="relative pl-8 border-l-4 border-[#0097b2] mb-12">
+                                <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed italic pr-4">
+                                    {selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi dikembangkan untuk pemulihan yang efektif dan aman.'}
+                                </p>
+                            </div>
+
+                            <div className="flex flex-row gap-4 md:gap-8 mb-12">
+                                <div className="bg-white p-6 md:p-8 rounded-[30px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
+                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Harga Unit</p>
+                                    <p className="text-2xl md:text-4xl font-black text-[#0097b2] tracking-tighter truncate w-full">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                                 </div>
-                                <div className="bg-white p-5 md:p-8 rounded-[24px] md:rounded-[40px] shadow-xl shadow-slate-200/40 border border-slate-50">
-                                    <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 md:mb-4">Sedia Stok</p>
-                                    <p className="text-xl md:text-4xl font-black text-slate-900 tracking-tight">{selectedProduct.stok} <span className="text-[10px] md:text-sm font-bold opacity-30 uppercase">Unit</span></p>
+                                <div className="bg-white p-6 md:p-8 rounded-[30px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
+                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Sedia Stok</p>
+                                    <p className="text-2xl md:text-4xl font-black text-slate-800 tracking-tighter truncate w-full">{selectedProduct.stok} <span className="text-xs text-slate-400 uppercase">Unit</span></p>
                                 </div>
                             </div>
-                            <button onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }} className="w-full py-4 md:py-6 premium-gradient text-white font-black rounded-2xl md:rounded-3xl shadow-2xl shadow-cyan-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 md:gap-6 text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em]"><ShoppingBag size={20} className="md:w-6 md:h-6" /> Masukkan Keranjang</button>
+
+                            <button
+                                onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}
+                                className="w-full py-6 md:py-8 bg-[#0097b2] hover:bg-[#00829a] text-white font-black rounded-3xl text-sm md:text-base uppercase tracking-[0.2em] flex items-center justify-center gap-4 shadow-xl shadow-cyan-500/30 transition-all hover:scale-[1.02] active:scale-95 group"
+                            >
+                                <ShoppingBag size={24} className="group-hover:-rotate-12 transition-transform" /> Masukkan Keranjang
+                            </button>
                         </div>
                     </div>
                 </div>

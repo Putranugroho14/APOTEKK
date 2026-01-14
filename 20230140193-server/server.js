@@ -24,44 +24,12 @@ app.use(morgan("dev"));
 // 3. Database Initialization
 const db = require("./models");
 
-// 4. Health Check with DB Diagnostics
-app.get("/", async (req, res) => {
-  let dbStatus = "Unknown";
-  let dbError = null;
-  let tables = [];
-
-  try {
-    await db.sequelize.authenticate();
-    dbStatus = "Connected";
-
-    // Check if tables exist
-    const [results] = await db.sequelize.query("SHOW TABLES");
-    tables = results.map(r => Object.values(r)[0]);
-
-    // Check Obat table structure specifically
-    try {
-      const [columns] = await db.sequelize.query("DESCRIBE Obats");
-      db.obats_structure = columns;
-    } catch (e) {
-      db.obats_structure = "Table 'Obats' not found or error: " + e.message;
-    }
-
-  } catch (err) {
-    dbStatus = "Failed";
-    dbError = err.message;
-  }
-
+// 4. Health Check (Clean Version)
+app.get("/", (req, res) => {
   res.status(200).json({
     status: "Success",
-    message: "Apotek API Diagnostics",
-    database: {
-      status: dbStatus,
-      error: dbError,
-      found_tables: tables,
-      obats_table: db.obats_structure
-    },
-    env: process.env.NODE_ENV,
-    time: new Date().toISOString()
+    message: "Apotek API is alive!",
+    env: process.env.NODE_ENV
   });
 });
 
@@ -74,18 +42,17 @@ app.use("/api/obat", obatRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/resep", resepRoutes);
 
-// Self-Healing Database Initialization
+// Self-Healing Database Initialization (Maintain silently)
 const initDB = async () => {
   try {
     const [result] = await db.sequelize.query("SHOW COLUMNS FROM Obats LIKE 'rating'");
     if (result.length === 0) {
-      console.log("Healing: Adding 'rating' column to Obats table...");
       await db.sequelize.query("ALTER TABLE Obats ADD COLUMN rating FLOAT DEFAULT 4.5");
     }
     await db.sequelize.sync({ alter: true });
-    console.log("Database synced successfully.");
+    console.log("Database initialized successfully.");
   } catch (err) {
-    console.error("Self-healing error:", err.message);
+    console.error("DB Init Error:", err.message);
   }
 };
 
@@ -96,13 +63,12 @@ app.use((req, res) => {
   res.status(404).json({ message: "Endpoint tidak ditemukan" });
 });
 
-// 7. Global Error Handler (Catch-all for 500s)
+// 7. Global Error Handler
 app.use((err, req, res, next) => {
   console.error("FATAL ERROR:", err);
   res.status(500).json({
     message: "Terjadi kesalahan pada server",
-    error: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    error: err.message
   });
 });
 
