@@ -289,47 +289,40 @@ const PublicPage = () => {
                             ))}
                         </div>
 
-                        <div className="flex flex-col sm:flex-row gap-4 md:gap-6 mt-12 md:mt-16 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                            <button onClick={() => scrollTo('produk')} className="w-full sm:w-auto px-8 md:px-12 py-5 premium-gradient text-white font-black rounded-2xl shadow-2xl shadow-cyan-900/40 hover:scale-105 active:scale-95 transition-all text-[10px] md:text-[11px] tracking-[0.2em] uppercase group">
-                                <span className="flex items-center gap-3 justify-center">
-                                    Cari Produk <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
-                                </span>
+                        <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-12 md:mt-20 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+                            <button
+                                onClick={() => scrollTo('produk')}
+                                className="w-full sm:w-auto px-10 md:px-16 py-6 liquid-glass-accent text-white font-black rounded-[32px] shadow-[0_0_50px_-10px_rgba(6,182,212,0.5)] hover:scale-105 active:scale-95 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase group flex items-center justify-center gap-4"
+                            >
+                                Cari Produk <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform shadow-glow" />
                             </button>
-                            <Link to="/unggah-resep" className="w-full sm:w-auto px-8 md:px-12 py-5 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-black rounded-2xl hover:bg-white/20 transition-all text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-center">
+                            <Link
+                                to="/unggah-resep"
+                                className="w-full sm:w-auto px-10 md:px-16 py-6 liquid-glass text-white font-black rounded-[32px] hover:bg-white/10 transition-all text-[11px] md:text-[13px] tracking-[0.3em] uppercase text-center flex items-center justify-center hover:scale-105 active:scale-95"
+                            >
                                 Kirim Resep
                             </Link>
                         </div>
                     </div>
                 </div>
 
-                <div className="absolute bottom-12 left-6 right-6 flex flex-col items-center">
-                    <div className="flex gap-3 mb-4">
-                        {missionSlides.map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => setCurrentMissionSlide(i)}
-                                className={`h-1.5 transition-all duration-500 rounded-full ${i === currentMissionSlide ? 'w-16 bg-cyan-500' : 'w-4 bg-white/20 hover:bg-white/40'}`}
-                            />
-                        ))}
-                    </div>
-                    <button onClick={() => scrollTo('produk')} className="text-white/40 animate-bounce hover:text-white transition-colors">
-                        <ChevronDown size={32} />
-                    </button>
-                </div>
             </section>
 
             {/* TRUST BAR */}
-            <section className="bg-white/5 backdrop-blur-md py-6 md:py-12 border-y border-white/5 relative z-10">
+            <section className="py-8 md:py-16 relative z-10">
                 <div className="container mx-auto px-6">
-                    <div className="flex flex-wrap justify-center md:justify-between items-center gap-6 md:gap-12 opacity-80 group hover:opacity-100 transition-all duration-700">
-                        <div className="flex items-center gap-2 md:gap-3 font-black text-sm md:text-xl tracking-tighter text-white">
-                            <ShieldCheck size={20} className="text-cyan-400 md:w-8 md:h-8" /> DISTRIBUTOR RESMI
+                    <div className="liquid-glass rounded-[32px] md:rounded-[60px] p-8 md:p-14 flex flex-wrap justify-center md:justify-between items-center gap-10 md:gap-12 group transition-all duration-700 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]">
+                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-white group-hover:scale-105 transition-all">
+                            <div className="w-10 h-10 md:w-16 md:h-16 bg-cyan-500/10 rounded-2xl md:rounded-3xl flex items-center justify-center border border-cyan-500/20"><ShieldCheck className="text-cyan-400 w-5 h-5 md:w-8 md:h-8" /></div>
+                            DISTRIBUTOR RESMI
                         </div>
-                        <div className="flex items-center gap-2 md:gap-3 font-black text-sm md:text-xl tracking-tighter text-white">
-                            <Award size={20} className="text-lime-400 md:w-8 md:h-8" /> APOTEKER BERLISENSI
+                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-white group-hover:scale-105 transition-all" style={{ transitionDelay: '0.1s' }}>
+                            <div className="w-10 h-10 md:w-16 md:h-16 bg-lime-500/10 rounded-2xl md:rounded-3xl flex items-center justify-center border border-lime-500/20"><Award className="text-lime-400 w-5 h-5 md:w-8 md:h-8" /></div>
+                            APOTEKER BERLISENSI
                         </div>
-                        <div className="flex items-center gap-2 md:gap-3 font-black text-sm md:text-xl tracking-tighter text-white">
-                            <CheckCircle size={20} className="text-cyan-400 md:w-8 md:h-8" /> 100% PRODUK ASLI
+                        <div className="flex items-center gap-3 md:gap-5 font-black text-xs md:text-2xl tracking-tighter text-white group-hover:scale-105 transition-all" style={{ transitionDelay: '0.2s' }}>
+                            <div className="w-10 h-10 md:w-16 md:h-16 bg-cyan-500/10 rounded-2xl md:rounded-3xl flex items-center justify-center border border-cyan-500/20"><CheckCircle className="text-cyan-400 w-5 h-5 md:w-8 md:h-8" /></div>
+                            100% PRODUK ASLI
                         </div>
                     </div>
                 </div>
@@ -343,8 +336,8 @@ const PublicPage = () => {
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 gap-8">
                         <div className="max-w-3xl transform transition-all duration-1000">
-                            <div className="inline-flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-3 rounded-2xl text-cyan-400 text-[9px] md:text-sm font-black uppercase tracking-[0.3em] mb-6 md:mb-10 shadow-sm">
-                                <Package size={16} /> PRODUK UNGGULAN
+                            <div className="inline-flex items-center gap-4 liquid-glass px-6 py-3 rounded-2xl text-cyan-400 text-[9px] md:text-xs font-black uppercase tracking-[0.4em] mb-6 md:mb-10">
+                                <Package size={16} className="animate-float" /> PRODUK UNGGULAN
                             </div>
                             <h2 className="text-3xl md:text-8xl font-black text-white tracking-tighter leading-[1] md:leading-[0.85] mb-6 md:mb-8">
                                 Pilih Obat <br className="hidden md:block" /><span className="text-cyan-400">Terbaik</span> Anda.
