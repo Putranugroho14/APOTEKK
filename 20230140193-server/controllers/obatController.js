@@ -55,7 +55,30 @@ exports.createObat = async (req, res) => {
   }
 };
 
-// ... getAllObat and getObatById remain same ...
+// 2. Get All Obat
+exports.getAllObat = async (req, res) => {
+  try {
+    const query = req.query.published === 'true' ? { where: { is_published: true } } : {};
+    const obats = await Obat.findAll({
+      ...query,
+      order: [['createdAt', 'DESC']]
+    });
+    res.json(obats);
+  } catch (error) {
+    res.status(500).json({ message: "Gagal mengambil data obat", error: error.message });
+  }
+};
+
+// 3. Get Obat By ID
+exports.getObatById = async (req, res) => {
+  try {
+    const obat = await Obat.findByPk(req.params.id);
+    if (!obat) return res.status(404).json({ message: "Obat tidak ditemukan" });
+    res.json(obat);
+  } catch (error) {
+    res.status(500).json({ message: "Gagal mengambil data obat", error: error.message });
+  }
+};
 
 // 4. Update Obat
 exports.updateObat = async (req, res) => {
