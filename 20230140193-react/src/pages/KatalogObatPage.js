@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   Search, ShoppingBag, ArrowLeft, Star, Package, Filter, XCircle,
   X, Trash2, Plus, Minus, ShoppingCart, Phone, Mail, MapPin,
-  Facebook, Instagram, Clock, ArrowRight, Zap, Award
+  Facebook, Instagram, Clock, ArrowRight, Zap, Award, ChevronDown
 } from 'lucide-react';
 import API_BASE_URL from '../config';
 import Particles from "../components/Particles";
