@@ -7,14 +7,7 @@ require("dotenv").config();
 const app = express();
 
 // 1. CORS - MUST BE FIRST
-app.use(cors({
-  origin: function (origin, callback) {
-    callback(null, true);
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
-  credentials: true
-}));
+app.use(cors());
 
 // 2. Body Parser
 app.use(express.json());

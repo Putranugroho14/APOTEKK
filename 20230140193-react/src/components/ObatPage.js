@@ -59,13 +59,16 @@ const ObatPage = () => {
     const fetchObats = async () => {
         setIsLoading(true);
         try {
-            const token = getToken();
-            const response = await axios.get(API_URL, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const response = await axios.get(API_URL, getHeaders());
             setObats(response.data.data || []);
             setFilteredObats(response.data.data || []);
-        } catch (err) { console.error(err); }
+        } catch (err) {
+            console.error("fetchObats error:", err);
+            if (err.response && err.response.status === 401) {
+                localStorage.removeItem("token");
+                navigate("/login");
+            }
+        }
         finally { setIsLoading(false); }
     };
 
@@ -112,7 +115,11 @@ const ObatPage = () => {
             setEditingObat(null);
             setFormData({ nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", gambar_file: null, is_published: true });
             fetchObats();
-        } catch (err) { alert("Gagal menyimpan data"); }
+        } catch (err) {
+            console.error("Submit Error:", err);
+            const msg = err.response?.data?.message || "Gagal menyimpan data. Pastikan Anda masih login sebagai Admin.";
+            alert(msg);
+        }
     };
 
     const handleDelete = async (id) => {
