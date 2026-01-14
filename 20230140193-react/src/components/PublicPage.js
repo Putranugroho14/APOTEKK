@@ -384,7 +384,7 @@ const PublicPage = () => {
                             <div className={`${obats.length > 4 ? 'overflow-visible lg:overflow-hidden' : ''} px-2 md:px-4 -mx-2 md:-mx-4`}>
                                 <div
                                     onTransitionEnd={handleTransitionEnd}
-                                    className={`flex gap-4 md:gap-8 ${obats.length > 4 ? (transitionEnabled ? 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]' : 'transition-none') : 'flex-wrap justify-center'}`}
+                                    className={`flex gap-3 md:gap-6 ${obats.length > 4 ? (transitionEnabled ? 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]' : 'transition-none') : 'flex-wrap justify-center'}`}
                                     style={obats.length > 4 ? {
                                         transform: `translateX(calc(-${productSlideIndex * 100}% / ${visibleItems} - ${productSlideIndex * (window.innerWidth < 768 ? 1 : 2)}rem))`
                                     } : {}}
@@ -392,51 +392,51 @@ const PublicPage = () => {
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] sm:min-w-[calc(50%-1rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-2xl md:rounded-[40px] p-3 md:p-8 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
+                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] sm:min-w-[calc(50%-1rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-2xl md:rounded-[24px] p-2.5 md:p-4 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
                                         >
-                                            <div className="relative h-28 md:h-56 mb-3 md:mb-8 overflow-hidden rounded-xl md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <div className="relative h-28 md:h-44 mb-3 md:mb-5 overflow-hidden rounded-xl md:rounded-[20px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
                                                     src={obat.gambar_url || "https://images.unsplash.com/photo-1576091160550-217359f48f4c?w=500"}
                                                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                                     alt={obat.nama_obat}
                                                     onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"; }}
                                                 />
-                                                <div className="absolute top-2 left-2 md:top-4 md:left-4">
-                                                    <span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[7px] md:text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">
+                                                <div className="absolute top-2 left-2 md:top-3 md:left-3">
+                                                    <span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[7px] md:text-[8px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">
                                                         {obat.kategori}
                                                     </span>
                                                 </div>
                                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                             </div>
-                                            <h4 className="font-black text-white text-xs md:text-xl mb-1 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <h4 className="font-black text-white text-[11px] md:text-base mb-1 md:mb-2 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 {obat.nama_obat}
                                             </h4>
 
-                                            <div className="flex items-center gap-2 mb-2 md:mb-4">
+                                            <div className="flex items-center gap-2 mb-2 md:mb-3">
                                                 <div className="flex gap-0.5">
                                                     {[1, 2, 3, 4, 5].map(s => (
                                                         <Star
                                                             key={s}
                                                             size={8}
-                                                            className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-3 md:h-3`}
+                                                            className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-2.5 md:h-2.5`}
                                                         />
                                                     ))}
                                                 </div>
-                                                <span className="text-[8px] md:text-xs font-bold text-slate-400">{(obat.rating || 4.5).toFixed(1)}</span>
+                                                <span className="text-[8px] md:text-[10px] font-bold text-slate-400">{(obat.rating || 4.5).toFixed(1)}</span>
                                             </div>
 
-                                            <p className="hidden md:block text-[10px] md:text-xs text-slate-400 font-medium italic mb-6 line-clamp-3">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
+                                            <p className="hidden md:block text-[10px] text-slate-400 font-medium italic mb-4 line-clamp-2 leading-relaxed">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
 
-                                            <div className="flex items-center justify-between pt-3 md:pt-6 border-t border-white/5 mt-auto">
+                                            <div className="flex items-center justify-between pt-3 md:pt-4 border-t border-white/5 mt-auto">
                                                 <div>
-                                                    <p className="text-[7px] md:text-[9px] font-bold text-slate-500 md:text-slate-400 uppercase tracking-widest mb-0.5 leading-none">HARGA</p>
-                                                    <p className="text-sm md:text-2xl font-black text-cyan-400 tracking-tight leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
+                                                    <p className="text-[7px] md:text-[8px] font-bold text-slate-500 md:text-slate-400 uppercase tracking-widest mb-0.5 leading-none">HARGA</p>
+                                                    <p className="text-sm md:text-lg font-black text-cyan-400 tracking-tight leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
                                                 </div>
                                                 <button
                                                     onClick={(e) => addToCart(obat, e)}
-                                                    className="w-8 h-8 md:w-14 md:h-14 bg-white/5 text-white rounded-lg md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10 border border-white/5"
+                                                    className="w-8 h-8 md:w-10 md:h-10 bg-white/5 text-white rounded-lg md:rounded-xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10 border border-white/5"
                                                 >
-                                                    <Plus size={14} className="md:w-6 md:h-6" />
+                                                    <Plus size={14} className="md:w-5 md:h-5" />
                                                 </button>
                                             </div>
                                         </div>
