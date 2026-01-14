@@ -269,29 +269,31 @@ const KatalogObatPage = () => {
 
             {/* RIGHT SIDE: INFO SECTION */}
             <div className="md:w-1/2 p-8 md:p-16 bg-white overflow-y-auto custom-scrollbar flex flex-col justify-center">
-              <div className="flex gap-1 mb-6">
-                {[1, 2, 3, 4, 5].map(s => (
-                  <Star key={s} size={18} className={`${s <= (selectedProduct.rating || 4.5) ? "fill-[#ffc107] text-[#ffc107]" : "fill-slate-200 text-slate-200"}`} />
-                ))}
+              <h3 className="text-2xl md:text-4xl font-black text-slate-900 mb-2 tracking-tighter leading-tight drop-shadow-sm">{selectedProduct.nama_obat}</h3>
+
+              <div className="flex items-center gap-1 mb-6">
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map(s => (
+                    <Star key={s} size={18} className={`${s <= (selectedProduct.rating || 4.5) ? "fill-[#ffc107] text-[#ffc107]" : "fill-slate-200 text-slate-200"}`} />
+                  ))}
+                </div>
                 <span className="ml-3 text-slate-400 font-bold text-sm tracking-widest">({selectedProduct.rating || 4.5})</span>
               </div>
 
-              <h3 className="text-2xl md:text-4xl font-black text-slate-900 mb-6 tracking-tighter leading-tight drop-shadow-sm">{selectedProduct.nama_obat}</h3>
-
-              <div className="relative pl-6 border-l-4 border-[#0097b2] mb-8">
+              <div className="mb-8">
                 <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed italic pr-4">
                   {selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi dikembangkan untuk pemulihan yang efektif dan aman.'}
                 </p>
               </div>
 
               <div className="flex flex-row gap-4 md:gap-6 mb-8">
-                <div className="bg-white p-5 md:p-6 rounded-[24px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Harga Unit</p>
-                  <p className="text-lg md:text-2xl font-black text-[#0097b2] tracking-tighter w-full">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+                <div className="bg-slate-50 p-5 md:p-6 rounded-[24px] border border-slate-100 flex-1 flex flex-row items-center justify-between min-w-0">
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Harga Unit</p>
+                  <p className="text-base md:text-xl font-black text-[#0097b2] tracking-tighter">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                 </div>
-                <div className="bg-white p-5 md:p-6 rounded-[24px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
-                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Sedia Stok</p>
-                  <p className="text-lg md:text-2xl font-black text-slate-800 tracking-tighter w-full">{selectedProduct.stok} <span className="text-[10px] text-slate-400 uppercase ml-1">Unit</span></p>
+                <div className="bg-slate-50 p-5 md:p-6 rounded-[24px] border border-slate-100 flex-1 flex flex-row items-center justify-between min-w-0">
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Sedia Stok</p>
+                  <p className="text-base md:text-xl font-black text-slate-800 tracking-tighter">{selectedProduct.stok} <span className="text-[10px] text-slate-400 uppercase">Unit</span></p>
                 </div>
               </div>
 
