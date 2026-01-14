@@ -142,7 +142,7 @@ const ObatPage = () => {
         <button
             onClick={() => path && navigate(path)}
             className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group
-            ${active ? 'premium-gradient text-white shadow-lg shadow-cyan-200' : 'text-slate-500 hover:bg-slate-50 hover:text-cyan-600'}`}
+            ${active ? 'premium-gradient text-white shadow-lg shadow-cyan-200' : 'text-slate-400 hover:bg-white/10 hover:text-white'}`}
         >
             <Icon size={20} className={active ? 'text-white' : 'group-hover:scale-110 transition-transform'} />
             <span className="font-bold text-sm tracking-wide">{label}</span>
@@ -158,7 +158,7 @@ const ObatPage = () => {
 
             <Particles count={60} opacity={0.25} speed={0.4} />
             {/* SIDEBAR */}
-            <aside className={`fixed lg:sticky top-0 left-0 h-screen w-80 bg-slate-900/90 lg:bg-slate-900/60 backdrop-blur-3xl lg:backdrop-blur-xl border-r border-white/10 flex flex-col p-6 z-[100] transition-transform duration-500 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+            <aside className={`fixed lg:sticky top-0 left-0 h-screen w-80 bg-slate-900 lg:bg-slate-900/60 lg:backdrop-blur-xl border-r border-white/10 flex flex-col p-6 z-[100] transition-transform duration-500 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
                 <div className="flex items-center justify-between mb-12 px-2">
                     <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
@@ -294,7 +294,7 @@ const ObatPage = () => {
                                     <div className="flex gap-3 md:gap-4">
                                         <button
                                             onClick={() => { setEditingObat(obat); setFormData(obat); setShowAddForm(true); }}
-                                            className="flex-1 py-3 md:py-4 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5 rounded-xl md:rounded-[20px] transition-all font-black text-[8px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em]"
+                                            className="flex-1 py-3 md:py-4 bg-white/10 text-white hover:bg-cyan-500 hover:text-white border border-white/10 rounded-xl md:rounded-[20px] transition-all font-black text-[8px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em]"
                                         >
                                             Edit Item
                                         </button>
