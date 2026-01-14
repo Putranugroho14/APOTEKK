@@ -96,7 +96,7 @@ const PublicPage = () => {
 
     useEffect(() => {
         const updateVisibleItems = () => {
-            if (window.innerWidth < 640) setVisibleItems(1);
+            if (window.innerWidth < 640) setVisibleItems(2);
             else if (window.innerWidth < 1024) setVisibleItems(3);
             else setVisibleItems(4);
         };
@@ -392,51 +392,51 @@ const PublicPage = () => {
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className={`${obats.length > 4 ? 'min-w-[calc(100%-1.5rem)] sm:min-w-[calc(50%-1rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-full sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[24px] md:rounded-[40px] p-6 md:p-8 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col mx-auto`}
+                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] sm:min-w-[calc(50%-1rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-2xl md:rounded-[40px] p-3 md:p-8 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
                                         >
-                                            <div className="relative h-32 md:h-56 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <div className="relative h-28 md:h-56 mb-3 md:mb-8 overflow-hidden rounded-xl md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
                                                     src={obat.gambar_url || "https://images.unsplash.com/photo-1576091160550-217359f48f4c?w=500"}
                                                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                                     alt={obat.nama_obat}
                                                     onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"; }}
                                                 />
-                                                <div className="absolute top-4 left-4">
-                                                    <span className="bg-slate-900/80 backdrop-blur-md px-4 py-1.5 rounded-full text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">
+                                                <div className="absolute top-2 left-2 md:top-4 md:left-4">
+                                                    <span className="bg-slate-900/80 backdrop-blur-md px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[7px] md:text-[9px] font-black text-cyan-400 uppercase tracking-widest shadow-xl border border-white/10">
                                                         {obat.kategori}
                                                     </span>
                                                 </div>
                                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                             </div>
-                                            <h4 className="font-black text-white text-lg md:text-xl mb-2 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
+                                            <h4 className="font-black text-white text-xs md:text-xl mb-1 md:mb-3 line-clamp-1 group-hover:text-cyan-400 transition-colors cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 {obat.nama_obat}
                                             </h4>
 
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <div className="flex gap-1">
+                                            <div className="flex items-center gap-2 mb-2 md:mb-4">
+                                                <div className="flex gap-0.5">
                                                     {[1, 2, 3, 4, 5].map(s => (
                                                         <Star
                                                             key={s}
-                                                            size={10}
+                                                            size={8}
                                                             className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-3 md:h-3`}
                                                         />
                                                     ))}
                                                 </div>
-                                                <span className="text-[10px] md:text-xs font-bold text-slate-400">{(obat.rating || 4.5).toFixed(1)} / 5.0</span>
+                                                <span className="text-[8px] md:text-xs font-bold text-slate-400">{(obat.rating || 4.5).toFixed(1)}</span>
                                             </div>
 
-                                            <p className="text-[10px] md:text-xs text-slate-400 font-medium italic mb-6 line-clamp-3">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
+                                            <p className="hidden md:block text-[10px] md:text-xs text-slate-400 font-medium italic mb-6 line-clamp-3">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
 
-                                            <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
+                                            <div className="flex items-center justify-between pt-3 md:pt-6 border-t border-white/5 mt-auto">
                                                 <div>
-                                                    <p className="text-[8px] md:text-[9px] font-bold text-slate-500 md:text-slate-400 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
-                                                    <p className="text-lg md:text-2xl font-black text-cyan-400 tracking-tight leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
+                                                    <p className="text-[7px] md:text-[9px] font-bold text-slate-500 md:text-slate-400 uppercase tracking-widest mb-0.5 leading-none">HARGA</p>
+                                                    <p className="text-sm md:text-2xl font-black text-cyan-400 tracking-tight leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
                                                 </div>
                                                 <button
                                                     onClick={(e) => addToCart(obat, e)}
-                                                    className="w-10 h-10 md:w-14 md:h-14 bg-white/5 text-white rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10 border border-white/5"
+                                                    className="w-8 h-8 md:w-14 md:h-14 bg-white/5 text-white rounded-lg md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10 border border-white/5"
                                                 >
-                                                    <Plus size={18} className="md:w-6 md:h-6" />
+                                                    <Plus size={14} className="md:w-6 md:h-6" />
                                                 </button>
                                             </div>
                                         </div>
