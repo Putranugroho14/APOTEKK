@@ -189,9 +189,12 @@ const KatalogObatPage = () => {
       <footer className="bg-slate-950/80 backdrop-blur-xl text-white py-20 relative z-10 border-t border-white/5">
         <div className="container mx-auto px-6 text-center">
           <div className="flex justify-center gap-8 mb-12">
-            <Instagram className="text-slate-500 hover:text-cyan-400 transition cursor-pointer" size={24} />
-            <Facebook className="text-slate-500 hover:text-cyan-400 transition cursor-pointer" size={24} />
-            <Phone className="text-slate-500 hover:text-cyan-400 transition cursor-pointer" size={24} />
+            <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer"><Instagram className="text-slate-500 hover:text-cyan-400 transition cursor-pointer" size={24} /></a>
+            <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer"><Facebook className="text-slate-500 hover:text-cyan-400 transition cursor-pointer" size={24} /></a>
+            <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-2 group decoration-transparent">
+              <Phone className="text-slate-500 group-hover:text-cyan-400 transition cursor-pointer" size={24} />
+              <span className="text-slate-500 group-hover:text-cyan-400 font-bold transition text-sm">0813-9080-7472</span>
+            </a>
           </div>
           <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em]">© 2026 HADINATA PHARMACY GROUP • ALL RIGHTS RESERVED</p>
         </div>

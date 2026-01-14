@@ -512,7 +512,10 @@ const PublicPage = () => {
                             <div className="flex gap-6">
                                 <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-cyan-600 hover:-translate-y-2 transition-all duration-500"><Instagram size={24} /></a>
                                 <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-blue-600 hover:-translate-y-2 transition-all duration-500"><Facebook size={24} /></a>
-                                <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:-translate-y-2 transition-all duration-500"><Phone size={24} /></a>
+                                <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-white/5 px-5 py-4 rounded-2xl hover:bg-lime-500 hover:-translate-y-2 transition-all duration-500 group">
+                                    <Phone size={24} />
+                                    <span className="font-bold text-sm text-slate-300 group-hover:text-white transition-colors hidden md:block tracking-widest">0813-9080-7472</span>
+                                </a>
                             </div>
                         </div>
                         <div>

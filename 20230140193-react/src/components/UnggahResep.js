@@ -151,7 +151,7 @@ const UnggahResep = () => {
                                         type="text" required
                                         onChange={e => setFormData({ ...formData, nomor_wa: e.target.value })}
                                         className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl outline-none focus:bg-white/10 focus:ring-4 focus:ring-lime-500/10 focus:border-lime-500 transition-all font-bold text-sm text-white placeholder:text-slate-600"
-                                        placeholder="0812xxxx"
+                                        placeholder="0813xxxx"
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -196,7 +196,10 @@ const UnggahResep = () => {
                     <div className="flex justify-center gap-10 mb-10">
                         <a href="https://instagram.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"><Instagram size={24} /></a>
                         <a href="https://facebook.com/hadinata" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"><Facebook size={24} /></a>
-                        <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="text-slate-500 hover:text-cyan-400 cursor-pointer transition-all hover:scale-125"><Phone size={24} /></a>
+                        <a href="https://wa.me/6281390807472" target="_blank" rel="noreferrer" className="flex items-center gap-2 group text-slate-500 hover:text-cyan-400 transition-all">
+                            <Phone size={24} className="group-hover:scale-110 transition-transform" />
+                            <span className="font-bold text-sm">0813-9080-7472</span>
+                        </a>
                     </div>
                     <p className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em]">© 2026 APOTEK HADINATA • SECURE TELEPHARMACY SYSTEM</p>
                 </div>
