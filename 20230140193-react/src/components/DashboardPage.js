@@ -140,19 +140,19 @@ const DashboardPage = () => {
               <Menu size={24} />
             </button>
             <div className="flex-1 lg:flex-none">
-              <h2 className="text-xl md:text-4xl font-black tracking-tight text-white mb-1 md:mb-2 leading-tight">Selamat Datang, <span className="text-cyan-400">{adminData.nama}!</span></h2>
-              <p className="text-slate-400 font-medium text-[10px] md:text-base">Ringkasan performa apotek Anda hari ini.</p>
+              <h2 className="text-xl md:text-4xl font-black tracking-tight text-slate-900 mb-1 md:mb-2 leading-tight">Selamat Datang, <span className="text-cyan-600">{adminData.nama}!</span></h2>
+              <p className="text-slate-500 font-bold text-[10px] md:text-base">Ringkasan performa apotek Anda hari ini.</p>
             </div>
           </div>
           <div className="flex items-center gap-6 w-full md:w-auto justify-end">
-            <button className="hidden md:flex w-12 h-12 bg-white/5 rounded-2xl border border-white/10 items-center justify-center text-slate-400 shadow-sm hover:text-cyan-400 transition-colors relative">
+            <button className="hidden md:flex w-12 h-12 bg-white rounded-2xl border border-slate-200 items-center justify-center text-slate-400 shadow-sm hover:text-cyan-600 transition-colors relative">
               <Bell size={20} />
-              <span className="absolute top-3 right-3 w-2 h-2 bg-red-500 rounded-full border-2 border-slate-900"></span>
+              <span className="absolute top-3 right-3 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
             </button>
-            <div className="flex items-center gap-4 bg-white/5 p-2 pr-6 rounded-2xl border border-white/10 shadow-sm">
-              <div className="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center font-black">{adminData.nama[0]}</div>
+            <div className="flex items-center gap-4 bg-white p-2 pr-6 rounded-2xl border border-slate-200 shadow-sm">
+              <div className="w-10 h-10 bg-cyan-100 text-cyan-600 rounded-xl flex items-center justify-center font-black">{adminData.nama[0]}</div>
               <div className="text-left">
-                <p className="text-xs font-black text-white leading-none whitespace-nowrap">{adminData.nama}</p>
+                <p className="text-xs font-black text-slate-900 leading-none whitespace-nowrap">{adminData.nama}</p>
                 <p className="text-[10px] font-bold text-slate-500 mt-1 uppercase tracking-widest">{adminData.username}</p>
               </div>
             </div>
@@ -170,55 +170,55 @@ const DashboardPage = () => {
             <div key={i} className="glass-card-dark p-5 md:p-8 rounded-[24px] md:rounded-[40px] border border-white/10 shadow-sm hover:translate-y-[-5px] transition-all duration-500 group">
               <div className="flex justify-between items-start mb-4 md:mb-6">
                 <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:rotate-12
-                            ${s.color === 'cyan' ? 'bg-cyan-500/10 text-cyan-400' : s.color === 'lime' ? 'bg-lime-500/10 text-lime-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                            ${s.color === 'cyan' ? 'bg-cyan-100 text-cyan-600' : s.color === 'lime' ? 'bg-lime-100 text-lime-600' : 'bg-amber-100 text-amber-600'}`}>
                   <s.icon size={20} className="md:w-[26px] md:h-[26px]" />
                 </div>
               </div>
               <p className="text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1">{s.label}</p>
-              <h3 className="text-xl md:text-4xl font-black text-white tracking-tighter">{isLoading ? '...' : s.value}</h3>
+              <h3 className="text-xl md:text-4xl font-black text-slate-900 tracking-tighter">{isLoading ? '...' : s.value}</h3>
             </div>
           ))}
         </div>
 
         {/* RECENT ACTIVITY & QUICK ACTIONS */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2 glass-card-dark rounded-[40px] border border-white/5 shadow-2xl overflow-hidden">
-            <div className="p-8 border-b border-white/5 flex justify-between items-center bg-white/5">
-              <h3 className="text-xl font-black text-white tracking-tight">Resep Terbaru</h3>
-              <button onClick={() => navigate('/admin/resep')} className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.2em] hover:text-white transition-colors">Lihat Semua Laporan</button>
+          <div className="xl:col-span-2 glass-card-dark rounded-[40px] border border-slate-200/60 shadow-xl overflow-hidden bg-white/80">
+            <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-white/50">
+              <h3 className="text-xl font-black text-slate-900 tracking-tight">Resep Terbaru</h3>
+              <button onClick={() => navigate('/admin/resep')} className="text-[10px] font-black text-cyan-600 uppercase tracking-[0.2em] hover:text-slate-900 transition-colors">Lihat Semua Laporan</button>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="bg-white/5">
+                  <tr className="bg-slate-50/50">
                     <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Pasien</th>
                     <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Tanggal</th>
                     <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Status</th>
                     <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Aksi</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-slate-100">
                   {isLoading ? (
-                    [1, 2, 3].map(i => <tr key={i}><td colSpan="4" className="p-8"><div className="h-8 bg-white/5 rounded-2xl animate-pulse"></div></td></tr>)
+                    [1, 2, 3].map(i => <tr key={i}><td colSpan="4" className="p-8"><div className="h-8 bg-slate-100 rounded-2xl animate-pulse"></div></td></tr>)
                   ) : recentResep.map(r => (
-                    <tr key={r.id} className="hover:bg-white/5 transition-all duration-300 group">
+                    <tr key={r.id} className="hover:bg-slate-50 transition-all duration-300 group">
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-slate-500 font-bold group-hover:scale-110 group-hover:bg-cyan-500/20 group-hover:text-cyan-400 transition-all">{r.nama_lengkap[0]}</div>
-                          <div className="text-sm font-bold text-white tracking-tight">{r.nama_lengkap}</div>
+                          <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-500 font-bold group-hover:scale-110 group-hover:bg-cyan-100 group-hover:text-cyan-600 transition-all">{r.nama_lengkap[0]}</div>
+                          <div className="text-sm font-bold text-slate-900 tracking-tight">{r.nama_lengkap}</div>
                         </div>
                       </td>
-                      <td className="px-8 py-6 text-sm font-medium text-slate-400 italic font-serif">
+                      <td className="px-8 py-6 text-sm font-medium text-slate-500 italic font-serif">
                         {new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
                       </td>
                       <td className="px-8 py-6">
                         <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border
-                                            ${r.status === 'selesai' ? 'bg-lime-500/10 text-lime-400 border-lime-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
+                                            ${r.status === 'selesai' ? 'bg-lime-100 text-lime-700 border-lime-200' : 'bg-amber-100 text-amber-700 border-amber-200'}`}>
                           {r.status}
                         </span>
                       </td>
                       <td className="px-8 py-6">
-                        <button onClick={() => navigate('/admin/resep')} className="p-2 text-slate-600 hover:text-white transition-all transform hover:translate-x-1">
+                        <button onClick={() => navigate('/admin/resep')} className="p-2 text-slate-400 hover:text-cyan-600 transition-all transform hover:translate-x-1">
                           <ChevronRight size={20} />
                         </button>
                       </td>
@@ -230,17 +230,17 @@ const DashboardPage = () => {
           </div>
 
           <div className="space-y-8">
-            <div className="glass-card-dark p-8 rounded-[40px] border border-white/5 shadow-2xl relative overflow-hidden group">
+            <div className="glass-card-dark p-8 rounded-[40px] border border-slate-200/60 shadow-xl relative overflow-hidden group bg-white/80">
               <div className="relative z-10">
-                <h3 className="text-xl font-black text-white mb-8 tracking-tight">Aksi Cepat</h3>
+                <h3 className="text-xl font-black text-slate-900 mb-8 tracking-tight">Aksi Cepat</h3>
                 <div className="grid grid-cols-2 gap-4 md:gap-6">
-                  <button onClick={() => navigate('/obat')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-white/5 rounded-[24px] md:rounded-[32px] hover:bg-cyan-500/20 hover:text-white transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn">
-                    <div className="w-10 h-10 md:w-14 md:h-14 bg-white/5 rounded-xl md:rounded-2xl shadow-xl flex items-center justify-center group-hover/btn:scale-110 transition-all border border-white/10"><Plus size={20} className="text-cyan-400 md:w-6 md:h-6" /></div>
-                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover/btn:text-white">Tambah Obat</span>
+                  <button onClick={() => navigate('/obat')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-slate-50 rounded-[24px] md:rounded-[32px] hover:bg-cyan-50 hover:text-cyan-600 transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn border border-slate-100">
+                    <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-sm flex items-center justify-center group-hover/btn:scale-110 transition-all border border-slate-100"><Plus size={20} className="text-cyan-600 md:w-6 md:h-6" /></div>
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover/btn:text-cyan-700">Tambah Obat</span>
                   </button>
-                  <button onClick={() => navigate('/admin/resep')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-white/5 rounded-[24px] md:rounded-[32px] hover:bg-lime-500/20 hover:text-white transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn">
-                    <div className="w-10 h-10 md:w-14 md:h-14 bg-white/5 rounded-xl md:rounded-2xl shadow-xl flex items-center justify-center group-hover/btn:scale-110 transition-all border border-white/10"><Activity size={20} className="text-lime-400 md:w-6 md:h-6" /></div>
-                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover/btn:text-white">Cek Resep</span>
+                  <button onClick={() => navigate('/admin/resep')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-slate-50 rounded-[24px] md:rounded-[32px] hover:bg-lime-50 hover:text-lime-600 transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn border border-slate-100">
+                    <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-sm flex items-center justify-center group-hover/btn:scale-110 transition-all border border-slate-100"><Activity size={20} className="text-lime-600 md:w-6 md:h-6" /></div>
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover/btn:text-lime-700">Cek Resep</span>
                   </button>
                 </div>
               </div>
@@ -255,9 +255,9 @@ const DashboardPage = () => {
               </div>
             </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </div >
+      </main >
+    </div >
   );
 };
 

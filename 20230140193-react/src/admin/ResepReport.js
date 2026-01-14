@@ -137,7 +137,7 @@ const ResepReport = () => {
                 <div className="mt-auto pt-6 border-t border-white/5 relative z-10">
                     <button
                         onClick={handleLogout}
-                        className="w-full flex items-center justify-center gap-3 py-4 text-red-400 font-black text-xs uppercase tracking-widest bg-white/5 rounded-2xl hover:bg-red-500/20 transition-colors"
+                        className="w-full flex items-center justify-center gap-3 py-4 text-slate-400 font-black text-xs uppercase tracking-widest bg-white/5 rounded-2xl hover:bg-red-500/10 hover:text-red-500 transition-colors"
                     >
                         <LogOut size={16} /> Sign Out
                     </button>
@@ -160,39 +160,39 @@ const ResepReport = () => {
                             <Menu size={24} />
                         </button>
                         <div className="flex-1 lg:flex-none">
-                            <h2 className="text-2xl md:text-4xl font-black tracking-tight text-white mb-2 leading-tight underline decoration-cyan-500/30">Laporan <span className="text-cyan-400">Resep Digital</span></h2>
-                            <p className="text-slate-400 font-medium italic text-xs md:text-base">Validasi dan tindak lanjuti resep yang dikirim oleh pasien.</p>
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900 mb-2 leading-tight underline decoration-cyan-500/30">Laporan <span className="text-cyan-600">Resep Digital</span></h2>
+                            <p className="text-slate-500 font-bold italic text-xs md:text-base">Validasi dan tindak lanjuti resep yang dikirim oleh pasien.</p>
                         </div>
                     </div>
-                    <div className="glass-card-dark px-8 py-5 border border-white/10 rounded-[24px] shadow-2xl w-full md:w-auto">
-                        <p className="text-[10px] uppercase font-black text-slate-500 tracking-[0.3em] mb-1">Total Antrean</p>
-                        <p className="text-3xl font-black text-white tracking-widest leading-none">{reseps.length}</p>
+                    <div className="glass-card-dark px-8 py-5 border border-slate-200/60 rounded-[24px] shadow-xl w-full md:w-auto bg-white/80">
+                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.3em] mb-1">Total Antrean</p>
+                        <p className="text-3xl font-black text-slate-900 tracking-widest leading-none">{reseps.length}</p>
                     </div>
                 </div>
 
                 {/* Filters */}
-                <div className="glass-card-dark p-6 rounded-[40px] border border-white/5 mb-10 shadow-2xl flex flex-col md:flex-row gap-6">
+                <div className="glass-card-dark p-6 rounded-[40px] border border-slate-200/60 mb-10 shadow-xl flex flex-col md:flex-row gap-6 bg-white/80">
                     <div className="flex-1 relative">
-                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
+                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                         <input
                             type="text"
                             placeholder="Cari nama pasien atau WhatsApp..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-14 pr-8 py-5 bg-white/5 border border-white/10 rounded-[30px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all text-sm font-bold text-white placeholder-slate-600 shadow-inner"
+                            className="w-full pl-14 pr-8 py-5 bg-slate-50 border border-slate-200 rounded-[30px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all text-sm font-bold text-slate-900 placeholder-slate-400 shadow-inner"
                         />
                     </div>
-                    <button onClick={() => setSearchQuery("")} className="w-16 h-16 bg-white/5 border border-white/10 rounded-[30px] flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
+                    <button onClick={() => setSearchQuery("")} className="w-16 h-16 bg-slate-50 border border-slate-200 rounded-[30px] flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
                         <RefreshCw size={22} />
                     </button>
                 </div>
 
                 {/* Desktop Table Layout */}
-                <div className="hidden lg:block glass-card-dark rounded-[40px] border border-white/5 shadow-2xl overflow-hidden">
+                <div className="hidden lg:block glass-card-dark rounded-[40px] border border-slate-200/60 shadow-xl overflow-hidden bg-white/80">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-white/5">
+                                <tr className="bg-slate-50/50">
                                     <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Waktu & Tanggal</th>
                                     <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Informasi Pasien</th>
                                     <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Dokumen</th>
@@ -200,30 +200,30 @@ const ResepReport = () => {
                                     <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center">Tindakan</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5">
+                            <tbody className="divide-y divide-slate-100">
                                 {loading ? (
                                     [1, 2, 3].map(i => <tr key={i}><td colSpan="5" className="p-8"><div className="h-8 bg-slate-50 rounded-xl animate-pulse"></div></td></tr>)
                                 ) : filteredReseps.length === 0 ? (
                                     <tr><td colSpan="5" className="p-20 text-center text-slate-400 italic">Tidak ada data resep ditemukan.</td></tr>
                                 ) : (
                                     filteredReseps.map(r => (
-                                        <tr key={r.id} className="hover:bg-white/5 transition-all duration-300 group">
+                                        <tr key={r.id} className="hover:bg-slate-50 transition-all duration-300 group">
                                             <td className="p-8">
                                                 <div className="flex items-center gap-5">
-                                                    <div className="w-12 h-12 bg-white/5 border border-white/10 text-cyan-400 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all">
+                                                    <div className="w-12 h-12 bg-slate-100 border border-slate-200 text-cyan-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-cyan-100 transition-all">
                                                         <Calendar size={20} />
                                                     </div>
                                                     <div>
-                                                        <p className="text-sm font-black text-white tracking-tight">{new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</p>
-                                                        <p className="text-[10px] font-black text-slate-500 flex items-center gap-1 uppercase tracking-widest"><Clock size={10} /> {new Date(r.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
+                                                        <p className="text-sm font-black text-slate-900 tracking-tight">{new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</p>
+                                                        <p className="text-[10px] font-black text-slate-400 flex items-center gap-1 uppercase tracking-widest"><Clock size={10} /> {new Date(r.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="p-8">
                                                 <div className="flex flex-col">
-                                                    <p className="text-base font-black text-white mb-1 tracking-tight">{r.nama_lengkap}</p>
-                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-lime-400 tracking-wider">
-                                                        <div className="w-2 h-2 bg-lime-400 rounded-full animate-pulse"></div> {r.nomor_wa}
+                                                    <p className="text-base font-black text-slate-900 mb-1 tracking-tight">{r.nama_lengkap}</p>
+                                                    <div className="flex items-center gap-2 text-[10px] font-bold text-lime-600 tracking-wider">
+                                                        <div className="w-2 h-2 bg-lime-500 rounded-full animate-pulse"></div> {r.nomor_wa}
                                                     </div>
                                                 </div>
                                             </td>
@@ -231,12 +231,12 @@ const ResepReport = () => {
                                                 <a
                                                     href={r.foto_resep}
                                                     target="_blank" rel="noreferrer"
-                                                    className="inline-flex items-center gap-3 text-xs font-black text-cyan-400 hover:text-white transition-all group/link"
+                                                    className="inline-flex items-center gap-3 text-xs font-black text-cyan-600 hover:text-slate-900 transition-all group/link"
                                                 >
-                                                    <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center group-hover/link:bg-white/10 transition-all">
+                                                    <div className="w-10 h-10 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-center group-hover/link:bg-white transition-all">
                                                         <Eye size={16} />
                                                     </div>
-                                                    <span className="underline underline-offset-8 decoration-cyan-400/30">Detail Foto</span>
+                                                    <span className="underline underline-offset-8 decoration-cyan-500/30">Detail Foto</span>
                                                 </a>
                                             </td>
                                             <td className="p-8">
