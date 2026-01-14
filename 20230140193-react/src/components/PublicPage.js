@@ -585,22 +585,22 @@ const PublicPage = () => {
                                 <span className="ml-3 text-slate-400 font-bold text-sm tracking-widest">({(selectedProduct.rating || 4.5).toFixed(1)})</span>
                             </div>
 
-                            <h3 className="text-4xl md:text-6xl font-black text-slate-900 mb-8 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
+                            <h3 className="text-2xl md:text-4xl font-black text-slate-900 mb-6 tracking-tighter leading-tight">{selectedProduct.nama_obat}</h3>
 
-                            <div className="relative pl-8 border-l-4 border-[#0097b2] mb-12">
-                                <p className="text-slate-500 text-base md:text-lg font-medium leading-relaxed italic pr-4">
+                            <div className="relative pl-6 border-l-4 border-[#0097b2] mb-8">
+                                <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed italic pr-4">
                                     {selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi dikembangkan untuk pemulihan yang efektif dan aman.'}
                                 </p>
                             </div>
 
-                            <div className="flex flex-row gap-4 md:gap-8 mb-12">
-                                <div className="bg-white p-6 md:p-8 rounded-[30px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
-                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Harga Unit</p>
-                                    <p className="text-2xl md:text-4xl font-black text-[#0097b2] tracking-tighter truncate w-full">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+                            <div className="flex flex-row gap-4 md:gap-6 mb-8">
+                                <div className="bg-white p-5 md:p-6 rounded-[24px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
+                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Harga Unit</p>
+                                    <p className="text-lg md:text-2xl font-black text-[#0097b2] tracking-tighter w-full">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                                 </div>
-                                <div className="bg-white p-6 md:p-8 rounded-[30px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
-                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Sedia Stok</p>
-                                    <p className="text-2xl md:text-4xl font-black text-slate-800 tracking-tighter truncate w-full">{selectedProduct.stok} <span className="text-xs text-slate-400 uppercase">Unit</span></p>
+                                <div className="bg-white p-5 md:p-6 rounded-[24px] shadow-[0_15px_30px_-5px_rgba(0,0,0,0.05)] border border-slate-50 flex-1 flex flex-col items-start min-w-0">
+                                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-2">Sedia Stok</p>
+                                    <p className="text-lg md:text-2xl font-black text-slate-800 tracking-tighter w-full">{selectedProduct.stok} <span className="text-[10px] text-slate-400 uppercase ml-1">Unit</span></p>
                                 </div>
                             </div>
 
