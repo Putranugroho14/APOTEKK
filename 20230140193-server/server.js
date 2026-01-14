@@ -40,11 +40,13 @@ db.sequelize.sync({ alter: true })
   })
   .catch(err => console.error("Database sync failed:", err));
 
-// Middleware
 app.use(cors({
-  origin: "*", // Allow all for debugging CORS 
+  origin: function (origin, callback) {
+    callback(null, true);
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+  credentials: true
 }));
 
 // Handle preflight requests specifically
