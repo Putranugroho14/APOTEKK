@@ -65,7 +65,7 @@ exports.getAllObat = async (req, res) => {
       where,
       order: [['createdAt', 'DESC']]
     });
-    return res.json(obats);
+    return res.json({ data: obats });
   } catch (error) {
     console.error("Error in getAllObat:", error);
     return res.status(500).json({
@@ -81,7 +81,7 @@ exports.getObatById = async (req, res) => {
   try {
     const obat = await Obat.findByPk(req.params.id);
     if (!obat) return res.status(404).json({ message: "Obat tidak ditemukan" });
-    return res.json(obat);
+    return res.json({ data: obat });
   } catch (error) {
     console.error("Error in getObatById:", error);
     return res.status(500).json({
