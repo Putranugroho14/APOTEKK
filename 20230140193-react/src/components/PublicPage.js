@@ -217,16 +217,13 @@ const PublicPage = () => {
 
                 {/* MOBILE MENU DRAWER */}
                 <div className={`fixed inset-0 z-[110] lg:hidden transition-all duration-500 ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="absolute inset-0 bg-slate-950/98 backdrop-blur-3xl" onClick={() => setIsMenuOpen(false)}></div>
-                    <div className={`absolute top-0 right-0 w-[80%] h-full bg-slate-950 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-8 flex flex-col z-[111]`}>
-                        <div className="flex justify-between items-center mb-16 border-b border-white/5 pb-8">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 bg-white rounded-lg p-1.5"><img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" /></div>
-                                <span className="font-black text-white text-xs tracking-tighter uppercase">Menu Navigasi</span>
-                            </div>
-                            <button onClick={() => setIsMenuOpen(false)} className="text-white w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl"><X size={20} /></button>
+                    <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl" onClick={() => setIsMenuOpen(false)}></div>
+                    <div className={`absolute top-0 right-0 w-[65%] sm:w-[50%] h-full bg-slate-950 border-l border-white/5 shadow-2xl transition-transform duration-500 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'} p-6 md:p-10 flex flex-col z-[111]`}>
+                        <div className="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
+                            <span className="font-black text-white text-[10px] tracking-widest uppercase opacity-40">Menu</span>
+                            <button onClick={() => setIsMenuOpen(false)} className="text-white w-10 h-10 flex items-center justify-center bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition-all"><X size={18} /></button>
                         </div>
-                        <nav className="flex flex-col gap-10">
+                        <nav className="flex flex-col gap-6">
                             {[
                                 { name: 'Beranda', type: 'scroll', target: 'beranda' },
                                 { name: 'Katalog Produk', type: 'link', path: '/katalog' },
@@ -237,26 +234,26 @@ const PublicPage = () => {
                                     <button
                                         key={item.name}
                                         onClick={() => scrollTo(item.target)}
-                                        className="text-left text-3xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all flex items-center justify-between group"
+                                        className="text-left text-xl font-bold uppercase tracking-tight text-slate-300 hover:text-cyan-400 transition-all flex items-center justify-between group"
                                     >
                                         {item.name}
-                                        <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all text-cyan-500" size={24} />
+                                        <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-cyan-500" size={18} />
                                     </button>
                                 ) : (
                                     <Link
                                         key={item.name}
                                         to={item.path}
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="text-left text-3xl font-black uppercase tracking-tighter text-white hover:text-cyan-400 transition-all flex items-center justify-between group"
+                                        className="text-left text-xl font-bold uppercase tracking-tight text-slate-300 hover:text-cyan-400 transition-all flex items-center justify-between group"
                                     >
                                         {item.name}
-                                        <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all text-cyan-500" size={24} />
+                                        <ArrowRight className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-cyan-500" size={18} />
                                     </Link>
                                 )
                             ))}
                         </nav>
-                        <div className="mt-auto pt-10 border-t border-white/5 uppercase text-[8px] font-black tracking-[0.4em] text-slate-700">
-                            Apotek Hadinata <br /> Established 2026
+                        <div className="mt-auto pt-8 border-t border-white/5 text-[7px] font-bold uppercase tracking-[0.4em] text-slate-600">
+                            Apotek Hadinata <br /> &copy; 2026
                         </div>
                     </div>
                 </div>
