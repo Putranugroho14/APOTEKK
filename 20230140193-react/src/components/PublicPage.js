@@ -392,7 +392,7 @@ const PublicPage = () => {
                                     {(obats.length < 5 ? obats : [...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10), ...obats.slice(0, 10)]).map((obat, idx) => (
                                         <div
                                             key={`${obat.id}-${idx}`}
-                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] sm:min-w-[calc(50%-1rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[24px] md:rounded-[40px] p-3 md:p-6 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
+                                            className={`${obats.length > 4 ? 'min-w-[calc(50%-0.5rem)] sm:min-w-[calc(50%-1rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.5rem)]' : 'w-[calc(50%-0.5rem)] sm:w-[calc(50%-1rem)] md:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.5rem)]'} shrink-0 group glass-card-dark rounded-[24px] md:rounded-[40px] p-4 md:p-8 border border-white/10 shadow-sm transition-all duration-500 hover:-translate-y-2 flex flex-col`}
                                         >
                                             <div className="relative h-32 md:h-56 mb-4 md:mb-8 overflow-hidden rounded-[16px] md:rounded-[32px] cursor-pointer" onClick={() => setSelectedProduct(obat)}>
                                                 <img
@@ -412,29 +412,31 @@ const PublicPage = () => {
                                                 {obat.nama_obat}
                                             </h4>
 
-                                            <div className="flex items-center gap-3 mb-6">
+                                            <div className="flex items-center gap-3 mb-4">
                                                 <div className="flex gap-1">
                                                     {[1, 2, 3, 4, 5].map(s => (
                                                         <Star
                                                             key={s}
-                                                            size={12}
-                                                            className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-4 md:h-4`}
+                                                            size={10}
+                                                            className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-700 text-slate-700"} md:w-3 md:h-3`}
                                                         />
                                                     ))}
                                                 </div>
                                                 <span className="text-[10px] md:text-xs font-bold text-slate-400">{(obat.rating || 4.5).toFixed(1)} / 5.0</span>
                                             </div>
 
+                                            <p className="text-[10px] md:text-xs text-slate-400 font-medium italic mb-6 line-clamp-3">"{obat.deskripsi || 'Produk farmasi berkualitas premium'}"</p>
+
                                             <div className="flex items-center justify-between pt-4 md:pt-6 border-t border-white/5 mt-auto">
                                                 <div>
-                                                    <p className="text-[8px] md:text-[9px] font-black text-slate-400 md:text-slate-300 uppercase tracking-widest mb-1">HARGA TERBAIK</p>
-                                                    <p className="text-xl md:text-2xl font-black text-cyan-400 tracking-tight">Rp{Number(obat.harga).toLocaleString()}</p>
+                                                    <p className="text-[8px] md:text-[9px] font-bold text-slate-500 md:text-slate-400 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
+                                                    <p className="text-lg md:text-2xl font-black text-cyan-400 tracking-tight leading-none">Rp{Number(obat.harga).toLocaleString()}</p>
                                                 </div>
                                                 <button
                                                     onClick={(e) => addToCart(obat, e)}
-                                                    className="w-12 h-12 md:w-14 md:h-14 bg-white/5 text-white rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10"
+                                                    className="w-10 h-10 md:w-14 md:h-14 bg-white/5 text-white rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-lime-500 hover:rotate-6 active:scale-95 transition-all shadow-xl shadow-cyan-900/10 border border-white/5"
                                                 >
-                                                    <Plus size={20} className="md:w-6 md:h-6" />
+                                                    <Plus size={18} className="md:w-6 md:h-6" />
                                                 </button>
                                             </div>
                                         </div>
