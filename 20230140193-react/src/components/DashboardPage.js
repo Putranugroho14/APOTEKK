@@ -19,6 +19,7 @@ const DashboardPage = () => {
   const [recentResep, setRecentResep] = useState([]);
   const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
   const [isLoading, setIsLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
   const decodeToken = (token) => {
@@ -90,16 +91,21 @@ const DashboardPage = () => {
       <Particles count={60} opacity={0.25} speed={0.4} />
 
       {/* SIDEBAR */}
-      <aside className="w-80 bg-slate-900/60 backdrop-blur-xl border-r border-white/5 flex flex-col p-6 sticky top-0 h-screen z-50">
-        <div className="flex items-center gap-4 mb-12 px-2">
-          <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
-            <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
-              onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
+      <aside className={`fixed lg:sticky top-0 left-0 h-screen w-80 bg-slate-900/90 lg:bg-slate-900/60 backdrop-blur-3xl lg:backdrop-blur-xl border-r border-white/10 flex flex-col p-6 z-[100] transition-transform duration-500 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+        <div className="flex items-center justify-between mb-12 px-2">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
+              <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
+                onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
+            </div>
+            <div>
+              <h1 className="text-xl font-black tracking-tight leading-none text-white">APOTEK <br /><span className="text-cyan-400">HADINATA</span></h1>
+              <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mt-1">Admin Panel</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-black tracking-tight leading-none text-white">APOTEK <br /><span className="text-cyan-400">HADINATA</span></h1>
-            <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mt-1">Admin Panel</p>
-          </div>
+          <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
+            <X size={24} />
+          </button>
         </div>
 
         <div className="space-y-2 flex-1 relative z-10">
@@ -118,22 +124,35 @@ const DashboardPage = () => {
         </div>
       </aside>
 
+      {/* OVERLAY FOR MOBILE SIDEBAR */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[90] lg:hidden animate-fade-in"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* MAIN CONTENT */}
       <main className="flex-1 p-8 md:p-12 overflow-y-auto relative z-10">
-        <header className="flex justify-between items-center mb-12">
-          <div>
-            <h2 className="text-4xl font-black tracking-tight text-white mb-2">Selamat Datang, <span className="text-cyan-400">{adminData.nama}!</span></h2>
-            <p className="text-slate-400 font-medium">Ini adalah ringkasan performa apotek Anda hari ini.</p>
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
+          <div className="flex items-center justify-between w-full md:w-auto">
+            <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden w-12 h-12 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center text-white mr-4">
+              <Menu size={24} />
+            </button>
+            <div className="flex-1 lg:flex-none">
+              <h2 className="text-2xl md:text-4xl font-black tracking-tight text-white mb-2 leading-tight">Selamat Datang, <span className="text-cyan-400">{adminData.nama}!</span></h2>
+              <p className="text-slate-400 font-medium text-xs md:text-base">Ini adalah ringkasan performa apotek Anda hari ini.</p>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <button className="w-12 h-12 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center text-slate-400 shadow-sm hover:text-cyan-400 transition-colors relative">
+          <div className="flex items-center gap-6 w-full md:w-auto justify-end">
+            <button className="hidden md:flex w-12 h-12 bg-white/5 rounded-2xl border border-white/10 items-center justify-center text-slate-400 shadow-sm hover:text-cyan-400 transition-colors relative">
               <Bell size={20} />
               <span className="absolute top-3 right-3 w-2 h-2 bg-red-500 rounded-full border-2 border-slate-900"></span>
             </button>
             <div className="flex items-center gap-4 bg-white/5 p-2 pr-6 rounded-2xl border border-white/10 shadow-sm">
               <div className="w-10 h-10 bg-cyan-500/20 text-cyan-400 rounded-xl flex items-center justify-center font-black">{adminData.nama[0]}</div>
               <div className="text-left">
-                <p className="text-xs font-black text-white leading-none">{adminData.nama}</p>
+                <p className="text-xs font-black text-white leading-none whitespace-nowrap">{adminData.nama}</p>
                 <p className="text-[10px] font-bold text-slate-500 mt-1 uppercase tracking-widest">{adminData.username}</p>
               </div>
             </div>

@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'resep_apotek',
-        allowed_formats: ['jpg', 'png', 'jpeg'],
+        allowed_formats: ['jpg', 'png', 'jpeg', 'heic', 'heif', 'webp'],
         public_id: (req, file) => `RESEP-${Date.now()}`
     },
 });

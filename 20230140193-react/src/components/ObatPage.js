@@ -4,7 +4,7 @@ import axios from "axios";
 import {
     Trash2, Edit3, Plus, X, Package, Image as ImageIcon, Layers,
     ArrowLeft, Pill, Search, Filter, RefreshCw, LayoutDashboard,
-    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff
+    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff, Menu
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
@@ -38,6 +38,7 @@ const ObatPage = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedKategori, setSelectedKategori] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [editingObat, setEditingObat] = useState(null);
     const [formData, setFormData] = useState({
         nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", is_published: true
@@ -124,16 +125,21 @@ const ObatPage = () => {
 
             <Particles count={60} opacity={0.25} speed={0.4} />
             {/* SIDEBAR */}
-            <aside className="w-80 bg-slate-900/60 backdrop-blur-xl border-r border-white/5 flex flex-col p-6 sticky top-0 h-screen z-50">
-                <div className="flex items-center gap-4 mb-12 px-2">
-                    <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
-                        <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
-                            onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
+            <aside className={`fixed lg:sticky top-0 left-0 h-screen w-80 bg-slate-900/90 lg:bg-slate-900/60 backdrop-blur-3xl lg:backdrop-blur-xl border-r border-white/10 flex flex-col p-6 z-[100] transition-transform duration-500 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+                <div className="flex items-center justify-between mb-12 px-2">
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
+                            <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
+                                onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-black tracking-tight leading-none text-white">APOTEK <br /><span className="text-cyan-400">HADINATA</span></h1>
+                            <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mt-1">Admin Panel</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="text-xl font-black tracking-tight leading-none text-white">APOTEK <br /><span className="text-cyan-400">HADINATA</span></h1>
-                        <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mt-1">Admin Panel</p>
-                    </div>
+                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
+                        <X size={24} />
+                    </button>
                 </div>
 
                 <div className="space-y-2 flex-1 relative z-10">
@@ -152,16 +158,29 @@ const ObatPage = () => {
                 </div>
             </aside>
 
+            {/* OVERLAY FOR MOBILE SIDEBAR */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[90] lg:hidden animate-fade-in"
+                    onClick={() => setIsSidebarOpen(false)}
+                ></div>
+            )}
+
             {/* MAIN CONTENT */}
             <main className="flex-1 p-8 md:p-12 overflow-y-auto relative z-10">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
-                    <div>
-                        <h2 className="text-4xl font-black tracking-tight text-white mb-2 underline decoration-cyan-500/30">Manajemen <span className="text-cyan-400">Katalog Obat</span></h2>
-                        <p className="text-slate-400 font-medium italic">Update stok, harga, dan informasi obat secara real-time.</p>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
+                    <div className="flex items-center justify-between w-full md:w-auto">
+                        <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden w-12 h-12 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center text-white mr-4">
+                            <Menu size={24} />
+                        </button>
+                        <div className="flex-1 lg:flex-none">
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight text-white mb-2 leading-tight underline decoration-cyan-500/30">Manajemen <span className="text-cyan-400">Katalog Obat</span></h2>
+                            <p className="text-slate-400 font-medium italic text-xs md:text-base">Update stok, harga, dan informasi obat secara real-time.</p>
+                        </div>
                     </div>
                     <button
                         onClick={() => { setShowAddForm(true); setEditingObat(null); }}
-                        className="px-10 py-5 premium-gradient text-white font-black rounded-2xl shadow-[0_20px_40px_-10px_rgba(6,182,212,0.5)] hover:scale-[1.05] active:scale-[0.95] transition-all flex items-center gap-4 uppercase tracking-[0.2em] text-[10px]"
+                        className="w-full md:w-auto px-10 py-5 premium-gradient text-white font-black rounded-2xl shadow-[0_20px_40px_-10px_rgba(6,182,212,0.5)] hover:scale-[1.05] active:scale-[0.95] transition-all flex items-center justify-center gap-4 uppercase tracking-[0.2em] text-[10px]"
                     >
                         <Plus size={20} /> Tambah Item Baru
                     </button>
@@ -262,8 +281,8 @@ const ObatPage = () => {
 
             {/* MODAL FORM */}
             {showAddForm && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-slate-950/80 backdrop-blur-xl animate-fade-in" onClick={() => setShowAddForm(false)}>
-                    <div className="glass-card-dark bg-slate-900/90 w-full max-w-2xl rounded-[60px] overflow-hidden shadow-[0_0_100px_rgba(6,182,212,0.2)] border border-white/10 animate-slide-in-up" onClick={e => e.stopPropagation()}>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl animate-fade-in" onClick={() => setShowAddForm(false)}>
+                    <div className="glass-card-dark bg-slate-900/90 w-full max-w-2xl rounded-[30px] md:rounded-[60px] overflow-hidden shadow-[0_0_100px_rgba(6,182,212,0.2)] border border-white/10 animate-slide-in-up" onClick={e => e.stopPropagation()}>
                         <div className="p-10 border-b border-white/5 flex justify-between items-center bg-white/5">
                             <div>
                                 <h3 className="text-3xl font-black tracking-tight text-white mb-1 uppercase">{editingObat ? 'Edit Produk' : 'Tambah Baru'}</h3>

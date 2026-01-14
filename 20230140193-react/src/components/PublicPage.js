@@ -158,15 +158,15 @@ const PublicPage = () => {
             {/* NAV BAR */}
             <header className={`fixed top-0 left-0 right-0 z-[70] transition-all duration-500 ${scrolled ? 'py-5 bg-slate-900/90 backdrop-blur-2xl border-b border-white/5 shadow-2xl' : 'py-10 bg-transparent'}`}>
                 <div className="container mx-auto px-6 flex justify-between items-center">
-                    <div className="flex items-center gap-6 group cursor-pointer" onClick={scrollToTop}>
-                        <div className={`transition-all duration-500 ${scrolled ? 'w-12 h-12' : 'w-16 h-16'} bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 group-hover:rotate-6`}>
+                    <div className="flex items-center gap-3 md:gap-6 group cursor-pointer" onClick={scrollToTop}>
+                        <div className={`transition-all duration-500 ${scrolled ? 'w-10 h-10' : 'w-12 h-12 md:w-16 h-16'} bg-white rounded-xl md:rounded-2xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-50 group-hover:rotate-6`}>
                             <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
                         </div>
                         <div>
-                            <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-2xl' : 'text-4xl'} text-white`}>
+                            <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-lg md:text-2xl' : 'text-xl md:text-4xl'} text-white`}>
                                 APOTEK <span className="text-cyan-400">HADINATA</span>
                             </h1>
-                            <p className={`text-[11px] font-black text-slate-500 uppercase tracking-[0.5em] mt-2 transition-all duration-500 ${scrolled ? 'opacity-0 h-0' : 'opacity-100'}`}>The Standard of Care</p>
+                            <p className={`text-[9px] md:text-[11px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.5em] mt-1 md:mt-2 transition-all duration-500 ${scrolled ? 'opacity-0 h-0' : 'opacity-100'}`}>The Standard of Care</p>
                         </div>
                     </div>
 
@@ -235,20 +235,20 @@ const PublicPage = () => {
 
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="max-w-4xl">
-                        <div className="relative h-[280px] md:h-[350px]">
+                        <div className="relative h-[320px] md:h-[400px]">
                             {missionSlides.map((slide, idx) => (
                                 <div
                                     key={idx}
                                     className={`absolute top-0 left-0 w-full transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] transform
                                         ${idx === currentMissionSlide ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}
                                 >
-                                    <h2 className="text-4xl md:text-8xl font-black text-white leading-[0.9] mb-8 tracking-tighter">
+                                    <h2 className="text-3xl md:text-8xl font-black text-white leading-[1] md:leading-[0.9] mb-6 md:mb-8 tracking-tighter">
                                         {slide.title} <br />
                                         <span className={`bg-gradient-to-r ${slide.accent} bg-clip-text text-transparent`}>
                                             {slide.subtitle}
                                         </span>
                                     </h2>
-                                    <p className="text-slate-400 text-lg md:text-xl max-w-2xl font-medium leading-relaxed">
+                                    <p className="text-slate-400 text-sm md:text-xl max-w-2xl font-medium leading-relaxed">
                                         {slide.content}
                                     </p>
                                 </div>
