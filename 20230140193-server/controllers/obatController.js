@@ -3,12 +3,12 @@ const Obat = db.Obat;
 const User = db.User;
 const { body, validationResult } = require("express-validator");
 
-// Validasi Input (Lebih toleran untuk FormData)
+// Validasi Input (Diberi prefix unik untuk tes koneksi)
 exports.validateObat = [
-  body("nama_obat").trim().notEmpty().withMessage("Nama obat tidak boleh kosong"),
-  body("deskripsi").trim().notEmpty().withMessage("Deskripsi tidak boleh kosong"),
-  body("harga").custom((val) => !isNaN(parseFloat(val))).withMessage("Harga harus berupa angka"),
-  body("stok").custom((val) => !isNaN(parseInt(val))).withMessage("Stok harus berupa angka"),
+  body("nama_obat").trim().notEmpty().withMessage("VERIFIKASI-BARU: Nama obat tidak boleh kosong"),
+  body("deskripsi").trim().notEmpty().withMessage("VERIFIKASI-BARU: Deskripsi tidak boleh kosong"),
+  body("harga").custom((val) => !isNaN(parseFloat(val))).withMessage("VERIFIKASI-BARU: Harga harus berupa angka"),
+  body("stok").custom((val) => !isNaN(parseInt(val))).withMessage("VERIFIKASI-BARU: Stok harus berupa angka"),
 ];
 
 // 1. Create Obat (Menambahkan dukungan is_published & Upload Gambar)
@@ -102,14 +102,14 @@ exports.getObatById = async (req, res) => {
 exports.updateObat = async (req, res) => {
   console.log("REQ.BODY:", JSON.stringify(req.body, null, 2));
   console.log("REQ.PARAMS:", JSON.stringify(req.params, null, 2));
-  const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.error("VALIDATION ERROR (UPDATE):", JSON.stringify(errors.array(), null, 2));
-    console.log("BODY RECEIVED:", JSON.stringify(req.body, null, 2));
+    console.error("SERVER-SIDE-DEBUG: Validation failed.");
     return res.status(400).json({
-      message: "Gagal Validasi Data",
+      status: "fail",
+      message: "Gagal Validasi Data (Versi Terbaru)",
       errors: errors.array(),
-      received: req.body
+      info: "Jika Anda melihat pesan ini, berarti Anda sudah memanggil backend yang BENAR.",
+      received_keys: Object.keys(req.body)
     });
   }
 
