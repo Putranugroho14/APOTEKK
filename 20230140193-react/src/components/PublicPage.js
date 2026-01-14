@@ -162,12 +162,9 @@ const PublicPage = () => {
                         <div className={`transition-all duration-500 ${scrolled ? 'w-8 h-8 md:w-10 h-10' : 'w-10 h-10 md:w-14 h-14'} bg-white rounded-xl shadow-xl flex items-center justify-center p-1.5 md:p-2 border border-slate-50 group-hover:rotate-6`}>
                             <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
                         </div>
-                        <div>
-                            <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-base md:text-2xl' : 'text-lg md:text-4xl'} text-white`}>
-                                APOTEK <span className="text-cyan-400">HADINATA</span>
-                            </h1>
-                            <p className={`text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] md:tracking-[0.6em] mt-4 md:mt-6 transition-all duration-500 ${scrolled ? 'opacity-0 h-0 hidden' : 'opacity-100'}`}>The Standard of Care</p>
-                        </div>
+                        <h1 className={`font-black tracking-tighter leading-none transition-all duration-500 ${scrolled ? 'text-base md:text-2xl' : 'text-lg md:text-4xl'} text-white`}>
+                            APOTEK <span className="text-cyan-400">HADINATA</span>
+                        </h1>
                     </div>
 
                     <nav className="hidden lg:flex items-center gap-12">
@@ -531,10 +528,7 @@ const PublicPage = () => {
                                 <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center p-2 shadow-2xl">
                                     <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" />
                                 </div>
-                                <div>
-                                    <h2 className="text-2xl md:text-3xl font-black tracking-tighter">APOTEK <span className="text-cyan-500">HADINATA</span></h2>
-                                    <p className="text-[9px] font-bold text-slate-500 uppercase tracking-[0.4em] mt-1">The Standard of Care</p>
-                                </div>
+                                <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-white">APOTEK <span className="text-cyan-500">HADINATA</span></h2>
                             </div>
                             <p className="text-slate-500 font-bold leading-loose text-lg max-w-xl mb-12 italic">
                                 "Membangun akses kesehatan digital yang lebih manusiawi, cepat, dan terpercaya untuk seluruh lapisan masyarakat."
