@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
     Trash2, Plus, X, Package,
-    Pill, Search, LayoutDashboard,
+    Pill, Search, LayoutDashboard, RefreshCw,
     FileText, LogOut, Save, Eye, EyeOff, Menu, Upload, ShoppingCart
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
@@ -37,6 +37,10 @@ const ObatPage = () => {
     const navigate = useNavigate();
     const [obats, setObats] = useState([]);
     const [filteredObats, setFilteredObats] = useState([]);
+    const [showAddForm, setShowAddForm] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedKategori, setSelectedKategori] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [editingObat, setEditingObat] = useState(null);
     const [formData, setFormData] = useState(initialFormState);
