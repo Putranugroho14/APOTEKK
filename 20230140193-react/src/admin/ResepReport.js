@@ -103,7 +103,7 @@ const ResepReport = () => {
     );
 
     return (
-        <div className="flex min-h-screen bg-mesh font-sans text-white relative overflow-hidden">
+        <div className="flex min-h-screen bg-mesh font-sans text-slate-900 relative overflow-hidden">
             {/* BACKGROUND DECORATIONS */}
             <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none"></div>
             <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[150px] animate-pulse-glow pointer-events-none"></div>
@@ -111,19 +111,19 @@ const ResepReport = () => {
 
             <Particles count={70} opacity={0.3} speed={0.4} />
             {/* SIDEBAR */}
-            <aside className={`fixed lg:sticky top-0 left-0 h-screen w-80 bg-slate-900/90 lg:bg-slate-900/60 backdrop-blur-3xl lg:backdrop-blur-xl border-r border-white/10 flex flex-col p-6 z-[100] transition-transform duration-500 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+            <aside className={`fixed lg:sticky top-0 left-0 h-screen w-80 bg-white border-r border-slate-200 flex flex-col p-6 z-[100] transition-transform duration-500 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
                 <div className="flex items-center justify-between mb-12 px-2">
                     <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white rounded-2xl shadow-xl flex items-center justify-center p-2 border border-slate-50 rotate-3">
-                            <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain"
+                        <div className="w-12 h-12 bg-cyan-500 text-white rounded-2xl shadow-lg flex items-center justify-center p-2 rotate-3">
+                            <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain brightness-0 invert"
                                 onError={(e) => e.target.src = "https://cdn-icons-png.flaticon.com/512/3063/3063067.png"} />
                         </div>
                         <div>
-                            <h1 className="text-xl font-black tracking-tight leading-none text-white">APOTEK <br /><span className="text-cyan-400">HADINATA</span></h1>
-                            <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mt-1">Admin Panel</p>
+                            <h1 className="text-xl font-black tracking-tight leading-none text-slate-900">APOTEK <br /><span className="text-cyan-500">HADINATA</span></h1>
+                            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mt-1">Admin Panel</p>
                         </div>
                     </div>
-                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
+                    <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-slate-900">
                         <X size={24} />
                     </button>
                 </div>
@@ -135,10 +135,10 @@ const ResepReport = () => {
                     <SidebarItem icon={ShoppingCart} label="Laporan Penjualan" path="/admin/penjualan" />
                 </div>
 
-                <div className="mt-auto pt-6 border-t border-white/5 relative z-10">
+                <div className="mt-auto pt-6 border-t border-slate-100 relative z-10">
                     <button
                         onClick={handleLogout}
-                        className="w-full flex items-center justify-center gap-3 py-4 text-slate-400 font-black text-xs uppercase tracking-widest bg-white/5 rounded-2xl hover:bg-red-500/10 hover:text-red-500 transition-colors"
+                        className="w-full flex items-center justify-center gap-3 py-4 text-red-500 font-black text-xs uppercase tracking-widest bg-red-50 rounded-2xl hover:bg-red-100 transition-colors"
                     >
                         <LogOut size={16} /> Sign Out
                     </button>
@@ -148,7 +148,7 @@ const ResepReport = () => {
             {/* OVERLAY FOR MOBILE SIDEBAR */}
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[90] lg:hidden animate-fade-in"
+                    className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[90] lg:hidden animate-fade-in"
                     onClick={() => setIsSidebarOpen(false)}
                 ></div>
             )}
@@ -157,7 +157,7 @@ const ResepReport = () => {
             <main className="flex-1 p-8 md:p-12 overflow-y-auto relative z-10">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-8">
                     <div className="flex items-center justify-between w-full md:w-auto">
-                        <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden w-12 h-12 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-center text-white mr-4">
+                        <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden w-12 h-12 bg-white rounded-2xl border border-slate-200 flex items-center justify-center text-slate-600 mr-4 shadow-sm">
                             <Menu size={24} />
                         </button>
                         <div className="flex-1 lg:flex-none">
@@ -242,7 +242,7 @@ const ResepReport = () => {
                                             </td>
                                             <td className="p-8">
                                                 <span className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border
-                                                    ${r.status === 'selesai' ? 'bg-lime-500/10 text-lime-400 border-lime-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
+                                                    ${r.status === 'selesai' ? 'bg-lime-500/10 text-lime-600 border-lime-500/20' : 'bg-amber-500/10 text-amber-600 border-amber-500/20'}`}>
                                                     {r.status === 'selesai' ? '✓ Selesai' : '⏳ Menunggu'}
                                                 </span>
                                             </td>
@@ -250,20 +250,20 @@ const ResepReport = () => {
                                                 <div className="flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0">
                                                     <button
                                                         onClick={() => handleUpdateStatus(r.id, 'selesai')}
-                                                        className="w-12 h-12 bg-lime-500/10 text-lime-400 hover:bg-lime-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-lime-500/20"
+                                                        className="w-12 h-12 bg-lime-500/10 text-lime-600 hover:bg-lime-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-lime-500/20"
                                                         title="Selesaikan"
                                                     >
                                                         <CheckCircle size={20} />
                                                     </button>
                                                     <a
                                                         href={`https://wa.me/${r.nomor_wa.replace(/^0/, '62')}`} target="_blank" rel="noreferrer"
-                                                        className="w-12 h-12 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-cyan-500/20"
+                                                        className="w-12 h-12 bg-cyan-500/10 text-cyan-600 hover:bg-cyan-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-cyan-500/20"
                                                     >
                                                         <MessageCircle size={20} />
                                                     </a>
                                                     <button
                                                         onClick={() => handleDelete(r.id)}
-                                                        className="w-12 h-12 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-red-500/20"
+                                                        className="w-12 h-12 bg-red-500/10 text-red-600 hover:bg-red-500 hover:text-white rounded-2xl transition-all flex items-center justify-center shadow-xl border border-red-500/20"
                                                     >
                                                         <Trash2 size={20} />
                                                     </button>
@@ -282,33 +282,33 @@ const ResepReport = () => {
                     {loading ? (
                         [1, 2, 3].map(i => <div key={i} className="h-48 bg-white/5 rounded-[30px] animate-pulse"></div>)
                     ) : filteredReseps.length === 0 ? (
-                        <div className="p-20 text-center text-slate-400 italic bg-white/5 rounded-[40px]">Tidak ada data resep ditemukan.</div>
+                        <div className="p-20 text-center text-slate-400 italic bg-white rounded-[40px] shadow-sm border border-slate-100">Tidak ada data resep ditemukan.</div>
                     ) : (
                         filteredReseps.map(r => (
-                            <div key={r.id} className="glass-card-dark p-6 rounded-[30px] border border-white/5 space-y-6">
+                            <div key={r.id} className="glass-card-dark p-6 rounded-[30px] border border-slate-200/60 space-y-6 shadow-xl bg-white">
                                 <div className="flex justify-between items-start">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-xl flex items-center justify-center shadow-lg">
+                                        <div className="w-12 h-12 bg-cyan-500/10 text-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
                                             <Calendar size={20} />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-black text-white tracking-tight">{new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</p>
+                                            <p className="text-sm font-black text-slate-900 tracking-tight">{new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</p>
                                             <p className="text-[10px] font-black text-slate-500 flex items-center gap-1 uppercase tracking-widest"><Clock size={10} /> {new Date(r.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
                                         </div>
                                     </div>
                                     <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border
-                                        ${r.status === 'selesai' ? 'bg-lime-500/10 text-lime-400 border-lime-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
+                                        ${r.status === 'selesai' ? 'bg-lime-500/10 text-lime-600 border-lime-500/20' : 'bg-amber-500/10 text-amber-600 border-amber-500/20'}`}>
                                         {r.status === 'selesai' ? '✓' : '⏳'}
                                     </span>
                                 </div>
-                                <div className="pt-4 border-t border-white/5">
-                                    <p className="text-lg font-black text-white mb-1">{r.nama_lengkap}</p>
-                                    <p className="text-sm font-bold text-lime-400">{r.nomor_wa}</p>
+                                <div className="pt-4 border-t border-slate-100">
+                                    <p className="text-lg font-black text-slate-900 mb-1">{r.nama_lengkap}</p>
+                                    <p className="text-sm font-bold text-lime-600">{r.nomor_wa}</p>
                                 </div>
-                                <div className="flex gap-4 pt-4 border-t border-white/5">
+                                <div className="flex gap-4 pt-4 border-t border-slate-100">
                                     <a
                                         href={r.foto_resep} target="_blank" rel="noreferrer"
-                                        className="flex-1 py-4 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest text-cyan-400"
+                                        className="flex-1 py-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest text-cyan-600 hover:bg-cyan-50 transition-colors"
                                     >
                                         <Eye size={16} /> Lihat Resep
                                     </a>
@@ -316,19 +316,19 @@ const ResepReport = () => {
                                 <div className="flex gap-3 pt-2">
                                     <button
                                         onClick={() => handleUpdateStatus(r.id, 'selesai')}
-                                        className="flex-1 py-4 bg-lime-500/10 text-lime-400 border border-lime-500/20 rounded-2xl flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest"
+                                        className="flex-1 py-4 bg-lime-500/10 text-lime-600 border border-lime-500/20 rounded-2xl flex items-center justify-center gap-2 text-[10px] font-black uppercase tracking-widest hover:bg-lime-500 hover:text-white transition-all"
                                     >
                                         <CheckCircle size={16} /> Selesai
                                     </button>
                                     <a
                                         href={`https://wa.me/${r.nomor_wa.replace(/^0/, '62')}`} target="_blank" rel="noreferrer"
-                                        className="w-14 h-14 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-2xl flex items-center justify-center"
+                                        className="w-14 h-14 bg-cyan-500/10 text-cyan-600 border border-cyan-500/20 rounded-2xl flex items-center justify-center hover:bg-cyan-500 hover:text-white transition-all"
                                     >
                                         <MessageCircle size={20} />
                                     </a>
                                     <button
                                         onClick={() => handleDelete(r.id)}
-                                        className="w-14 h-14 bg-red-500/10 text-red-500 border border-red-500/20 rounded-2xl flex items-center justify-center"
+                                        className="w-14 h-14 bg-red-500/10 text-red-600 border border-red-500/20 rounded-2xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all"
                                     >
                                         <Trash2 size={20} />
                                     </button>

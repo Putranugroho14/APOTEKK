@@ -29,6 +29,10 @@ const decodeTokenPayload = (token) => {
 
 const kategoriOptions = ["Obat Bebas", "Obat Keras", "Suplemen", "Obat Bebas Terbatas", "Vitamin", "Antibiotik"];
 
+const initialFormState = {
+    nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", gambar_file: null, is_published: true
+};
+
 const ObatPage = () => {
     const navigate = useNavigate();
     const [obats, setObats] = useState([]);
@@ -40,9 +44,7 @@ const ObatPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [editingObat, setEditingObat] = useState(null);
-    const [formData, setFormData] = useState({
-        nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", gambar_file: null, is_published: true
-    });
+    const [formData, setFormData] = useState(initialFormState);
 
     const user = decodeTokenPayload(getToken());
 
@@ -112,7 +114,7 @@ const ObatPage = () => {
             }
             setShowAddForm(false);
             setEditingObat(null);
-            setFormData({ nama_obat: "", deskripsi: "", kategori: "", stok: 0, harga: 0, gambar_url: "", gambar_file: null, is_published: true });
+            setFormData(initialFormState);
             fetchObats();
         } catch (err) {
             console.error("FULL SUBMIT ERROR:", err);

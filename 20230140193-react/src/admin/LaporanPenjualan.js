@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
     Clock, CheckCircle, MessageCircle, ShoppingBag, Trash2,
-    Calendar, LayoutDashboard, FileText, ShoppingCart,
+    Calendar, LayoutDashboard, FileText, ShoppingCart, Package,
     LogOut, Search, RefreshCw, Eye, Menu, X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
