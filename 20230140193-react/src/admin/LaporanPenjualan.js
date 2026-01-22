@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-    Clock, CheckCircle, MessageCircle, ShoppingBag, Trash2,
-    Calendar, LayoutDashboard, FileText, ShoppingCart, Package,
+    Clock, CheckCircle, MessageCircle, ShoppingCart, Package,
     LogOut, Search, RefreshCw, Eye, Menu, X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +16,7 @@ const LaporanPenjualan = () => {
     const [loading, setLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
+    // const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
     const [selectedOrder, setSelectedOrder] = useState(null); // For Detail Modal
     const navigate = useNavigate();
 
@@ -32,8 +31,8 @@ const LaporanPenjualan = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) return navigate('/login');
-        const decoded = decodeToken(token);
-        if (decoded) setAdminData({ nama: decoded.nama, username: decoded.username });
+        // const decoded = decodeToken(token);
+        // if (decoded) setAdminData({ nama: decoded.nama, username: decoded.username });
         fetchPenjualans();
     }, [navigate]);
 
@@ -73,18 +72,18 @@ const LaporanPenjualan = () => {
         } catch (err) { alert("Gagal memperbarui status"); }
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Hapus data penjualan ini permanen?")) {
-            try {
-                const token = localStorage.getItem('token');
-                await axios.delete(`${API_BASE_URL}/api/penjualan/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                alert("Data berhasil dihapus!");
-                fetchPenjualans();
-            } catch (err) { alert("Gagal menghapus data"); }
-        }
-    };
+    // const handleDelete = async (id) => {
+    //     if (window.confirm("Hapus data penjualan ini permanen?")) {
+    //         try {
+    //             const token = localStorage.getItem('token');
+    //             await axios.delete(`${API_BASE_URL}/api/penjualan/${id}`, {
+    //                 headers: { Authorization: `Bearer ${token}` }
+    //             });
+    //             alert("Data berhasil dihapus!");
+    //             fetchPenjualans();
+    //         } catch (err) { alert("Gagal menghapus data"); }
+    //     }
+    // };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -292,7 +291,7 @@ const LaporanPenjualan = () => {
                                 {parseItems(selectedOrder.detail_pesanan).map((item, idx) => (
                                     <div key={idx} className="flex gap-4 p-4 border border-slate-100 rounded-2xl">
                                         <div className="w-16 h-16 bg-slate-100 rounded-xl overflow-hidden">
-                                            <img src={item.gambar_url || "https://placehold.co/100"} className="w-full h-full object-cover" />
+                                            <img src={item.gambar_url || "https://placehold.co/100"} alt={item.nama_obat} className="w-full h-full object-cover" />
                                         </div>
                                         <div>
                                             <p className="font-black text-slate-900 text-sm">{item.nama_obat}</p>

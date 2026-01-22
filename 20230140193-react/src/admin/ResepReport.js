@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
-    Clock, CheckCircle, MessageCircle, ExternalLink, Trash2,
-    ArrowLeft, Package, Calendar, LayoutDashboard, FileText,
-    LogOut, Search, RefreshCw, ChevronRight, Eye, User, Menu, X, ShoppingCart
+    Clock, CheckCircle, MessageCircle, Trash2,
+    Package, Calendar, LayoutDashboard, FileText,
+    LogOut, Search, RefreshCw, Eye, X, ShoppingCart, Menu
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config';
@@ -18,7 +18,7 @@ const ResepReport = () => {
     const [loading, setLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
+    // const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
     const navigate = useNavigate();
 
     const decodeToken = (token) => {
@@ -32,8 +32,8 @@ const ResepReport = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) return navigate('/login');
-        const decoded = decodeToken(token);
-        if (decoded) setAdminData({ nama: decoded.nama, username: decoded.username });
+        // const decoded = decodeToken(token);
+        // if (decoded) setAdminData({ nama: decoded.nama, username: decoded.username });
         fetchReseps();
     }, [navigate]);
 
