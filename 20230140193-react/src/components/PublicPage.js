@@ -127,6 +127,7 @@ const PublicPage = () => {
             setCurrentMissionSlide((prev) => (prev + 1) % missionSlides.length);
         }, 6000);
         return () => clearInterval(interval);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const addToCart = (product, e) => {

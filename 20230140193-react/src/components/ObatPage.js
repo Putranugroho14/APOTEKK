@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-    Trash2, Edit3, Plus, X, Package, Image as ImageIcon, Layers,
-    ArrowLeft, Pill, Search, Filter, RefreshCw, LayoutDashboard,
-    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff, Menu, Upload, ShoppingCart
+    Trash2, Plus, X, Package,
+    Pill, Search, LayoutDashboard,
+    FileText, LogOut, Save, Eye, EyeOff, Menu, Upload, ShoppingCart
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
@@ -37,11 +37,6 @@ const ObatPage = () => {
     const navigate = useNavigate();
     const [obats, setObats] = useState([]);
     const [filteredObats, setFilteredObats] = useState([]);
-    const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
-    const [showAddForm, setShowAddForm] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [selectedKategori, setSelectedKategori] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [editingObat, setEditingObat] = useState(null);
     const [formData, setFormData] = useState(initialFormState);
@@ -50,8 +45,8 @@ const ObatPage = () => {
 
     useEffect(() => {
         if (!getToken()) navigate('/login');
-        if (user) setAdminData({ nama: user.nama, username: user.username });
         fetchObats();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getHeaders = () => ({
@@ -274,6 +269,7 @@ const ObatPage = () => {
                             <div key={obat.id} className="glass-card-dark rounded-[24px] md:rounded-[40px] border border-white/5 overflow-hidden shadow-2xl transition-all duration-500 group flex flex-col">
                                 <div className="h-32 md:h-56 relative overflow-hidden bg-slate-900">
                                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
+                                        alt={obat.nama_obat}
                                         className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                                     <div className="absolute top-4 left-4 md:top-5 md:left-5">

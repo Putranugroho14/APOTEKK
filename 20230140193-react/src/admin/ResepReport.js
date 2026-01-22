@@ -21,19 +21,11 @@ const ResepReport = () => {
     // const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
     const navigate = useNavigate();
 
-    const decodeToken = (token) => {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            return JSON.parse(atob(base64));
-        } catch (e) { return null; }
-    };
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) return navigate('/login');
-        // const decoded = decodeToken(token);
-        // if (decoded) setAdminData({ nama: decoded.nama, username: decoded.username });
         fetchReseps();
     }, [navigate]);
 

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
-import { Lock, User, ShieldCheck, ArrowRight, Loader2, Sparkles, Eye, EyeOff } from "lucide-react";
+import { Lock, User, ShieldCheck, ArrowRight, Loader2, Eye, EyeOff } from "lucide-react";
 import Particles from "./Particles";
 
 function LoginPage() {
