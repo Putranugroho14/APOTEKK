@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-    Star, ShoppingCart, Plus, Minus, Search, Menu, X, ChevronRight, ChevronLeft, Zap,
-    MapPin, Phone, Mail, Instagram, Twitter, Facebook, ArrowRight, Upload, Clock,
-    ShieldCheck, Award, Heart, Package, Trash2, LogOut, LayoutDashboard, User,
-    ChevronDown, CheckCircle, FileText, Truck, Headphones, ShoppingBag, ArrowUp
+    Star, ShoppingCart, Plus, Minus, Menu, X, ChevronRight, ChevronLeft,
+    Phone, Instagram, Facebook, ArrowRight,
+    ShieldCheck, Award, Package, Trash2, FileText, Truck, Headphones, ShoppingBag, ArrowUp, CheckCircle
 } from 'lucide-react';
 import API_BASE_URL from '../config';
 import Particles from "./Particles";

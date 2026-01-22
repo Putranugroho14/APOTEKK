@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  ShoppingBag, Users, FileText, CheckCircle, Clock,
-  ArrowRight, Activity, Package, TrendingUp, Calendar,
-  Bell, Search, Menu, X, LogOut, LayoutDashboard, ChevronRight, Plus, ShoppingCart
+  FileText, CheckCircle, Clock,
+  Activity, Package,
+  Bell, Menu, X, LogOut, LayoutDashboard, ChevronRight, Plus, ShoppingCart
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";

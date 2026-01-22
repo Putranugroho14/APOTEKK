@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
-    Upload, Send, ArrowLeft, CheckCircle, Phone, Mail, MapPin,
-    Facebook, Instagram, Clock, ShieldCheck, Award, FileText,
+    Upload, Send, ArrowLeft, CheckCircle, Phone,
+    Facebook, Instagram, FileText,
     Camera, BadgeCheck, Loader2, Package
 } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";

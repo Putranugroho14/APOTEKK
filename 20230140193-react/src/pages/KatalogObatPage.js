@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  Search, ShoppingBag, ArrowLeft, Star, Package, Filter, XCircle,
-  X, Trash2, Plus, Minus, ShoppingCart, Phone, Mail, MapPin,
-  Facebook, Instagram, Clock, ArrowRight, Zap, Award, ChevronDown
+  Search, ShoppingBag, ArrowLeft, Star, Package,
+  X, Trash2, Plus, Minus, ShoppingCart, Phone,
+  Facebook, Instagram, ChevronDown
 } from 'lucide-react';
 import API_BASE_URL from '../config';
 import Particles from "../components/Particles";
@@ -248,7 +248,7 @@ const KatalogObatPage = () => {
                 cart.map(item => (
                   <div key={item.id} className="flex gap-6 p-4 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all group">
                     <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 shadow-sm">
-                      <img src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
+                      <img src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} alt={item.nama_obat} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-black text-slate-900 text-sm mb-1">{item.nama_obat}</h4>
