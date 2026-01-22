@@ -18,6 +18,8 @@ const KatalogObatPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
   const [address, setAddress] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
 
@@ -264,28 +266,80 @@ const KatalogObatPage = () => {
             </div>
             {cart.length > 0 && (
               <div className="p-12 bg-white rounded-t-[60px] shadow-2xl border-t border-slate-100">
-                <div className="mb-6">
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Alamat Pengiriman</label>
-                  <textarea
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors resize-none h-24"
-                    placeholder="Masukkan alamat lengkap..."
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  ></textarea>
+                <div className="mb-6 space-y-4">
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Nama Lengkap</label>
+                    <input
+                      type="text"
+                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors"
+                      placeholder="Nama Anda"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Nomor WhatsApp</label>
+                    <input
+                      type="text"
+                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors"
+                      placeholder="08xxxxxxxxxx"
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Alamat Pengiriman</label>
+                    <textarea
+                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors resize-none h-24"
+                      placeholder="Masukkan alamat lengkap..."
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    ></textarea>
+                  </div>
                 </div>
                 <div className="flex justify-between items-center mb-10">
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Harga</p>
                   <p className="text-4xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
                 </div>
                 <button
-                  onClick={() => {
-                    if (!address.trim()) {
-                      alert("Mohon isi alamat pengiriman terlebih dahulu!");
+                  onClick={async () => {
+                    if (!customerName.trim() || !customerPhone.trim() || !address.trim()) {
+                      alert("Mohon lengkapi Nama, Nomor WhatsApp, dan Alamat pengiriman!");
                       return;
                     }
-                    window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
+
+                    // Tampilkan indikator loading sederhana jika perlu, atau langsung proses
+                    try {
+                      // Simpan ke database
+                      await fetch(`${API_BASE_URL}/api/penjualan`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          nama_pelanggan: customerName,
+                          nomor_wa: customerPhone,
+                          alamat: address,
+                          detail_pesanan: cart,
+                          total_harga: getTotalPrice()
+                        })
+                      });
+
+                      // Reset form / cart if needed? For now just open WA
+                      // Maybe clear cart?
+                      // setCart([]); 
+                      // setCustomerName(""); ...
+
+                      // Buka WhatsApp
+                      window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
+                      setShowCart(false);
+                      setCart([]);
+                      alert("Pesanan berhasil dibuat! Silahkan lanjutkan konfirmasi di WhatsApp.");
+                    } catch (error) {
+                      console.error("Gagal menyimpan pesanan:", error);
+                      alert("Terjadi kesalahan sistem. Mengalihkan ke WhatsApp manual...");
+                      window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
+                    }
                   }}
-                  className={`block w-full py-8 text-white text-center font-black rounded-3xl text-xs uppercase tracking-[0.4em] shadow-xl shadow-cyan-500/10 transition-all ${!address.trim() ? 'bg-slate-300 cursor-not-allowed' : 'bg-cyan-600 hover:bg-cyan-700 hover:scale-[1.02] active:scale-[0.98]'}`}
+                  className={`block w-full py-8 text-white text-center font-black rounded-3xl text-xs uppercase tracking-[0.4em] shadow-xl shadow-cyan-500/10 transition-all ${(!address.trim() || !customerName.trim() || !customerPhone.trim()) ? 'bg-slate-300 cursor-not-allowed' : 'bg-cyan-600 hover:bg-cyan-700 hover:scale-[1.02] active:scale-[0.98]'}`}
                 >
                   Pesan Via WhatsApp
                 </button>

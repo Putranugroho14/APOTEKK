@@ -4,7 +4,7 @@ import axios from "axios";
 import {
     Trash2, Edit3, Plus, X, Package, Image as ImageIcon, Layers,
     ArrowLeft, Pill, Search, Filter, RefreshCw, LayoutDashboard,
-    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff, Menu, Upload
+    FileText, Users, Bell, LogOut, ChevronRight, Save, Eye, EyeOff, Menu, Upload, ShoppingCart
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
@@ -179,6 +179,7 @@ const ObatPage = () => {
                     <SidebarItem icon={LayoutDashboard} label="Dashboard" path="/dashboard" />
                     <SidebarItem icon={Package} label="Kelola Obat" active />
                     <SidebarItem icon={FileText} label="Laporan Resep" path="/admin/resep" />
+                    <SidebarItem icon={ShoppingCart} label="Laporan Penjualan" path="/admin/penjualan" />
                 </div>
 
                 <div className="mt-8 mb-4 relative z-10">
@@ -226,7 +227,7 @@ const ObatPage = () => {
                     >
                         <Plus size={18} className="md:w-5 md:h-5" /> Tambah Baru
                     </button>
-                </div>
+                </header>
 
                 {/* Filters */}
                 <div className="glass-card-dark p-4 md:p-6 rounded-[24px] md:rounded-[40px] border border-white/5 mb-8 md:mb-14 shadow-2xl flex flex-col md:flex-row gap-4 md:gap-6">

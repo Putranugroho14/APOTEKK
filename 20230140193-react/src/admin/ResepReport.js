@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
     Clock, CheckCircle, MessageCircle, ExternalLink, Trash2,
     ArrowLeft, Package, Calendar, LayoutDashboard, FileText,
-    LogOut, Search, RefreshCw, ChevronRight, Eye, User, Menu, X
+    LogOut, Search, RefreshCw, ChevronRight, Eye, User, Menu, X, ShoppingCart
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config';
@@ -132,6 +132,7 @@ const ResepReport = () => {
                     <SidebarItem icon={LayoutDashboard} label="Dashboard" path="/dashboard" />
                     <SidebarItem icon={Package} label="Kelola Obat" path="/obat" />
                     <SidebarItem icon={FileText} label="Laporan Resep" active />
+                    <SidebarItem icon={ShoppingCart} label="Laporan Penjualan" path="/admin/penjualan" />
                 </div>
 
                 <div className="mt-auto pt-6 border-t border-white/5 relative z-10">

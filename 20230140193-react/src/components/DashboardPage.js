@@ -4,7 +4,7 @@ import axios from "axios";
 import {
   ShoppingBag, Users, FileText, CheckCircle, Clock,
   ArrowRight, Activity, Package, TrendingUp, Calendar,
-  Bell, Search, Menu, X, LogOut, LayoutDashboard, ChevronRight, Plus
+  Bell, Search, Menu, X, LogOut, LayoutDashboard, ChevronRight, Plus, ShoppingCart
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
@@ -112,6 +112,7 @@ const DashboardPage = () => {
           <SidebarItem icon={LayoutDashboard} label="Dashboard" active />
           <SidebarItem icon={Package} label="Kelola Obat" path="/obat" />
           <SidebarItem icon={FileText} label="Laporan Resep" path="/admin/resep" />
+          <SidebarItem icon={ShoppingCart} label="Laporan Penjualan" path="/admin/penjualan" />
         </div>
 
         <div className="mt-auto pt-6 border-t border-slate-100 relative z-10">

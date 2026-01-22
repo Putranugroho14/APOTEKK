@@ -8,6 +8,7 @@ import UnggahResep from "./components/UnggahResep";
 import ResepReport from "./admin/ResepReport";
 import KatalogObatPage from "./pages/KatalogObatPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import LaporanPenjualan from "./admin/LaporanPenjualan";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/obat" element={<ObatPage />} />
           <Route path="/admin/resep" element={<ResepReport />} />
+          <Route path="/admin/penjualan" element={<LaporanPenjualan />} />
         </Route>
       </Routes>
     </Router>

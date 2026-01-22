@@ -30,10 +30,12 @@ app.get("/", (req, res) => {
 const obatRoutes = require("./routes/obat");
 const authRoutes = require("./routes/auth");
 const resepRoutes = require("./routes/resep");
+const penjualanRoutes = require("./routes/penjualan");
 
 app.use("/api/obat", obatRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/resep", resepRoutes);
+app.use("/api/penjualan", penjualanRoutes);
 
 // Self-Healing Database Initialization (Maintain silently)
 const initDB = async () => {
