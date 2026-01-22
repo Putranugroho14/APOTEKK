@@ -1,4 +1,5 @@
 # Panduan Deployment Gratis (TiDB Cloud + Render + Vercel)
+*Last updated: 23 January 2026*
 
 Saya telah memperbarui panduan ini agar menggunakan **TiDB Cloud** yang memberikan kapasitas 5GB gratis selamanya.
 
