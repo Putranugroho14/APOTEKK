@@ -1,10 +1,12 @@
-const { Penjualan } = require('../models');
+const { Penjualan, Obat, sequelize } = require('../models');
 
 // CREATE Order (Public)
 exports.createPenjualan = async (req, res) => {
+    const t = await sequelize.transaction();
     try {
         const { nama_pelanggan, nomor_wa, alamat, detail_pesanan, total_harga } = req.body;
 
+        // 1. Create Penjualan Record
         const newPenjualan = await Penjualan.create({
             nama_pelanggan,
             nomor_wa,
@@ -12,15 +14,32 @@ exports.createPenjualan = async (req, res) => {
             detail_pesanan: typeof detail_pesanan === 'string' ? detail_pesanan : JSON.stringify(detail_pesanan),
             total_harga,
             status: 'Menunggu'
-        });
+        }, { transaction: t });
+
+        // 2. Reduce Stock
+        const items = typeof detail_pesanan === 'string' ? JSON.parse(detail_pesanan) : detail_pesanan;
+
+        for (const item of items) {
+            const obat = await Obat.findByPk(item.id, { transaction: t });
+            if (obat) {
+                if (obat.stok < item.qty) {
+                    throw new Error(`Stok obat ${obat.nama_obat} tidak mencukupi`);
+                }
+                obat.stok -= item.qty;
+                await obat.save({ transaction: t });
+            }
+        }
+
+        await t.commit();
 
         res.status(201).json({
-            message: "Pesanan berhasil dibuat",
+            message: "Pesanan berhasil dibuat dan stok diperbarui",
             data: newPenjualan
         });
     } catch (error) {
+        await t.rollback();
         console.error("Error creating penjualan:", error);
-        res.status(500).json({ message: "Gagal membuat pesanan", error: error.message });
+        res.status(500).json({ message: error.message || "Gagal membuat pesanan", error: error.message });
     }
 };
 

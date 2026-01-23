@@ -228,9 +228,15 @@ const LaporanPenjualan = () => {
                                                     <button onClick={() => setSelectedOrder(order)} className="w-10 h-10 bg-slate-100 text-slate-500 hover:bg-slate-200 rounded-xl flex items-center justify-center transition-all" title="Lihat Order">
                                                         <Eye size={16} />
                                                     </button>
-                                                    <a href={`https://wa.me/${order.nomor_wa.replace(/^0/, '62')}`} target="_blank" rel="noreferrer" className="w-10 h-10 bg-cyan-100 text-cyan-600 hover:bg-cyan-200 rounded-xl flex items-center justify-center transition-all" title="WhatsApp">
-                                                        <MessageCircle size={16} />
-                                                    </a>
+                                                    {order.nomor_wa !== "N/A" ? (
+                                                        <a href={`https://wa.me/${order.nomor_wa.replace(/^0/, '62')}`} target="_blank" rel="noreferrer" className="w-10 h-10 bg-cyan-100 text-cyan-600 hover:bg-cyan-200 rounded-xl flex items-center justify-center transition-all" title="WhatsApp">
+                                                            <MessageCircle size={16} />
+                                                        </a>
+                                                    ) : (
+                                                        <div className="w-10 h-10 bg-slate-100 text-slate-300 rounded-xl flex items-center justify-center cursor-not-allowed" title="WhatsApp Tidak Tersedia">
+                                                            <MessageCircle size={16} />
+                                                        </div>
+                                                    )}
                                                     {order.status !== 'Selesai' && (
                                                         <button onClick={() => handleUpdateStatus(order.id, 'Selesai')} className="w-10 h-10 bg-lime-100 text-lime-600 hover:bg-lime-200 rounded-xl flex items-center justify-center transition-all" title="Selesaikan">
                                                             <CheckCircle size={16} />

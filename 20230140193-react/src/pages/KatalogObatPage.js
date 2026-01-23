@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   Search, ShoppingBag, ArrowLeft, Star, Package,
   X, Trash2, Plus, Minus, ShoppingCart, Phone,
-  Facebook, Instagram, ChevronDown
+  Facebook, Instagram, ChevronDown, User, MapPin
 } from 'lucide-react';
 import API_BASE_URL from '../config';
 import Particles from "../components/Particles";
@@ -19,7 +19,6 @@ const KatalogObatPage = () => {
   const [cart, setCart] = useState([]);
   const [address, setAddress] = useState("");
   const [customerName, setCustomerName] = useState("");
-  const [customerPhone, setCustomerPhone] = useState("");
   const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
 
@@ -61,19 +60,28 @@ const KatalogObatPage = () => {
   const getTotalPrice = () => cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
 
   const generateWhatsAppMessage = () => {
-    let message = `*PESANAN BARU*\n`;
-    message += `Nama: ${customerName.trim() || 'Pelanggan'}\n\n`;
-    message += `*DAFTAR PESANAN:*\n`;
+    const divider = "──────────────────────────";
+    let message = `*📦 PESANAN BARU - APOTEK HADINATA*\n`;
+    message += `${divider}\n`;
+    message += `👤 *Pelanggan:* ${customerName.trim() || 'Pelanggan'}\n`;
+    message += `📅 *Tanggal:* ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}\n`;
+    message += `${divider}\n\n`;
+
+    message += `*🛒 DAFTAR PESANAN:*\n`;
     cart.forEach((item, index) => {
-      message += `${index + 1}. ${item.nama_obat}\n   Qty: ${item.qty}x - Rp${(item.harga * item.qty).toLocaleString()}\n`;
+      message += `${index + 1}. *${item.nama_obat}*\n`;
+      message += `   └─ ${item.qty}x @ Rp${item.harga.toLocaleString()} = *Rp${(item.harga * item.qty).toLocaleString()}*\n`;
     });
-    message += `\n*TOTAL: Rp${getTotalPrice().toLocaleString()}*`;
+
+    message += `\n💰 *TOTAL PEMBAYARAN:* \n*Rp${getTotalPrice().toLocaleString()}*\n`;
+    message += `${divider}\n\n`;
 
     if (address.trim()) {
-      message += `\n\n*ALAMAT PENGIRIMAN:*\n${address}`;
+      message += `📍 *ALAMAT PENGIRIMAN:*\n${address}\n`;
+      message += `${divider}\n\n`;
     }
 
-    message += `\n\nMohon diproses. Terima kasih! 🙏`;
+    message += `Mohon segera diproses ya. Terima kasih! 🙏✨`;
     return encodeURIComponent(message);
   };
 
@@ -297,33 +305,44 @@ const KatalogObatPage = () => {
                   </div>
 
                   {/* CHECKOUT FORM */}
-                  <div className="px-4 pb-4 space-y-4">
+                  <div className="px-4 pb-6 space-y-4">
                     {/* Address Section */}
-                    <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                      <h3 className="font-semibold text-sm text-gray-800 mb-3">Detail Pengiriman</h3>
-
-                      <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Nama Lengkap</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-                          placeholder="Masukkan nama Anda"
-                          value={customerName}
-                          onChange={(e) => setCustomerName(e.target.value)}
-                        />
+                    <div className="bg-slate-50 border border-slate-100 rounded-[20px] p-5 space-y-5 shadow-sm">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600">
+                          <Package size={16} />
+                        </div>
+                        <h3 className="font-bold text-sm text-slate-800">Detail Pengiriman</h3>
                       </div>
 
+                      <div className="space-y-4">
+                        <div className="relative">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Nama Penerima</label>
+                          <div className="relative">
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                            <input
+                              type="text"
+                              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 shadow-sm"
+                              placeholder="Ketik nama lengkap..."
+                              value={customerName}
+                              onChange={(e) => setCustomerName(e.target.value)}
+                            />
+                          </div>
+                        </div>
 
-
-                      <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Alamat Lengkap</label>
-                        <textarea
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition resize-none"
-                          placeholder="Masukkan alamat pengiriman lengkap..."
-                          rows="3"
-                          value={address}
-                          onChange={(e) => setAddress(e.target.value)}
-                        />
+                        <div className="relative">
+                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Alamat Tujuan</label>
+                          <div className="relative">
+                            <MapPin className="absolute left-3 top-3 text-slate-400" size={16} />
+                            <textarea
+                              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 resize-none shadow-sm"
+                              placeholder="Ketik alamat lengkap pengiriman..."
+                              rows="3"
+                              value={address}
+                              onChange={(e) => setAddress(e.target.value)}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
