@@ -228,124 +228,132 @@ const KatalogObatPage = () => {
         </div>
       </footer>
 
-      {/* CART MODAL - IMPROVED UI */}
+      {/* CART MODAL - MODERN E-COMMERCE STYLE */}
       {showCart && (
-        <div className="fixed inset-0 z-[100] flex justify-end bg-slate-900/60 backdrop-blur-md animate-fade-in" onClick={() => setShowCart(false)}>
-          <div className="w-full max-w-lg bg-gradient-to-br from-white via-slate-50 to-cyan-50/30 h-screen flex flex-col shadow-[0_20px_60px_rgba(0,0,0,0.3)] animate-slide-in-right overflow-hidden rounded-l-[40px] md:rounded-l-[60px] border-l-4 border-cyan-400" onClick={e => e.stopPropagation()}>
+        <div className="fixed inset-0 z-[100] flex justify-end bg-black/40 animate-fade-in" onClick={() => setShowCart(false)}>
+          <div className="w-full max-w-md bg-white h-screen flex flex-col shadow-2xl animate-slide-in-right overflow-hidden" onClick={e => e.stopPropagation()}>
+
             {/* HEADER */}
-            <div className="p-8 md:p-12 border-b border-cyan-100 flex justify-between items-center bg-gradient-to-r from-cyan-500 to-blue-600">
-              <div>
-                <h3 className="text-2xl md:text-3xl font-black tracking-tighter mb-1 text-white drop-shadow-lg">🛒 Keranjang Belanja</h3>
-                <p className="text-[10px] font-black text-cyan-100 uppercase tracking-[0.3em]">{getTotalItems()} Item terpilih</p>
-              </div>
-              <button onClick={() => setShowCart(false)} className="w-12 h-12 md:w-14 md:h-14 bg-white/20 backdrop-blur-md text-white border-2 border-white/30 rounded-2xl flex items-center justify-center hover:bg-white/30 hover:rotate-90 transition-all duration-300 shadow-lg">
-                <X size={24} />
+            <div className="px-6 py-4 border-b border-gray-200 flex items-center gap-4">
+              <button onClick={() => setShowCart(false)} className="p-2 hover:bg-gray-100 rounded-full transition">
+                <ArrowLeft size={20} className="text-gray-700" />
               </button>
+              <h2 className="text-lg font-bold text-gray-800">Keranjang Saya</h2>
             </div>
 
-            {/* CART ITEMS */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-12 space-y-6">
+            {/* SCROLLABLE CONTENT */}
+            <div className="flex-1 overflow-y-auto">
               {cart.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center">
-                  <div className="w-32 h-32 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full flex items-center justify-center mb-6 shadow-xl">
-                    <ShoppingBag size={60} className="text-cyan-400" />
-                  </div>
-                  <p className="text-slate-500 font-bold text-lg italic">Keranjang masih kosong</p>
-                  <p className="text-slate-400 text-sm mt-2">Mulai belanja sekarang!</p>
+                <div className="h-full flex flex-col items-center justify-center p-8 text-center">
+                  <ShoppingBag size={64} className="text-gray-300 mb-4" />
+                  <p className="text-gray-500 font-medium">Keranjang masih kosong</p>
+                  <p className="text-gray-400 text-sm mt-2">Mulai belanja sekarang!</p>
                 </div>
               ) : (
-                cart.map(item => (
-                  <div key={item.id} className="flex gap-4 md:gap-6 p-4 md:p-5 rounded-2xl md:rounded-3xl bg-white border-2 border-slate-100 hover:border-cyan-200 hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
-                    {/* Subtle gradient overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-50/0 to-blue-50/0 group-hover:from-cyan-50/50 group-hover:to-blue-50/50 transition-all duration-500 pointer-events-none"></div>
+                <>
+                  {/* PRODUCT LIST */}
+                  <div className="p-4 space-y-4">
+                    {cart.map(item => (
+                      <div key={item.id} className="flex gap-3 bg-white border border-gray-200 rounded-lg p-3">
+                        <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                          <img
+                            src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200"}
+                            alt={item.nama_obat}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
 
-                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl md:rounded-2xl overflow-hidden shrink-0 shadow-lg border-2 border-slate-100 relative z-10">
-                      <img
-                        src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
-                        alt={item.nama_obat}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
-                    </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 mb-1">{item.nama_obat}</h3>
+                          <p className="text-sm font-bold text-gray-900">Rp {item.harga.toLocaleString()}</p>
 
-                    <div className="flex-1 relative z-10">
-                      <h4 className="font-black text-slate-900 text-sm md:text-base mb-1 group-hover:text-cyan-600 transition-colors">{item.nama_obat}</h4>
-                      <p className="text-xl md:text-2xl font-black bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent mb-3 md:mb-4">
-                        Rp{item.harga.toLocaleString()}
-                      </p>
+                          <div className="flex items-center gap-2 mt-2">
+                            <button
+                              onClick={() => updateQty(item.id, item.qty - 1)}
+                              className="w-7 h-7 flex items-center justify-center bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition"
+                            >
+                              <Minus size={14} />
+                            </button>
+                            <span className="w-8 text-center font-semibold text-sm">{item.qty}</span>
+                            <button
+                              onClick={() => updateQty(item.id, item.qty + 1)}
+                              className="w-7 h-7 flex items-center justify-center bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </div>
+                        </div>
 
-                      <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-2 w-fit shadow-inner">
                         <button
-                          onClick={() => updateQty(item.id, item.qty - 1)}
-                          className="w-8 h-8 flex items-center justify-center bg-white text-cyan-600 hover:bg-cyan-500 hover:text-white rounded-lg border border-cyan-200 shadow-sm transition-all hover:scale-110 active:scale-95"
+                          onClick={() => removeFromCart(item.id)}
+                          className="text-gray-400 hover:text-red-500 transition self-start"
                         >
-                          <Minus size={14} />
-                        </button>
-                        <span className="font-black text-slate-900 min-w-[24px] text-center">{item.qty}</span>
-                        <button
-                          onClick={() => updateQty(item.id, item.qty + 1)}
-                          className="w-8 h-8 flex items-center justify-center bg-white text-cyan-600 hover:bg-cyan-500 hover:text-white rounded-lg border border-cyan-200 shadow-sm transition-all hover:scale-110 active:scale-95"
-                        >
-                          <Plus size={14} />
+                          <Trash2 size={18} />
                         </button>
                       </div>
-                    </div>
-
-                    <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-slate-300 hover:text-red-500 hover:scale-125 transition-all relative z-10"
-                    >
-                      <Trash2 size={20} />
-                    </button>
+                    ))}
                   </div>
-                ))
+
+                  {/* CHECKOUT FORM */}
+                  <div className="px-4 pb-4 space-y-4">
+                    {/* Address Section */}
+                    <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                      <h3 className="font-semibold text-sm text-gray-800 mb-3">Detail Pengiriman</h3>
+
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Nama Lengkap</label>
+                        <input
+                          type="text"
+                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                          placeholder="Masukkan nama Anda"
+                          value={customerName}
+                          onChange={(e) => setCustomerName(e.target.value)}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Nomor WhatsApp</label>
+                        <input
+                          type="text"
+                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                          placeholder="08xxxxxxxxxx"
+                          value={customerPhone}
+                          onChange={(e) => setCustomerPhone(e.target.value)}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 mb-1">Alamat Lengkap</label>
+                        <textarea
+                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition resize-none"
+                          placeholder="Masukkan alamat pengiriman lengkap..."
+                          rows="3"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
 
-            {/* CHECKOUT FORM */}
+            {/* STICKY BOTTOM - SUMMARY & CHECKOUT */}
             {cart.length > 0 && (
-              <div className="p-6 md:p-12 bg-white rounded-t-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.1)] border-t-4 border-cyan-400">
-                <div className="mb-6 space-y-4">\n                  <div>
-                  <label className="block text-[10px] font-black text-cyan-600 uppercase tracking-widest mb-2 flex items-center gap-2">
-                    👤 Nama Lengkap
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 focus:bg-white focus:shadow-lg transition-all"
-                    placeholder="Masukkan nama Anda"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                  />
-                </div>
-
-                  <div>
-                    <label className="block text-[10px] font-black text-cyan-600 uppercase tracking-widest mb-2 flex items-center gap-2">
-                      📱 Nomor WhatsApp
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 focus:bg-white focus:shadow-lg transition-all"
-                      placeholder="08xxxxxxxxxx"
-                      value={customerPhone}
-                      onChange={(e) => setCustomerPhone(e.target.value)}
-                    />
+              <div className="border-t border-gray-200 bg-white p-4 space-y-3">
+                {/* Summary */}
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between text-gray-600">
+                    <span>Subtotal ({getTotalItems()} items)</span>
+                    <span className="font-semibold">Rp {getTotalPrice().toLocaleString()}</span>
                   </div>
-
-                  <div>
-                    <label className="block text-[10px] font-black text-cyan-600 uppercase tracking-widest mb-2 flex items-center gap-2">
-                      📍 Alamat Pengiriman
-                    </label>
-                    <textarea
-                      className="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 focus:bg-white focus:shadow-lg transition-all resize-none h-24"
-                      placeholder="Masukkan alamat lengkap..."
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                    ></textarea>
+                  <div className="flex justify-between font-bold text-base text-gray-900 pt-2 border-t border-gray-200">
+                    <span>TOTAL</span>
+                    <span className="text-amber-600">Rp {getTotalPrice().toLocaleString()}</span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center mb-10">
-                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Harga</p>
-                  <p className="text-4xl font-black text-slate-900 tracking-tighter">Rp{getTotalPrice().toLocaleString()}</p>
-                </div>
+
+                {/* Checkout Button */}
                 <button
                   onClick={async () => {
                     if (!customerName.trim() || !customerPhone.trim() || !address.trim()) {
@@ -353,9 +361,7 @@ const KatalogObatPage = () => {
                       return;
                     }
 
-                    // Tampilkan indikator loading sederhana jika perlu, atau langsung proses
                     try {
-                      // Simpan ke database
                       await fetch(`${API_BASE_URL}/api/penjualan`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -368,25 +374,26 @@ const KatalogObatPage = () => {
                         })
                       });
 
-                      // Reset form / cart if needed? For now just open WA
-                      // Maybe clear cart?
-                      // setCart([]); 
-                      // setCustomerName(""); ...
-
-                      // Buka WhatsApp
                       window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
                       setShowCart(false);
                       setCart([]);
+                      setCustomerName("");
+                      setCustomerPhone("");
+                      setAddress("");
                       alert("Pesanan berhasil dibuat! Silahkan lanjutkan konfirmasi di WhatsApp.");
                     } catch (error) {
                       console.error("Gagal menyimpan pesanan:", error);
-                      alert("Terjadi kesalahan sistem. Mengalihkan ke WhatsApp manual...");
+                      alert("Terjadi kesalahan. Mengalihkan ke WhatsApp...");
                       window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
                     }
                   }}
-                  className={`block w-full py-8 text-white text-center font-black rounded-3xl text-xs uppercase tracking-[0.4em] shadow-xl shadow-cyan-500/10 transition-all ${(!address.trim() || !customerName.trim() || !customerPhone.trim()) ? 'bg-slate-300 cursor-not-allowed' : 'bg-cyan-600 hover:bg-cyan-700 hover:scale-[1.02] active:scale-[0.98]'}`}
+                  disabled={!address.trim() || !customerName.trim() || !customerPhone.trim()}
+                  className={`w-full py-3.5 rounded-lg font-bold text-sm transition-all ${(!address.trim() || !customerName.trim() || !customerPhone.trim())
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-500/30 active:scale-95'
+                    }`}
                 >
-                  Pesan Via WhatsApp
+                  Pesan Sekarang
                 </button>
               </div>
             )}
