@@ -60,28 +60,20 @@ const KatalogObatPage = () => {
   const getTotalPrice = () => cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
 
   const generateWhatsAppMessage = () => {
-    const divider = "──────────────────────────";
-    let message = `*📦 PESANAN BARU - APOTEK HADINATA*\n`;
-    message += `${divider}\n`;
-    message += `👤 *Pelanggan:* ${customerName.trim() || 'Pelanggan'}\n`;
-    message += `📅 *Tanggal:* ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}\n`;
-    message += `${divider}\n\n`;
+    let message = `Halo Apotek Hadinata, saya ingin pesan:\n\n`;
+    message += `Nama: ${customerName.trim() || 'Pelanggan'}\n\n`;
 
-    message += `*🛒 DAFTAR PESANAN:*\n`;
     cart.forEach((item, index) => {
-      message += `${index + 1}. *${item.nama_obat}*\n`;
-      message += `   └─ ${item.qty}x @ Rp${item.harga.toLocaleString()} = *Rp${(item.harga * item.qty).toLocaleString()}*\n`;
+      message += `${index + 1}. ${item.nama_obat} - Qty: ${item.qty} - Rp${(item.harga * item.qty).toLocaleString()}\n`;
     });
 
-    message += `\n💰 *TOTAL PEMBAYARAN:* \n*Rp${getTotalPrice().toLocaleString()}*\n`;
-    message += `${divider}\n\n`;
+    message += `\nTotal: Rp${getTotalPrice().toLocaleString()}\n\n`;
 
     if (address.trim()) {
-      message += `📍 *ALAMAT PENGIRIMAN:*\n${address}\n`;
-      message += `${divider}\n\n`;
+      message += `Alamat Pengiriman:\n${address}\n\n`;
     }
 
-    message += `Mohon segera diproses ya. Terima kasih! 🙏✨`;
+    message += `Mohon diproses. Terima kasih!`;
     return encodeURIComponent(message);
   };
 
