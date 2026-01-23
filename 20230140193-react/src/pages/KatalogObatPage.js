@@ -313,16 +313,7 @@ const KatalogObatPage = () => {
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-medium text-gray-600 mb-1">Nomor WhatsApp</label>
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-                          placeholder="08xxxxxxxxxx"
-                          value={customerPhone}
-                          onChange={(e) => setCustomerPhone(e.target.value)}
-                        />
-                      </div>
+
 
                       <div>
                         <label className="block text-xs font-medium text-gray-600 mb-1">Alamat Lengkap</label>
@@ -358,8 +349,8 @@ const KatalogObatPage = () => {
                 {/* Checkout Button */}
                 <button
                   onClick={async () => {
-                    if (!customerName.trim() || !customerPhone.trim() || !address.trim()) {
-                      alert("Mohon lengkapi Nama, Nomor WhatsApp, dan Alamat pengiriman!");
+                    if (!customerName.trim() || !address.trim()) {
+                      alert("Mohon lengkapi Nama dan Alamat pengiriman!");
                       return;
                     }
 
@@ -369,7 +360,7 @@ const KatalogObatPage = () => {
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                           nama_pelanggan: customerName,
-                          nomor_wa: customerPhone,
+                          nomor_wa: "N/A", // Phone number is now handled by WhatsApp directly
                           alamat: address,
                           detail_pesanan: cart,
                           total_harga: getTotalPrice()
@@ -380,7 +371,6 @@ const KatalogObatPage = () => {
                       setShowCart(false);
                       setCart([]);
                       setCustomerName("");
-                      setCustomerPhone("");
                       setAddress("");
                       alert("Pesanan berhasil dibuat! Silahkan lanjutkan konfirmasi di WhatsApp.");
                     } catch (error) {
@@ -389,8 +379,8 @@ const KatalogObatPage = () => {
                       window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
                     }
                   }}
-                  disabled={!address.trim() || !customerName.trim() || !customerPhone.trim()}
-                  className={`w-full py-3.5 rounded-lg font-bold text-sm transition-all ${(!address.trim() || !customerName.trim() || !customerPhone.trim())
+                  disabled={!address.trim() || !customerName.trim()}
+                  className={`w-full py-3.5 rounded-lg font-bold text-sm transition-all ${(!address.trim() || !customerName.trim())
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-500/30 active:scale-95'
                     }`}
