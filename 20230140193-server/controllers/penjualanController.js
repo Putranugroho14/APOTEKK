@@ -48,6 +48,7 @@ exports.createPenjualan = async (req, res) => {
 // GET All Orders (Admin Only)
 exports.getAllPenjualan = async (req, res) => {
     try {
+        console.log("Mencoba mengambil data penjualan...");
         const penjualans = await Penjualan.findAll({
             order: [['createdAt', 'DESC']]
         });
@@ -55,7 +56,12 @@ exports.getAllPenjualan = async (req, res) => {
             data: penjualans
         });
     } catch (error) {
-        res.status(500).json({ message: "Gagal mengambil data penjualan", error: error.message });
+        console.error("Gagal mengambil data penjualan:", error);
+        res.status(500).json({
+            message: "Gagal mengambil data penjualan",
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 };
 
