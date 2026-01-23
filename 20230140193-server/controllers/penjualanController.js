@@ -2,6 +2,7 @@ const { Penjualan, Obat, sequelize } = require('../models');
 
 // CREATE Order (Public)
 exports.createPenjualan = async (req, res) => {
+    console.log("Menerima pesanan baru:", req.body);
     const t = await sequelize.transaction();
     try {
         const { nama_pelanggan, nomor_wa, alamat, detail_pesanan, total_harga } = req.body;
@@ -31,6 +32,7 @@ exports.createPenjualan = async (req, res) => {
         }
 
         await t.commit();
+        console.log("Pesanan berhasil disimpan & stok diperbarui ID:", newPenjualan.id);
 
         res.status(201).json({
             message: "Pesanan berhasil dibuat dan stok diperbarui",

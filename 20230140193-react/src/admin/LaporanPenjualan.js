@@ -45,10 +45,12 @@ const LaporanPenjualan = () => {
     };
 
     useEffect(() => {
-        const filtered = penjualans.filter(p =>
-            p.nama_pelanggan.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            p.nomor_wa.includes(searchQuery)
-        );
+        const filtered = penjualans.filter(p => {
+            const name = (p.nama_pelanggan || "").toLowerCase();
+            const wa = (p.nomor_wa || "").toLowerCase();
+            const query = searchQuery.toLowerCase();
+            return name.includes(query) || wa.includes(query);
+        });
         setFilteredPenjualans(filtered);
     }, [searchQuery, penjualans]);
 
@@ -198,7 +200,9 @@ const LaporanPenjualan = () => {
                                 {loading ? (
                                     [1, 2, 3].map(i => <tr key={i}><td colSpan="5" className="p-8"><div className="h-8 bg-slate-50 rounded-xl animate-pulse"></div></td></tr>)
                                 ) : filteredPenjualans.length === 0 ? (
-                                    <tr><td colSpan="5" className="p-20 text-center text-slate-400 italic">Tidak ada data penjualan.</td></tr>
+                                    <tr><td colSpan="5" className="p-20 text-center text-slate-400 italic">
+                                        {loading ? "Memuat data..." : "Tidak ada data penjualan. Pastikan koneksi API sudah benar."}
+                                    </td></tr>
                                 ) : (
                                     filteredPenjualans.map(order => (
                                         <tr key={order.id} className="hover:bg-slate-50 transition-all duration-300 group">

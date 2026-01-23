@@ -57,7 +57,7 @@ const KatalogObatPage = () => {
     else setCart(cart.map(item => item.id === productId ? { ...item, qty: newQty } : item));
   };
   const getTotalItems = () => cart.reduce((sum, item) => sum + item.qty, 0);
-  const getTotalPrice = () => cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
+  const getTotalPrice = () => cart.reduce((sum, item) => sum + (Number(item.harga) * item.qty), 0);
 
   const generateWhatsAppMessage = () => {
     let message = `Halo Apotek Hadinata, saya ingin pesan:\n\n`;
