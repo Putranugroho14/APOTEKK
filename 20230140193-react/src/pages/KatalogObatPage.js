@@ -61,17 +61,19 @@ const KatalogObatPage = () => {
   const getTotalPrice = () => cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
 
   const generateWhatsAppMessage = () => {
-    let message = "Halo Apotek Hadinata, saya ingin pesan:\n\n";
+    let message = `*PESANAN BARU*\n`;
+    message += `Nama: ${customerName.trim() || 'Pelanggan'}\n\n`;
+    message += `*DAFTAR PESANAN:*\n`;
     cart.forEach((item, index) => {
-      message += `${index + 1}. ${item.nama_obat} - Qty: ${item.qty} - Rp${(item.harga * item.qty).toLocaleString()} \n`;
+      message += `${index + 1}. ${item.nama_obat}\n   Qty: ${item.qty}x - Rp${(item.harga * item.qty).toLocaleString()}\n`;
     });
-    message += `\nTotal: Rp${getTotalPrice().toLocaleString()}`;
+    message += `\n*TOTAL: Rp${getTotalPrice().toLocaleString()}*`;
 
     if (address.trim()) {
-      message += `\n\nAlamat Pengiriman:\n${address}`;
+      message += `\n\n*ALAMAT PENGIRIMAN:*\n${address}`;
     }
 
-    message += `\n\nMohon diproses. Terima kasih!`;
+    message += `\n\nMohon diproses. Terima kasih! 🙏`;
     return encodeURIComponent(message);
   };
 
