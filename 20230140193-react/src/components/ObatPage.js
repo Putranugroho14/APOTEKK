@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
     Trash2, Plus, X, Package,
-    Pill, Search, LayoutDashboard, RefreshCw,
+    Search, LayoutDashboard, RefreshCw,
     FileText, LogOut, Save, Eye, EyeOff, Menu, Upload, ShoppingCart
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
@@ -45,7 +45,7 @@ const ObatPage = () => {
     const [editingObat, setEditingObat] = useState(null);
     const [formData, setFormData] = useState(initialFormState);
 
-    const user = decodeTokenPayload(getToken());
+
 
     useEffect(() => {
         if (!getToken()) navigate('/login');
