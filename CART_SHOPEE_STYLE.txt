@@ -1,0 +1,18 @@
+# Shopee-Style Cart Checkout Design
+
+Fitur yang akan diimplementasikan:
+1. Header sederhana dengan title dan close button
+2. Section "Produk yang Dibeli" dengan list items clean
+3. Section "Detail Pengiriman" dengan form terpisah
+4. Sticky bottom untuk Total dan Tombol Checkout
+5. Warna lebih clean: putih, orange accent (seperti Shopee)
+6. Typography lebih jelas dan spacing yang baik
+
+Layout:
+- Header (white bg, orange text)
+- Scrollable content:
+  - Products section
+  - Shipping details section  
+- Fixed bottom:
+  - Total price
+  - Checkout button (orange)
