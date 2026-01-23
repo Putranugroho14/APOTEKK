@@ -49,6 +49,7 @@ const KatalogObatPage = () => {
     } else {
       setCart([...cart, { ...product, qty: 1 }]);
     }
+    setShowCart(true); // Auto-open cart when item added
   };
 
   const removeFromCart = (productId) => setCart(cart.filter(item => item.id !== productId));
@@ -227,70 +228,114 @@ const KatalogObatPage = () => {
         </div>
       </footer>
 
-      {/* CART MODAL */}
+      {/* CART MODAL - IMPROVED UI */}
       {showCart && (
-        <div className="fixed inset-0 z-[100] flex justify-end bg-slate-900/20 backdrop-blur-sm animate-fade-in" onClick={() => setShowCart(false)}>
-          <div className="w-full max-w-lg bg-white h-screen flex flex-col shadow-2xl animate-slide-in-right overflow-hidden rounded-l-[40px] md:rounded-l-[60px] border-l border-slate-100" onClick={e => e.stopPropagation()}>
-            <div className="p-12 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+        <div className="fixed inset-0 z-[100] flex justify-end bg-slate-900/60 backdrop-blur-md animate-fade-in" onClick={() => setShowCart(false)}>
+          <div className="w-full max-w-lg bg-gradient-to-br from-white via-slate-50 to-cyan-50/30 h-screen flex flex-col shadow-[0_20px_60px_rgba(0,0,0,0.3)] animate-slide-in-right overflow-hidden rounded-l-[40px] md:rounded-l-[60px] border-l-4 border-cyan-400" onClick={e => e.stopPropagation()}>
+            {/* HEADER */}
+            <div className="p-8 md:p-12 border-b border-cyan-100 flex justify-between items-center bg-gradient-to-r from-cyan-500 to-blue-600">
               <div>
-                <h3 className="text-3xl font-black tracking-tighter mb-2 text-slate-900">Keranjang</h3>
-                <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">{getTotalItems()} Item terpilih</p>
+                <h3 className="text-2xl md:text-3xl font-black tracking-tighter mb-1 text-white drop-shadow-lg">🛒 Keranjang Belanja</h3>
+                <p className="text-[10px] font-black text-cyan-100 uppercase tracking-[0.3em]">{getTotalItems()} Item terpilih</p>
               </div>
-              <button onClick={() => setShowCart(false)} className="w-14 h-14 bg-white text-slate-400 border border-slate-100 rounded-3xl flex items-center justify-center hover:bg-slate-100 hover:text-slate-900 transition shadow-xl"><X size={24} /></button>
+              <button onClick={() => setShowCart(false)} className="w-12 h-12 md:w-14 md:h-14 bg-white/20 backdrop-blur-md text-white border-2 border-white/30 rounded-2xl flex items-center justify-center hover:bg-white/30 hover:rotate-90 transition-all duration-300 shadow-lg">
+                <X size={24} />
+              </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-12 space-y-8">
+
+            {/* CART ITEMS */}
+            <div className="flex-1 overflow-y-auto p-6 md:p-12 space-y-6">
               {cart.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center">
-                  <ShoppingBag size={50} className="text-slate-200 mb-8" />
-                  <p className="text-slate-400 font-bold italic">Belum ada item terpilih.</p>
+                  <div className="w-32 h-32 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full flex items-center justify-center mb-6 shadow-xl">
+                    <ShoppingBag size={60} className="text-cyan-400" />
+                  </div>
+                  <p className="text-slate-500 font-bold text-lg italic">Keranjang masih kosong</p>
+                  <p className="text-slate-400 text-sm mt-2">Mulai belanja sekarang!</p>
                 </div>
               ) : (
                 cart.map(item => (
-                  <div key={item.id} className="flex gap-6 p-4 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-all group">
-                    <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 shadow-sm">
-                      <img src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} alt={item.nama_obat} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
+                  <div key={item.id} className="flex gap-4 md:gap-6 p-4 md:p-5 rounded-2xl md:rounded-3xl bg-white border-2 border-slate-100 hover:border-cyan-200 hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+                    {/* Subtle gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-50/0 to-blue-50/0 group-hover:from-cyan-50/50 group-hover:to-blue-50/50 transition-all duration-500 pointer-events-none"></div>
+
+                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-xl md:rounded-2xl overflow-hidden shrink-0 shadow-lg border-2 border-slate-100 relative z-10">
+                      <img
+                        src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
+                        alt={item.nama_obat}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-black text-slate-900 text-sm mb-1">{item.nama_obat}</h4>
-                      <p className="text-lg font-black text-cyan-600 mb-4">Rp{item.harga.toLocaleString()}</p>
-                      <div className="flex items-center gap-4">
-                        <button onClick={() => updateQty(item.id, item.qty - 1)} className="w-8 h-8 flex items-center justify-center bg-white text-slate-400 rounded-lg border border-slate-100 shadow-sm"><Minus size={14} /></button>
-                        <span className="font-black text-slate-900">{item.qty}</span>
-                        <button onClick={() => updateQty(item.id, item.qty + 1)} className="w-8 h-8 flex items-center justify-center bg-white text-slate-400 rounded-lg border border-slate-100 shadow-sm"><Plus size={14} /></button>
+
+                    <div className="flex-1 relative z-10">
+                      <h4 className="font-black text-slate-900 text-sm md:text-base mb-1 group-hover:text-cyan-600 transition-colors">{item.nama_obat}</h4>
+                      <p className="text-xl md:text-2xl font-black bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent mb-3 md:mb-4">
+                        Rp{item.harga.toLocaleString()}
+                      </p>
+
+                      <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-2 w-fit shadow-inner">
+                        <button
+                          onClick={() => updateQty(item.id, item.qty - 1)}
+                          className="w-8 h-8 flex items-center justify-center bg-white text-cyan-600 hover:bg-cyan-500 hover:text-white rounded-lg border border-cyan-200 shadow-sm transition-all hover:scale-110 active:scale-95"
+                        >
+                          <Minus size={14} />
+                        </button>
+                        <span className="font-black text-slate-900 min-w-[24px] text-center">{item.qty}</span>
+                        <button
+                          onClick={() => updateQty(item.id, item.qty + 1)}
+                          className="w-8 h-8 flex items-center justify-center bg-white text-cyan-600 hover:bg-cyan-500 hover:text-white rounded-lg border border-cyan-200 shadow-sm transition-all hover:scale-110 active:scale-95"
+                        >
+                          <Plus size={14} />
+                        </button>
                       </div>
                     </div>
-                    <button onClick={() => removeFromCart(item.id)} className="text-slate-300 hover:text-red-500 transition-colors"><Trash2 size={18} /></button>
+
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-slate-300 hover:text-red-500 hover:scale-125 transition-all relative z-10"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
                 ))
               )}
             </div>
+
+            {/* CHECKOUT FORM */}
             {cart.length > 0 && (
-              <div className="p-12 bg-white rounded-t-[60px] shadow-2xl border-t border-slate-100">
-                <div className="mb-6 space-y-4">
+              <div className="p-6 md:p-12 bg-white rounded-t-[40px] shadow-[0_-20px_40px_rgba(0,0,0,0.1)] border-t-4 border-cyan-400">
+                <div className="mb-6 space-y-4">\n                  <div>
+                  <label className="block text-[10px] font-black text-cyan-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    👤 Nama Lengkap
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 focus:bg-white focus:shadow-lg transition-all"
+                    placeholder="Masukkan nama Anda"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
+                </div>
+
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Nama Lengkap</label>
+                    <label className="block text-[10px] font-black text-cyan-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+                      📱 Nomor WhatsApp
+                    </label>
                     <input
                       type="text"
-                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors"
-                      placeholder="Nama Anda"
-                      value={customerName}
-                      onChange={(e) => setCustomerName(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Nomor WhatsApp</label>
-                    <input
-                      type="text"
-                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors"
+                      className="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 focus:bg-white focus:shadow-lg transition-all"
                       placeholder="08xxxxxxxxxx"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                     />
                   </div>
+
                   <div>
-                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Alamat Pengiriman</label>
+                    <label className="block text-[10px] font-black text-cyan-600 uppercase tracking-widest mb-2 flex items-center gap-2">
+                      📍 Alamat Pengiriman
+                    </label>
                     <textarea
-                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 transition-colors resize-none h-24"
+                      className="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:border-cyan-500 focus:bg-white focus:shadow-lg transition-all resize-none h-24"
                       placeholder="Masukkan alamat lengkap..."
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
