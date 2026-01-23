@@ -366,17 +366,23 @@ const KatalogObatPage = () => {
                     }
 
                     try {
-                      await fetch(`${API_BASE_URL}/api/penjualan`, {
+                      const response = await fetch(`${API_BASE_URL}/api/penjualan`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                           nama_pelanggan: customerName,
-                          nomor_wa: "N/A", // Phone number is now handled by WhatsApp directly
+                          nomor_wa: "N/A",
                           alamat: address,
                           detail_pesanan: cart,
                           total_harga: getTotalPrice()
                         })
                       });
+
+                      const result = await response.json();
+
+                      if (!response.ok) {
+                        throw new Error(result.message || "Gagal menyimpan ke database");
+                      }
 
                       window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
                       setShowCart(false);
@@ -386,7 +392,7 @@ const KatalogObatPage = () => {
                       alert("Pesanan berhasil dibuat! Silahkan lanjutkan konfirmasi di WhatsApp.");
                     } catch (error) {
                       console.error("Gagal menyimpan pesanan:", error);
-                      alert("Terjadi kesalahan. Mengalihkan ke WhatsApp...");
+                      alert(`Gagal: ${error.message}. Pesanan tetap akan dialihkan ke WhatsApp untuk pengecekan manual.`);
                       window.open(`https://wa.me/6281390807472?text=${generateWhatsAppMessage()}`, '_blank');
                     }
                   }}
