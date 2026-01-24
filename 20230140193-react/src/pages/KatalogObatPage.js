@@ -147,7 +147,7 @@ const KatalogObatPage = () => {
               <div className="relative">
                 <select
                   value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full lg:w-auto pl-4 pr-10 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[8px] md:text-[10px] uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none relative"
+                  className="w-full lg:w-auto pl-4 pr-10 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[8px] md:text-[10px] uppercase tracking-wider text-slate-700 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none relative"
                 >
                   {categories.map(c => <option key={c} value={c} className="bg-white text-slate-900">{c}</option>)}
                 </select>
@@ -157,13 +157,13 @@ const KatalogObatPage = () => {
               <div className="relative">
                 <select
                   value={sortBy} onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full lg:w-auto pl-4 pr-10 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[8px] md:text-[10px] uppercase tracking-wider text-slate-600 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none relative"
+                  className="w-full lg:w-auto pl-4 pr-10 py-5 bg-slate-50 border border-slate-100 rounded-[28px] outline-none font-black text-[8px] md:text-[10px] uppercase tracking-wider text-slate-700 cursor-pointer shadow-sm hover:border-cyan-500 transition-all appearance-none relative"
                 >
                   <option value="nama" className="bg-white text-slate-900">Urut Nama</option>
                   <option value="harga-asc" className="bg-white text-slate-900">Termurah</option>
                   <option value="harga-desc" className="bg-white text-slate-900">Termahal</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={14} />
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={14} />
               </div>
             </div>
           </div>
@@ -195,12 +195,12 @@ const KatalogObatPage = () => {
                           <Star key={s} size={8} className={`${s <= (obat.rating || 4.5) ? "fill-amber-400 text-amber-400" : "fill-slate-200 text-slate-200"} md:w-2.5 md:h-2.5`} />
                         ))}
                       </div>
-                      <span className="text-[7px] md:text-[9px] font-black text-slate-500 uppercase">{(obat.rating || 4.8).toFixed(1)} / 5</span>
+                      <span className="text-[7px] md:text-[9px] font-black text-slate-600 uppercase">{(obat.rating || 4.8).toFixed(1)} / 5</span>
                     </div>
 
                     <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto w-full">
                       <div className="text-left">
-                        <p className="text-[6px] md:text-[7px] font-black text-slate-500 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
+                        <p className="text-[6px] md:text-[7px] font-black text-slate-600 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
                         <p className="text-xs md:text-lg font-black text-cyan-600 tracking-tighter leading-none">Rp{Math.floor(obat.harga).toLocaleString()}</p>
                       </div>
                       <button onClick={() => addToCart(obat)} className="w-7 h-7 md:w-9 md:h-9 bg-slate-50 text-cyan-600 border border-slate-100 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:rotate-6 active:scale-95 transition-all">
@@ -309,7 +309,7 @@ const KatalogObatPage = () => {
 
                       <div className="space-y-4">
                         <div className="relative">
-                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Nama Penerima</label>
+                          <label className="block text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5 ml-1">Nama Penerima</label>
                           <div className="relative">
                             <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                             <input
@@ -323,7 +323,7 @@ const KatalogObatPage = () => {
                         </div>
 
                         <div className="relative">
-                          <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">Alamat Tujuan</label>
+                          <label className="block text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5 ml-1">Alamat Tujuan</label>
                           <div className="relative">
                             <MapPin className="absolute left-3 top-3 text-slate-400" size={16} />
                             <textarea
@@ -347,7 +347,7 @@ const KatalogObatPage = () => {
               <div className="border-t border-gray-200 bg-white p-4 space-y-3">
                 {/* Summary */}
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between text-gray-600">
+                  <div className="flex justify-between text-gray-700">
                     <span>Subtotal ({getTotalItems()} items)</span>
                     <span className="font-semibold">Rp {getTotalPrice().toLocaleString()}</span>
                   </div>
@@ -437,11 +437,11 @@ const KatalogObatPage = () => {
                     <Star key={s} size={18} className={`${s <= (selectedProduct.rating || 4.5) ? "fill-[#ffc107] text-[#ffc107]" : "fill-slate-200 text-slate-200"}`} />
                   ))}
                 </div>
-                <span className="ml-3 text-slate-400 font-bold text-sm tracking-widest">({selectedProduct.rating || 4.5})</span>
+                <span className="ml-3 text-slate-600 font-bold text-sm tracking-widest">({selectedProduct.rating || 4.5})</span>
               </div>
 
               <div className="mb-8">
-                <p className="text-slate-500 text-sm md:text-base font-medium leading-relaxed italic pr-4">
+                <p className="text-slate-700 text-sm md:text-base font-medium leading-relaxed italic pr-4">
                   {selectedProduct.deskripsi || 'Produk farmasi berkualitas tinggi dikembangkan untuk pemulihan yang efektif dan aman.'}
                 </p>
               </div>

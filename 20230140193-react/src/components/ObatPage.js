@@ -229,17 +229,17 @@ const ObatPage = () => {
                             placeholder="Cari nama obat..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-6 py-4 md:pl-14 md:pr-8 md:py-5 bg-white/5 border border-white/10 rounded-[20px] md:rounded-[30px] outline-none focus:bg-white/10 transition-all text-xs md:text-sm font-bold text-white placeholder-slate-600 shadow-inner"
+                            className="w-full pl-12 pr-6 py-4 md:pl-14 md:pr-8 md:py-5 bg-white border border-slate-200 rounded-[20px] md:rounded-[30px] outline-none focus:ring-4 focus:ring-cyan-500/5 transition-all text-xs md:text-sm font-bold text-slate-900 placeholder-slate-400 shadow-sm"
                         />
                     </div>
                     <div className="w-full md:w-72">
                         <select
                             value={selectedKategori}
                             onChange={(e) => setSelectedKategori(e.target.value)}
-                            className="w-full px-6 py-4 md:px-8 md:py-5 bg-white/5 border border-white/10 rounded-[20px] md:rounded-[30px] outline-none transition-all text-[10px] md:text-sm font-black text-slate-400 appearance-none cursor-pointer"
+                            className="w-full px-6 py-4 md:px-8 md:py-5 bg-white border border-slate-200 rounded-[20px] md:rounded-[30px] outline-none transition-all text-[10px] md:text-sm font-black text-slate-700 appearance-none cursor-pointer shadow-sm"
                         >
-                            <option value="" className="bg-slate-900 text-white">Semua Kategori</option>
-                            {kategoriOptions.map(kat => <option key={kat} value={kat} className="bg-slate-900 text-white">{kat}</option>)}
+                            <option value="">Semua Kategori</option>
+                            {kategoriOptions.map(kat => <option key={kat} value={kat}>{kat}</option>)}
                         </select>
                     </div>
                     <button onClick={() => { setSearchQuery(""); setSelectedKategori(""); }} className="hidden md:flex w-16 h-16 bg-white/5 border border-white/10 rounded-[30px] items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
@@ -260,12 +260,12 @@ const ObatPage = () => {
                         </div>
                     ) : (
                         filteredObats.map(obat => (
-                            <div key={obat.id} className="glass-card-dark rounded-[24px] md:rounded-[40px] border border-white/5 overflow-hidden shadow-2xl transition-all duration-500 group flex flex-col">
-                                <div className="h-32 md:h-56 relative overflow-hidden bg-slate-900">
+                            <div key={obat.id} className="bg-white rounded-[24px] md:rounded-[40px] border border-slate-100 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 group flex flex-col">
+                                <div className="h-40 md:h-60 relative overflow-hidden bg-slate-50 flex items-center justify-center p-4">
                                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
                                         alt={obat.nama_obat}
-                                        className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                                        className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-700 drop-shadow-lg" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent"></div>
                                     <div className="absolute top-4 left-4 md:top-5 md:left-5">
                                         <span className="bg-cyan-500 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[8px] md:text-[9px] font-black shadow-xl uppercase tracking-widest">
                                             {obat.kategori}
@@ -279,24 +279,24 @@ const ObatPage = () => {
                                     </div>
                                 </div>
                                 <div className="p-3 md:p-6 flex flex-col flex-1 relative">
-                                    <h4 className="font-black text-white mb-2 md:mb-3 truncate text-sm md:text-base tracking-tight" title={obat.nama_obat}>{obat.nama_obat}</h4>
-                                    <p className="text-[10px] md:text-[11px] text-slate-500 font-medium line-clamp-2 mb-4 md:mb-6 italic leading-relaxed">"{obat.deskripsi}"</p>
+                                    <h4 className="font-black text-slate-900 mb-2 md:mb-3 truncate text-sm md:text-base tracking-tight" title={obat.nama_obat}>{obat.nama_obat}</h4>
+                                    <p className="text-[10px] md:text-[11px] text-slate-600 font-medium line-clamp-2 mb-4 md:mb-6 leading-relaxed">"{obat.deskripsi}"</p>
 
-                                    <div className="mt-auto grid grid-cols-2 gap-4 md:gap-6 pt-4 md:pt-6 border-t border-white/5 mb-6 md:mb-8">
+                                    <div className="mt-auto grid grid-cols-2 gap-4 md:gap-6 pt-4 md:pt-6 border-t border-slate-100 mb-6 md:mb-8">
                                         <div>
-                                            <p className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-1.5">Stok</p>
-                                            <p className={`text-sm md:text-base font-black ${obat.stok < 10 ? 'text-red-400 animate-pulse' : 'text-white'}`}>{obat.stok} <span className="text-[8px] opacity-30">UNIT</span></p>
+                                            <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-1.5">Stok</p>
+                                            <p className={`text-sm md:text-base font-black ${obat.stok < 10 ? 'text-red-500 animate-pulse' : 'text-slate-900'}`}>{obat.stok} <span className="text-[8px] opacity-30">UNIT</span></p>
                                         </div>
                                         <div>
-                                            <p className="text-[8px] md:text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-1.5">Harga</p>
-                                            <p className="text-sm md:text-base font-black text-cyan-400">Rp{obat.harga.toLocaleString()}</p>
+                                            <p className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 md:mb-1.5">Harga</p>
+                                            <p className="text-sm md:text-base font-black text-cyan-600">Rp{obat.harga.toLocaleString()}</p>
                                         </div>
                                     </div>
 
                                     <div className="flex gap-3 md:gap-4">
                                         <button
                                             onClick={() => { setEditingObat(obat); setFormData(obat); setShowAddForm(true); }}
-                                            className="flex-1 py-3 md:py-4 bg-white/10 text-white hover:bg-cyan-500 hover:text-white border border-white/10 rounded-xl md:rounded-[20px] transition-all font-black text-[8px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em]"
+                                            className="flex-1 py-3 md:py-4 bg-slate-50 text-slate-900 hover:bg-cyan-500 hover:text-white border border-slate-200 rounded-xl md:rounded-[20px] transition-all font-black text-[8px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em]"
                                         >
                                             Edit Item
                                         </button>

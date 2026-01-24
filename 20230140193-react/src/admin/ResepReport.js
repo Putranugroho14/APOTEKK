@@ -157,14 +157,14 @@ const ResepReport = () => {
                             <p className="text-slate-500 font-bold italic text-xs md:text-base">Validasi dan tindak lanjuti resep yang dikirim oleh pasien.</p>
                         </div>
                     </div>
-                    <div className="glass-card-dark px-8 py-5 border border-slate-200/60 rounded-[24px] shadow-xl w-full md:w-auto bg-white/80">
-                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.3em] mb-1">Total Antrean</p>
+                    <div className="bg-white px-8 py-5 border border-slate-200 rounded-[24px] shadow-sm w-full md:w-auto">
+                        <p className="text-[10px] uppercase font-black text-slate-500 tracking-[0.3em] mb-1">Total Antrean</p>
                         <p className="text-3xl font-black text-slate-900 tracking-widest leading-none">{reseps.length}</p>
                     </div>
                 </div>
 
                 {/* Filters */}
-                <div className="glass-card-dark p-6 rounded-[40px] border border-slate-200/60 mb-10 shadow-xl flex flex-col md:flex-row gap-6 bg-white/80">
+                <div className="bg-white p-6 rounded-[40px] border border-slate-200 mb-10 shadow-sm flex flex-col md:flex-row gap-6">
                     <div className="flex-1 relative">
                         <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
                         <input
@@ -181,16 +181,16 @@ const ResepReport = () => {
                 </div>
 
                 {/* Desktop Table Layout */}
-                <div className="hidden lg:block glass-card-dark rounded-[40px] border border-slate-200/60 shadow-xl overflow-hidden bg-white/80">
+                <div className="hidden lg:block bg-white rounded-[40px] border border-slate-200 shadow-sm overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-slate-50/50">
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Waktu & Tanggal</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Informasi Pasien</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Dokumen</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Status</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 text-center">Tindakan</th>
+                                <tr className="bg-slate-50">
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Waktu & Tanggal</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Informasi Pasien</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Dokumen</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Status</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 text-center">Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
@@ -208,7 +208,7 @@ const ResepReport = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-sm font-black text-slate-900 tracking-tight">{new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</p>
-                                                        <p className="text-[10px] font-black text-slate-400 flex items-center gap-1 uppercase tracking-widest"><Clock size={10} /> {new Date(r.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
+                                                        <p className="text-[10px] font-black text-slate-500 flex items-center gap-1 uppercase tracking-widest"><Clock size={10} /> {new Date(r.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
                                                     </div>
                                                 </div>
                                             </td>

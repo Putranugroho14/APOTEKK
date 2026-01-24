@@ -40,41 +40,14 @@ app.use("/api/penjualan", penjualanRoutes);
 // Self-Healing Database Initialization (Maintain silently)
 const initDB = async () => {
   try {
-    console.log("Menghubungkan ke database...");
-
-    // Sinkronisasi model secara keseluruhan
-    await db.sequelize.sync({ alter: true });
-
-    // Cek manual kolom rating (existing logic)
-    const [ratingCheck] = await db.sequelize.query("SHOW COLUMNS FROM Obats LIKE 'rating'");
-    if (ratingCheck.length === 0) {
+    const [result] = await db.sequelize.query("SHOW COLUMNS FROM Obats LIKE 'rating'");
+    if (result.length === 0) {
       await db.sequelize.query("ALTER TABLE Obats ADD COLUMN rating FLOAT DEFAULT 4.5");
     }
-
+    await db.sequelize.sync({ alter: true });
     console.log("Database initialized successfully.");
   } catch (err) {
     console.error("DB Init Error:", err.message);
-
-    // Fallback: Jika sinkronisasi otomatis gagal, coba buat tabel Penjualans secara manual
-    try {
-      console.log("Mencoba membuat tabel Penjualans secara manual...");
-      await db.sequelize.query(`
-        CREATE TABLE IF NOT EXISTS Penjualans (
-          id INT AUTO_INCREMENT PRIMARY KEY,
-          nama_pelanggan VARCHAR(255),
-          nomor_wa VARCHAR(255),
-          alamat TEXT,
-          detail_pesanan TEXT,
-          total_harga DECIMAL(10, 2),
-          status VARCHAR(255) DEFAULT 'Menunggu',
-          createdAt DATETIME NOT NULL,
-          updatedAt DATETIME NOT NULL
-        )
-      `);
-      console.log("Tabel Penjualans berhasil dibuat secara manual.");
-    } catch (manualErr) {
-      console.error("Gagal membuat tabel secara manual:", manualErr.message);
-    }
   }
 };
 

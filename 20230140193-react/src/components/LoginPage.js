@@ -69,7 +69,7 @@ function LoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-8">
             <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase text-slate-600 tracking-[0.2em] ml-2">Username</label>
+              <label className="text-[10px] font-black uppercase text-slate-800 tracking-[0.2em] ml-2">Username</label>
               <div className="group relative">
                 <User className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-500 transition-colors" size={20} />
                 <input
@@ -83,7 +83,7 @@ function LoginPage() {
             </div>
 
             <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase text-slate-600 tracking-[0.2em] ml-2">Password</label>
+              <label className="text-[10px] font-black uppercase text-slate-800 tracking-[0.2em] ml-2">Password</label>
               <div className="group relative">
                 <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-500 transition-colors" size={20} />
                 <input

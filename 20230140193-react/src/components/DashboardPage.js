@@ -168,14 +168,14 @@ const DashboardPage = () => {
             { label: 'Pending', value: stats.pending, icon: Clock, color: 'amber' },
             { label: 'Selesai', value: stats.selesai, icon: CheckCircle, color: 'cyan' },
           ].map((s, i) => (
-            <div key={i} className="glass-card-dark p-5 md:p-8 rounded-[24px] md:rounded-[40px] border border-white/10 shadow-sm hover:translate-y-[-5px] transition-all duration-500 group">
+            <div key={i} className="bg-white p-5 md:p-8 rounded-[24px] md:rounded-[40px] border border-slate-200 shadow-sm hover:translate-y-[-5px] transition-all duration-500 group">
               <div className="flex justify-between items-start mb-4 md:mb-6">
                 <div className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:rotate-12
                             ${s.color === 'cyan' ? 'bg-cyan-100 text-cyan-600' : s.color === 'lime' ? 'bg-lime-100 text-lime-600' : 'bg-amber-100 text-amber-600'}`}>
                   <s.icon size={20} className="md:w-[26px] md:h-[26px]" />
                 </div>
               </div>
-              <p className="text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1">{s.label}</p>
+              <p className="text-slate-600 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-1">{s.label}</p>
               <h3 className="text-xl md:text-4xl font-black text-slate-900 tracking-tighter">{isLoading ? '...' : s.value}</h3>
             </div>
           ))}
@@ -183,7 +183,7 @@ const DashboardPage = () => {
 
         {/* RECENT ACTIVITY & QUICK ACTIONS */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2 glass-card-dark rounded-[40px] border border-slate-200/60 shadow-xl overflow-hidden bg-white/80">
+          <div className="xl:col-span-2 bg-white rounded-[40px] border border-slate-200 shadow-sm overflow-hidden">
             <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-white/50">
               <h3 className="text-xl font-black text-slate-900 tracking-tight">Resep Terbaru</h3>
               <button onClick={() => navigate('/admin/resep')} className="text-[10px] font-black text-cyan-600 uppercase tracking-[0.2em] hover:text-slate-900 transition-colors">Lihat Semua Laporan</button>
@@ -191,11 +191,11 @@ const DashboardPage = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="bg-slate-50/50">
-                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Pasien</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Tanggal</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Status</th>
-                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-500">Aksi</th>
+                  <tr className="bg-slate-50">
+                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-600">Pasien</th>
+                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-600">Tanggal</th>
+                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-600">Status</th>
+                    <th className="px-8 py-5 text-[10px] font-black uppercase tracking-widest text-slate-600">Aksi</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -209,7 +209,7 @@ const DashboardPage = () => {
                           <div className="text-sm font-bold text-slate-900 tracking-tight">{r.nama_lengkap}</div>
                         </div>
                       </td>
-                      <td className="px-8 py-6 text-sm font-medium text-slate-500 italic font-serif">
+                      <td className="px-8 py-6 text-sm font-black text-slate-600 italic">
                         {new Date(r.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
                       </td>
                       <td className="px-8 py-6">
@@ -231,17 +231,17 @@ const DashboardPage = () => {
           </div>
 
           <div className="space-y-8">
-            <div className="glass-card-dark p-8 rounded-[40px] border border-slate-200/60 shadow-xl relative overflow-hidden group bg-white/80">
+            <div className="bg-white p-8 rounded-[40px] border border-slate-200 shadow-sm relative overflow-hidden group">
               <div className="relative z-10">
                 <h3 className="text-xl font-black text-slate-900 mb-8 tracking-tight">Aksi Cepat</h3>
                 <div className="grid grid-cols-2 gap-4 md:gap-6">
                   <button onClick={() => navigate('/obat')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-slate-50 rounded-[24px] md:rounded-[32px] hover:bg-cyan-50 hover:text-cyan-600 transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn border border-slate-100">
                     <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-sm flex items-center justify-center group-hover/btn:scale-110 transition-all border border-slate-100"><Plus size={20} className="text-cyan-600 md:w-6 md:h-6" /></div>
-                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover/btn:text-cyan-700">Tambah Obat</span>
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 group-hover/btn:text-cyan-700">Tambah Obat</span>
                   </button>
                   <button onClick={() => navigate('/admin/resep')} className="flex flex-col items-center justify-center p-5 md:p-8 bg-slate-50 rounded-[24px] md:rounded-[32px] hover:bg-lime-50 hover:text-lime-600 transition-all transform hover:-translate-y-1 gap-3 md:gap-4 group/btn border border-slate-100">
                     <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-sm flex items-center justify-center group-hover/btn:scale-110 transition-all border border-slate-100"><Activity size={20} className="text-lime-600 md:w-6 md:h-6" /></div>
-                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 group-hover/btn:text-lime-700">Cek Resep</span>
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 group-hover/btn:text-lime-700">Cek Resep</span>
                   </button>
                 </div>
               </div>
