@@ -4,7 +4,7 @@ import axios from "axios";
 import {
     Trash2, Plus, X, Package,
     Search, LayoutDashboard, RefreshCw,
-    FileText, LogOut, Save, Eye, EyeOff, Menu, Upload, ShoppingCart
+    FileText, LogOut, Save, Eye, EyeOff, Menu, Upload, ShoppingCart, ChevronDown
 } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
