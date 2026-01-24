@@ -109,12 +109,12 @@ const KatalogObatPage = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setShowCart(true)}
-              className="relative w-10 h-10 md:w-12 md:h-12 bg-cyan-500/10 text-cyan-600 border border-cyan-100 rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-cyan-500/20 transition-all shadow-xl shadow-cyan-500/5"
+              className="relative w-10 h-10 md:w-12 md:h-12 bg-cyan-500/10 text-slate-900 border border-cyan-100 rounded-xl md:rounded-2xl flex items-center justify-center hover:bg-cyan-500/20 transition-all shadow-xl shadow-cyan-500/5"
             >
               <ShoppingCart size={18} className="md:w-5 md:h-5" />
               {getTotalItems() > 0 && <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-lime-500 text-white text-[9px] flex items-center justify-center rounded-full font-black animate-bounce shadow-lg">{getTotalItems()}</span>}
             </button>
-            <button onClick={() => navigate('/')} className="flex items-center gap-2 font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-500 hover:text-cyan-600 transition bg-slate-50 px-3 py-2 rounded-xl md:px-0 md:py-0 md:bg-transparent">
+            <button onClick={() => navigate('/')} className="flex items-center gap-2 font-black text-[9px] md:text-[10px] uppercase tracking-widest text-slate-500 hover:text-slate-900 transition bg-slate-50 px-3 py-2 rounded-xl md:px-0 md:py-0 md:bg-transparent">
               <ArrowLeft size={14} className="md:w-4 md:h-4" /> <span className="hidden xs:inline">Kembali</span>
             </button>
           </div>
@@ -124,7 +124,7 @@ const KatalogObatPage = () => {
       <main className="relative z-10 pt-16 pb-32">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mb-20 animate-fade-in">
-            <div className="inline-flex items-center gap-3 bg-cyan-50 backdrop-blur-md px-4 py-1.5 rounded-full border border-cyan-100/50 text-cyan-600 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8 shadow-sm">
+            <div className="inline-flex items-center gap-3 bg-cyan-50 backdrop-blur-md px-4 py-1.5 rounded-full border border-cyan-100/50 text-slate-900 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8 shadow-sm">
               <Package size={14} /> APOTEK HADINATA
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-none mb-6">
@@ -136,7 +136,7 @@ const KatalogObatPage = () => {
           {/* SEARCH & FILTERS */}
           <div className="bg-slate-100/40 backdrop-blur-xl p-6 md:p-8 rounded-[40px] border border-slate-200/60 shadow-premium mb-16 flex flex-col lg:flex-row gap-6 md:gap-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="flex-1 relative">
-              <Search className="absolute left-5 md:left-6 top-1/2 -translate-y-1/2 text-slate-400 focus-within:text-cyan-600 transition-colors" size={20} />
+              <Search className="absolute left-5 md:left-6 top-1/2 -translate-y-1/2 text-slate-400 focus-within:text-slate-900 transition-colors" size={20} />
               <input
                 type="text" placeholder="Cari obat..."
                 value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
@@ -183,11 +183,11 @@ const KatalogObatPage = () => {
                   <div className="relative w-full aspect-[1/1.2] mb-3 md:mb-4 overflow-hidden rounded-xl md:rounded-[20px] cursor-pointer bg-slate-50" onClick={() => setSelectedProduct(obat)}>
                     <img src={obat.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={obat.nama_obat} />
                     <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[90%]">
-                      <span className="block text-center bg-white/95 backdrop-blur-md px-1.5 py-1 rounded-full text-[6px] md:text-[8px] font-black text-cyan-600 uppercase tracking-[0.2em] shadow-lg border border-slate-100">{obat.kategori}</span>
+                      <span className="block text-center bg-white/95 backdrop-blur-md px-1.5 py-1 rounded-full text-[6px] md:text-[8px] font-black text-slate-900 uppercase tracking-[0.2em] shadow-lg border border-slate-100">{obat.kategori}</span>
                     </div>
                   </div>
                   <div className="flex-1 flex flex-col w-full">
-                    <h4 className="font-black text-slate-800 text-[11px] md:text-sm mb-1.5 md:mb-2 line-clamp-1 group-hover:text-cyan-600 transition-colors cursor-pointer text-center" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
+                    <h4 className="font-black text-slate-800 text-[11px] md:text-sm mb-1.5 md:mb-2 line-clamp-1 group-hover:text-slate-900 transition-colors cursor-pointer text-center" onClick={() => setSelectedProduct(obat)}>{obat.nama_obat}</h4>
 
                     <div className="flex items-center justify-center gap-1.5 mb-3 md:mb-4 w-full">
                       <div className="flex gap-0.5">
@@ -201,9 +201,9 @@ const KatalogObatPage = () => {
                     <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto w-full">
                       <div className="text-left">
                         <p className="text-[6px] md:text-[7px] font-black text-slate-600 uppercase tracking-widest mb-1 leading-none">HARGA TERBAIK</p>
-                        <p className="text-xs md:text-lg font-black text-cyan-600 tracking-tighter leading-none">Rp{Math.floor(obat.harga).toLocaleString()}</p>
+                        <p className="text-xs md:text-lg font-black text-slate-900 tracking-tighter leading-none">Rp{Math.floor(obat.harga).toLocaleString()}</p>
                       </div>
-                      <button onClick={() => addToCart(obat)} className="w-7 h-7 md:w-9 md:h-9 bg-slate-50 text-cyan-600 border border-slate-100 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:rotate-6 active:scale-95 transition-all">
+                      <button onClick={() => addToCart(obat)} className="w-7 h-7 md:w-9 md:h-9 bg-slate-50 text-slate-900 border border-slate-100 rounded-lg md:rounded-xl flex items-center justify-center hover:bg-cyan-500 hover:text-white hover:rotate-6 active:scale-95 transition-all">
                         <Plus size={14} className="md:w-5 md:h-5" />
                       </button>
                     </div>
@@ -238,12 +238,12 @@ const KatalogObatPage = () => {
             {/* HEADER */}
             <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <button onClick={() => setShowCart(false)} className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-500 hover:bg-cyan-50 hover:text-cyan-600 rounded-xl transition-all border border-slate-100">
+                <button onClick={() => setShowCart(false)} className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-500 hover:bg-cyan-50 hover:text-slate-900 rounded-xl transition-all border border-slate-100">
                   <ArrowLeft size={18} />
                 </button>
-                <h2 className="text-xl font-black text-slate-900 tracking-tight">Keranjang <span className="text-cyan-600">Saya</span></h2>
+                <h2 className="text-xl font-black text-slate-900 tracking-tight">Keranjang <span className="text-slate-900">Saya</span></h2>
               </div>
-              <div className="bg-cyan-50 text-cyan-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-cyan-100">
+              <div className="bg-cyan-50 text-slate-900 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-cyan-100">
                 {getTotalItems()} ITEMS
               </div>
             </div>
@@ -260,41 +260,40 @@ const KatalogObatPage = () => {
                 <>
                   <div className="p-6 space-y-5">
                     {cart.map(item => (
-                      <div key={item.id} className="flex gap-4 bg-white border border-slate-100 rounded-[24px] p-4 shadow-sm hover:shadow-md transition-all group">
+                      <div key={item.id} className="flex gap-4 bg-white border border-slate-100 rounded-[24px] p-4 shadow-sm hover:shadow-md hover:border-amber-200 transition-all group">
                         <div className="w-20 h-20 bg-slate-50 rounded-2xl overflow-hidden flex-shrink-0 border border-slate-100 flex items-center justify-center p-2">
                           <img
                             src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200"}
                             alt={item.nama_obat}
-                            className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform"
+                            className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-700"
                           />
                         </div>
 
                         <div className="flex-1 min-w-0 flex flex-col justify-center">
                           <h3 className="font-black text-sm text-slate-900 line-clamp-1 mb-1 tracking-tight">{item.nama_obat}</h3>
-                          <p className="text-sm font-black text-cyan-600 mb-3">Rp {item.harga.toLocaleString()}</p>
-
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center justify-between mt-1">
                             <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1">
                               <button
                                 onClick={() => updateQty(item.id, item.qty - 1)}
-                                className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-cyan-600 transition"
+                                className="w-7 h-7 flex items-center justify-center text-slate-400 hover:bg-amber-100 hover:text-amber-600 rounded-lg transition-all"
                               >
                                 <Minus size={12} />
                               </button>
-                              <span className="w-8 text-center font-black text-xs text-slate-800">{item.qty}</span>
+                              <span className="w-8 text-center font-black text-[10px] text-slate-800">{item.qty}</span>
                               <button
                                 onClick={() => updateQty(item.id, item.qty + 1)}
-                                className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-cyan-600 transition"
+                                className="w-7 h-7 flex items-center justify-center text-slate-400 hover:bg-amber-100 hover:text-amber-600 rounded-lg transition-all"
                               >
                                 <Plus size={12} />
                               </button>
                             </div>
+                            <p className="font-black text-sm text-slate-900 tracking-tight">Rp {(item.harga * item.qty).toLocaleString()}</p>
                           </div>
                         </div>
 
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="w-10 h-10 flex items-center justify-center bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-500 rounded-xl transition self-center"
+                          className="w-10 h-10 flex items-center justify-center bg-white text-slate-300 hover:bg-red-50 hover:text-red-500 border border-slate-100 rounded-xl transition-all self-center shadow-sm"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -307,21 +306,21 @@ const KatalogObatPage = () => {
                     {/* Address Section */}
                     <div className="bg-slate-50 border border-slate-100 rounded-[32px] p-6 space-y-6 shadow-sm">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white shadow-sm border border-slate-100 rounded-xl flex items-center justify-center text-cyan-600">
+                        <div className="w-10 h-10 bg-amber-100 shadow-sm border border-amber-200 rounded-xl flex items-center justify-center text-amber-600">
                           <Package size={18} />
                         </div>
-                        <h3 className="font-black text-sm text-slate-800 uppercase tracking-widest">Detail Pengiriman</h3>
+                        <h3 className="font-black text-[10px] text-slate-800 uppercase tracking-[0.2em]">Detail Pengiriman</h3>
                       </div>
 
                       <div className="space-y-4">
                         <div className="relative">
-                          <label className="block text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5 ml-1">Nama Penerima</label>
-                          <div className="relative">
-                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                          <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">NAMA PENERIMA</label>
+                          <div className="relative group">
+                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-amber-500 transition-colors" size={16} />
                             <input
                               type="text"
-                              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-sm font-bold text-slate-700 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-300 shadow-sm"
-                              placeholder="Ketik nama lengkap..."
+                              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-xs font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 shadow-inner"
+                              placeholder="Siapa penerimanya?"
                               value={customerName}
                               onChange={(e) => setCustomerName(e.target.value)}
                             />
@@ -329,12 +328,12 @@ const KatalogObatPage = () => {
                         </div>
 
                         <div className="relative">
-                          <label className="block text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5 ml-1">Alamat Tujuan</label>
-                          <div className="relative">
-                            <MapPin className="absolute left-4 top-4 text-slate-400" size={16} />
+                          <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">ALAMAT TUJUAN</label>
+                          <div className="relative group">
+                            <MapPin className="absolute left-4 top-4 text-slate-300 group-focus-within:text-amber-500 transition-colors" size={16} />
                             <textarea
-                              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-sm font-bold text-slate-700 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-300 resize-none shadow-sm"
-                              placeholder="Ketik alamat lengkap pengiriman..."
+                              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-xs font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 resize-none shadow-inner"
+                              placeholder="Ke mana pesanannya harus dikirim?"
                               rows="3"
                               value={address}
                               onChange={(e) => setAddress(e.target.value)}
@@ -350,20 +349,18 @@ const KatalogObatPage = () => {
 
             {/* STICKY BOTTOM - SUMMARY & CHECKOUT */}
             {cart.length > 0 && (
-              <div className="border-t border-gray-200 bg-white p-4 space-y-3">
-                {/* Summary */}
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between text-gray-700">
-                    <span>Subtotal ({getTotalItems()} items)</span>
-                    <span className="font-semibold">Rp {getTotalPrice().toLocaleString()}</span>
+              <div className="border-t border-slate-100 bg-white p-6 space-y-4">
+                <div className="bg-slate-50 p-6 rounded-[24px] border border-slate-100 space-y-2">
+                  <div className="flex justify-between text-slate-400 font-black text-[10px] uppercase tracking-widest">
+                    <span>Subtotal</span>
+                    <span>Rp {getTotalPrice().toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between font-black text-lg text-slate-900 pt-4 border-t border-slate-100">
-                    <span>TOTAL</span>
-                    <span className="text-cyan-600">Rp {getTotalPrice().toLocaleString()}</span>
+                  <div className="flex justify-between font-black text-lg text-slate-900 pt-3 border-t border-slate-200">
+                    <span className="text-xs uppercase tracking-widest self-center">Total</span>
+                    <span className="text-2xl text-amber-600 font-black tracking-tighter">Rp {getTotalPrice().toLocaleString()}</span>
                   </div>
                 </div>
 
-                {/* Checkout Button */}
                 <button
                   onClick={async () => {
                     if (!customerName.trim() || !address.trim()) {
@@ -403,13 +400,14 @@ const KatalogObatPage = () => {
                     }
                   }}
                   disabled={!address.trim() || !customerName.trim()}
-                  className={`w-full py-5 rounded-[24px] font-black text-xs uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 ${(!address.trim() || !customerName.trim())
-                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
-                    : 'premium-gradient text-white shadow-xl shadow-cyan-900/10 hover:-translate-y-1 active:scale-95'
+                  className={`w-full py-5 rounded-[24px] font-black text-[10px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 ${(!address.trim() || !customerName.trim())
+                    ? 'bg-slate-100 text-slate-300 cursor-not-allowed border border-slate-200'
+                    : 'premium-gradient text-white shadow-xl shadow-cyan-200/50 hover:scale-[1.02] active:scale-[0.98]'
                     }`}
                 >
-                  Confirm Order <ArrowRight size={16} />
+                  <ShoppingCart size={16} /> Pesan Sekarang
                 </button>
+                <p className="text-center text-[8px] text-slate-400 font-black uppercase tracking-[0.2em]">AMAN • TERPERCAYA • CEPAT</p>
               </div>
             )}
           </div>
@@ -455,7 +453,7 @@ const KatalogObatPage = () => {
               <div className="flex flex-row gap-4 md:gap-6 mb-8">
                 <div className="bg-slate-50 p-5 md:p-6 rounded-[24px] border border-slate-100 flex-1 flex flex-row items-center justify-between min-w-0">
                   <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Harga Unit</p>
-                  <p className="text-base md:text-xl font-black text-cyan-600 tracking-tighter">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
+                  <p className="text-base md:text-xl font-black text-slate-900 tracking-tighter">Rp{Number(selectedProduct.harga).toLocaleString()}</p>
                 </div>
                 <div className="bg-slate-50 p-5 md:p-6 rounded-[24px] border border-slate-100 flex-1 flex flex-row items-center justify-between min-w-0">
                   <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Sedia Stok</p>

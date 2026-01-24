@@ -314,79 +314,92 @@ const ObatPage = () => {
                 </div>
             </main>
 
-            {/* MODAL FORM */}
+            {/* MODAL FORM - PREMIUM LIGHT THEME */}
             {showAddForm && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl animate-fade-in" onClick={() => setShowAddForm(false)}>
-                    <div className="glass-card-dark bg-slate-900/90 w-full max-w-2xl rounded-[30px] md:rounded-[60px] overflow-hidden shadow-[0_0_100px_rgba(6,182,212,0.2)] border border-white/10 animate-slide-in-up" onClick={e => e.stopPropagation()}>
-                        <div className="p-10 border-b border-white/5 flex justify-between items-center bg-white/5">
+                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={() => setShowAddForm(false)}>
+                    <div className="bg-white w-full max-w-2xl rounded-[40px] md:rounded-[60px] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border border-white/20 animate-slide-in-up" onClick={e => e.stopPropagation()}>
+                        <div className="p-8 md:p-12 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                             <div>
-                                <h3 className="text-3xl font-black tracking-tight text-white mb-1 uppercase">{editingObat ? 'Edit Produk' : 'Tambah Baru'}</h3>
-                                <p className="text-xs font-black text-cyan-400 tracking-[0.3em] uppercase">Inventory System</p>
+                                <h3 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900 mb-1 uppercase">{editingObat ? 'Edit Produk' : 'Tambah Baru'}</h3>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></div>
+                                    <p className="text-[10px] font-black text-cyan-600 tracking-[0.3em] uppercase underline decoration-cyan-500/30">Inventory System</p>
+                                </div>
                             </div>
-                            <button onClick={() => setShowAddForm(false)} className="w-14 h-14 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-slate-400 hover:bg-red-500 hover:text-white transition-all transform hover:rotate-90"><X size={24} /></button>
+                            <button onClick={() => setShowAddForm(false)} className="w-12 h-12 md:w-16 md:h-16 bg-white border border-slate-100 rounded-full flex items-center justify-center text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all shadow-sm"><X size={24} /></button>
                         </div>
-                        <form onSubmit={handleSubmit} className="p-10 space-y-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                        <form onSubmit={handleSubmit} className="p-8 md:p-12 space-y-8 max-h-[75vh] overflow-y-auto custom-scrollbar bg-white">
                             <div className="space-y-3">
-                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Identitas Produk</label>
-                                <input
-                                    type="text" required value={formData.nama_obat}
-                                    onChange={e => setFormData({ ...formData, nama_obat: e.target.value })}
-                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white placeholder-slate-700"
-                                    placeholder="Nama Obat / Produk..."
-                                />
+                                <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Identitas Produk</label>
+                                <div className="relative group">
+                                    <Package className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-500 transition-colors" size={20} />
+                                    <input
+                                        type="text" required value={formData.nama_obat}
+                                        onChange={e => setFormData({ ...formData, nama_obat: e.target.value })}
+                                        className="w-full pl-16 pr-8 py-5 bg-slate-50 border border-slate-100 rounded-[25px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-base text-slate-900 placeholder-slate-300 shadow-inner"
+                                        placeholder="Nama Obat / Produk..."
+                                    />
+                                </div>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Kategori</label>
-                                    <select
-                                        required value={formData.kategori}
-                                        onChange={e => setFormData({ ...formData, kategori: e.target.value })}
-                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-black text-sm text-slate-400 appearance-none cursor-pointer"
-                                    >
-                                        <option value="" className="bg-slate-900">Pilih Kategori</option>
-                                        {kategoriOptions.map(k => <option key={k} value={k} className="bg-slate-900">{k}</option>)}
-                                    </select>
+                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Kategori</label>
+                                    <div className="relative group">
+                                        <select
+                                            required value={formData.kategori}
+                                            onChange={e => setFormData({ ...formData, kategori: e.target.value })}
+                                            className="w-full px-8 py-5 bg-slate-50 border border-slate-100 rounded-[25px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-black text-sm text-slate-700 appearance-none cursor-pointer shadow-inner"
+                                        >
+                                            <option value="">Pilih Kategori</option>
+                                            {kategoriOptions.map(k => <option key={k} value={k}>{k}</option>)}
+                                        </select>
+                                        <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none group-focus-within:text-cyan-500" size={18} />
+                                    </div>
                                 </div>
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Harga (IDR)</label>
+                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Harga (IDR)</label>
                                     <input
                                         type="number" required value={formData.harga}
                                         onChange={e => setFormData({ ...formData, harga: parseInt(e.target.value) || 0 })}
-                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
+                                        className="w-full px-8 py-5 bg-slate-50 border border-slate-100 rounded-[25px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-base text-slate-900 shadow-inner"
                                     />
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Stok Tersedia</label>
+                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Stok Tersedia</label>
                                     <input
                                         type="number" required value={formData.stok}
                                         onChange={e => setFormData({ ...formData, stok: parseInt(e.target.value) || 0 })}
-                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
+                                        className="w-full px-8 py-5 bg-slate-50 border border-slate-100 rounded-[25px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-base text-slate-900 shadow-inner"
                                     />
                                 </div>
                                 <div className="space-y-3">
-                                    <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Visibilitas</label>
-                                    <div className="flex items-center h-[60px] bg-white/5 border border-white/10 rounded-[25px] px-8 gap-4">
+                                    <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Visibilitas</label>
+                                    <div className="flex items-center h-[66px] bg-slate-50 border border-slate-100 rounded-[25px] px-8 gap-4 shadow-inner">
                                         <input
                                             type="checkbox" checked={formData.is_published}
                                             onChange={e => setFormData({ ...formData, is_published: e.target.checked })}
-                                            className="w-6 h-6 rounded-lg text-cyan-500 focus:ring-cyan-500 border-white/10 bg-slate-800"
+                                            className="w-6 h-6 rounded-lg text-cyan-600 focus:ring-cyan-500 border-slate-200 bg-white"
                                         />
-                                        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">Tayangkan di Katalog</span>
+                                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Tayangkan di Katalog</span>
                                     </div>
                                 </div>
                             </div>
+
                             <div className="space-y-3">
-                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Rating Produk (1.0 - 5.0)</label>
+                                <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Rating Produk (1.0 - 5.0)</label>
                                 <input
                                     type="number" step="0.1" min="1" max="5" value={formData.rating || 4.5}
                                     onChange={e => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
-                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white"
+                                    className="w-full px-8 py-5 bg-slate-50 border border-slate-100 rounded-[25px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-base text-slate-900 shadow-inner"
                                 />
                             </div>
+
                             <div className="space-y-3">
-                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Foto Produk</label>
+                                <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Foto Produk</label>
                                 <div className="space-y-4">
                                     <div className="relative group">
                                         <input
@@ -394,37 +407,45 @@ const ObatPage = () => {
                                             onChange={e => setFormData({ ...formData, gambar_file: e.target.files[0] })}
                                             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                                         />
-                                        <div className="w-full px-8 py-5 bg-white/5 border border-dashed border-white/10 rounded-[25px] flex items-center justify-center gap-3 group-hover:bg-white/10 transition-all">
-                                            <Upload size={20} className="text-cyan-400" />
-                                            <span className="text-xs font-bold text-slate-400 group-hover:text-white transition-colors">
-                                                {formData.gambar_file ? formData.gambar_file.name : "Klik untuk unggah foto dari galeri"}
-                                            </span>
+                                        <div className="w-full px-8 py-6 bg-slate-50 border border-dashed border-slate-200 rounded-[25px] flex items-center justify-center gap-3 group-hover:bg-cyan-50 group-hover:border-cyan-200 transition-all group-hover:scale-[1.01] duration-500">
+                                            <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-cyan-500">
+                                                <Upload size={20} />
+                                            </div>
+                                            <div className="text-left">
+                                                <span className="block text-xs font-black text-slate-900 uppercase tracking-widest">{formData.gambar_file ? formData.gambar_file.name : "Klik untuk unggah foto"}</span>
+                                                <span className="block text-[10px] font-medium text-slate-400">PNG, JPG up to 5MB</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="text-center text-[10px] font-black text-slate-600 uppercase tracking-widest">- ATAU GUNAKAN URL -</div>
+                                    <div className="text-center text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] py-2">- ATAU GUNAKAN URL -</div>
                                     <input
                                         type="url" value={formData.gambar_url}
                                         onChange={e => setFormData({ ...formData, gambar_url: e.target.value })}
-                                        className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-base text-white placeholder-slate-700 font-mono text-sm"
+                                        className="w-full px-8 py-5 bg-slate-50 border border-slate-100 rounded-[25px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-slate-900 placeholder-slate-300 text-sm shadow-inner"
                                         placeholder="https://images.unsplash.com/..."
                                     />
                                 </div>
                             </div>
+
                             <div className="space-y-3">
-                                <label className="text-[10px] font-black uppercase text-slate-500 tracking-[0.3em] ml-2">Detail Deskripsi</label>
+                                <label className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] ml-2">Detail Deskripsi</label>
                                 <textarea
                                     required value={formData.deskripsi}
                                     onChange={e => setFormData({ ...formData, deskripsi: e.target.value })}
-                                    className="w-full px-8 py-5 bg-white/5 border border-white/10 rounded-[25px] outline-none focus:bg-white/10 focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-400 transition-all font-bold text-sm text-white h-32 resize-none placeholder-slate-700"
-                                    placeholder="Jelaskan manfaat dan aturan pakai..."
+                                    className="w-full px-8 py-5 bg-slate-50 border border-slate-100 rounded-[25px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/5 focus:border-cyan-500 transition-all font-bold text-sm text-slate-900 h-40 resize-none placeholder-slate-300 shadow-inner"
+                                    placeholder="Jelaskan manfaat dan aturan pakai secara detail..."
                                 />
                             </div>
-                            <button
-                                type="submit"
-                                className="w-full py-6 premium-gradient text-white font-black rounded-[30px] shadow-[0_20px_40px_-10px_rgba(6,182,212,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 uppercase tracking-[0.3em] text-xs"
-                            >
-                                <Save size={20} /> Konfirmasi & Simpan
-                            </button>
+
+                            <div className="pt-6">
+                                <button
+                                    type="submit"
+                                    className="w-full py-6 md:py-8 premium-gradient text-white font-black rounded-[28px] md:rounded-[40px] shadow-xl shadow-cyan-200 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-4 uppercase tracking-[0.3em] text-xs md:text-sm group"
+                                >
+                                    <Save size={24} className="group-hover:rotate-12 transition-transform" /> Konfirmasi & Simpan Produk
+                                </button>
+                                <p className="text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-6">Data produk akan diperbarui secara real-time</p>
+                            </div>
                         </form>
                     </div>
                 </div >

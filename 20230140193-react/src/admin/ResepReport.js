@@ -153,13 +153,13 @@ const ResepReport = () => {
                             <Menu size={24} />
                         </button>
                         <div className="flex-1 lg:flex-none">
-                            <h2 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900 mb-2 leading-tight underline decoration-cyan-500/30">Laporan <span className="text-cyan-600">Resep Digital</span></h2>
-                            <p className="text-slate-500 font-bold italic text-xs md:text-base">Validasi dan tindak lanjuti resep yang dikirim oleh pasien.</p>
+                            <h2 className="text-2xl md:text-4xl font-black tracking-tight text-slate-900 mb-2 leading-tight">Laporan <span className="text-cyan-600">Resep Digital</span></h2>
+                            <p className="text-slate-600 font-bold italic text-xs md:text-base">Validasi dan tindak lanjuti resep yang dikirim oleh pasien.</p>
                         </div>
                     </div>
                     <div className="bg-white px-8 py-5 border border-slate-200 rounded-[24px] shadow-sm w-full md:w-auto">
-                        <p className="text-[10px] uppercase font-black text-slate-500 tracking-[0.3em] mb-1">Total Antrean</p>
-                        <p className="text-3xl font-black text-slate-900 tracking-widest leading-none">{reseps.length}</p>
+                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.3em] mb-1 leading-none">Total Antrean</p>
+                        <p className="text-3xl font-black text-slate-900 tracking-widest leading-none mt-1">{reseps.length}</p>
                     </div>
                 </div>
 
@@ -186,11 +186,11 @@ const ResepReport = () => {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="bg-slate-50">
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Waktu & Tanggal</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Informasi Pasien</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Dokumen</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">Status</th>
-                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-600 text-center">Tindakan</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Waktu & Tanggal</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Informasi Pasien</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Dokumen</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Status</th>
+                                    <th className="p-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 text-center">Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
