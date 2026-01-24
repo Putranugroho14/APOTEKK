@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
     Clock, CheckCircle, MessageCircle, ShoppingCart, Package,
-    LogOut, Search, RefreshCw, Eye, Menu, X, LayoutDashboard, FileText
+    LogOut, Search, RefreshCw, Eye, Menu, X, LayoutDashboard, FileText,
+    TrendingUp, TrendingDown, Trash2, Calendar, PieChart, Filter, Award, AlertCircle
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config';
@@ -16,8 +17,14 @@ const LaporanPenjualan = () => {
     const [loading, setLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    // const [adminData, setAdminData] = useState({ nama: 'Admin', username: 'admin' });
-    const [selectedOrder, setSelectedOrder] = useState(null); // For Detail Modal
+    const [filterType, setFilterType] = useState('all'); // all, daily, monthly, range
+    const [dateFilter, setDateFilter] = useState({
+        specificDate: new Date().toISOString().split('T')[0],
+        month: new Date().toISOString().slice(0, 7), // YYYY-MM
+        start: "",
+        end: ""
+    });
+    const [selectedOrder, setSelectedOrder] = useState(null);
     const navigate = useNavigate();
 
 
@@ -45,14 +52,85 @@ const LaporanPenjualan = () => {
     };
 
     useEffect(() => {
-        const filtered = penjualans.filter(p => {
-            const name = (p.nama_pelanggan || "").toLowerCase();
-            const wa = (p.nomor_wa || "").toLowerCase();
+        let filtered = [...penjualans];
+
+        // 1. Filter by Date/Type
+        if (filterType === 'daily') {
+            filtered = filtered.filter(p => new Date(p.createdAt).toISOString().split('T')[0] === dateFilter.specificDate);
+        } else if (filterType === 'monthly') {
+            filtered = filtered.filter(p => new Date(p.createdAt).toISOString().slice(0, 7) === dateFilter.month);
+        } else if (filterType === 'range' && dateFilter.start && dateFilter.end) {
+            const start = new Date(dateFilter.start);
+            const end = new Date(dateFilter.end);
+            end.setHours(23, 59, 59, 999);
+            filtered = filtered.filter(p => {
+                const pDate = new Date(p.createdAt);
+                return pDate >= start && pDate <= end;
+            });
+        }
+
+        // 2. Filter by Search Query
+        if (searchQuery) {
             const query = searchQuery.toLowerCase();
-            return name.includes(query) || wa.includes(query);
-        });
+            filtered = filtered.filter(p => {
+                const name = (p.nama_pelanggan || "").toLowerCase();
+                const wa = (p.nomor_wa || "").toLowerCase();
+                const address = (p.alamat || "").toLowerCase();
+                return name.includes(query) || wa.includes(query) || address.includes(query);
+            });
+        }
+
         setFilteredPenjualans(filtered);
-    }, [searchQuery, penjualans]);
+    }, [searchQuery, penjualans, filterType, dateFilter]);
+
+    // ANALYTICS CALCULATIONS
+    const stats = React.useMemo(() => {
+        // Total Income from current filtered view
+        const totalIncome = filteredPenjualans.reduce((sum, p) => sum + Number(p.total_harga), 0);
+
+        // Month comparison logic
+        const now = new Date();
+        const thisMonth = now.toISOString().slice(0, 7);
+        const lastMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        const lastMonth = lastMonthDate.toISOString().slice(0, 7);
+
+        const currentMonthSales = penjualans.filter(p => new Date(p.createdAt).toISOString().slice(0, 7) === thisMonth);
+        const lastMonthSales = penjualans.filter(p => new Date(p.createdAt).toISOString().slice(0, 7) === lastMonth);
+
+        const currentMonthIncome = currentMonthSales.reduce((sum, p) => sum + Number(p.total_harga), 0);
+        const lastMonthIncome = lastMonthSales.reduce((sum, p) => sum + Number(p.total_harga), 0);
+
+        let growth = 0;
+        if (lastMonthIncome > 0) {
+            growth = ((currentMonthIncome - lastMonthIncome) / lastMonthIncome) * 100;
+        } else if (currentMonthIncome > 0) {
+            growth = 100;
+        }
+
+        // Product Analytics (Most & Least Sold)
+        const productMap = {};
+        filteredPenjualans.forEach(p => {
+            const items = parseItems(p.detail_pesanan);
+            items.forEach(item => {
+                if (!productMap[item.nama_obat]) {
+                    productMap[item.nama_obat] = { name: item.nama_obat, qty: 0, revenue: 0 };
+                }
+                productMap[item.nama_obat].qty += Number(item.qty);
+                productMap[item.nama_obat].revenue += (Number(item.qty) * Number(item.harga));
+            });
+        });
+
+        const sortedProducts = Object.values(productMap).sort((a, b) => b.qty - a.qty);
+
+        return {
+            totalIncome,
+            currentMonthIncome,
+            growth,
+            topProduct: sortedProducts[0] || null,
+            leastProduct: sortedProducts.length > 1 ? sortedProducts[sortedProducts.length - 1] : null,
+            totalOrders: filteredPenjualans.length
+        };
+    }, [filteredPenjualans, penjualans]);
 
     const handleUpdateStatus = async (id, status) => {
         if (!window.confirm(`Ubah status menjadi '${status}'?`)) return;
@@ -66,18 +144,20 @@ const LaporanPenjualan = () => {
         } catch (err) { alert("Gagal memperbarui status"); }
     };
 
-    // const handleDelete = async (id) => {
-    //     if (window.confirm("Hapus data penjualan ini permanen?")) {
-    //         try {
-    //             const token = localStorage.getItem('token');
-    //             await axios.delete(`${API_BASE_URL}/api/penjualan/${id}`, {
-    //                 headers: { Authorization: `Bearer ${token}` }
-    //             });
-    //             alert("Data berhasil dihapus!");
-    //             fetchPenjualans();
-    //         } catch (err) { alert("Gagal menghapus data"); }
-    //     }
-    // };
+    const handleDelete = async (id) => {
+        if (!window.confirm("Hapus data penjualan ini secara permanen? Stok tidak akan dikembalikan otomatis.")) return;
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(`${API_BASE_URL}/api/penjualan/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert("Data berhasil dihapus!");
+            fetchPenjualans();
+        } catch (err) {
+            console.error(err);
+            alert("Gagal menghapus data");
+        }
+    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -166,21 +246,150 @@ const LaporanPenjualan = () => {
                     </div>
                 </div>
 
-                {/* Filters */}
-                <div className="bg-white p-6 rounded-[40px] border border-slate-200 mb-10 shadow-sm flex flex-col md:flex-row gap-6">
-                    <div className="flex-1 relative">
-                        <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-                        <input
-                            type="text"
-                            placeholder="Cari nama pembeli atau WhatsApp..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-14 pr-8 py-5 bg-slate-50 border border-slate-200 rounded-[30px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all text-sm font-bold text-slate-900 placeholder-slate-400 shadow-inner"
-                        />
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
+                    {/* TOTAL INCOME */}
+                    <div className="bg-white p-8 border border-slate-200 rounded-[32px] shadow-premium group hover:border-cyan-500 transition-all duration-500">
+                        <div className="flex justify-between items-start mb-4">
+                            <div className="w-12 h-12 bg-cyan-50 text-cyan-500 rounded-2xl flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                                <TrendingUp size={24} />
+                            </div>
+                            <div className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-wider ${stats.growth >= 0 ? 'text-lime-600' : 'text-red-500'}`}>
+                                {stats.growth >= 0 ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                                {Math.abs(stats.growth).toFixed(1)}%
+                            </div>
+                        </div>
+                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.2em] mb-1">Total Pendapatan</p>
+                        <h4 className="text-2xl font-black text-slate-900 tracking-tight">Rp{stats.totalIncome.toLocaleString()}</h4>
+                        <p className="text-[10px] text-slate-400 mt-2 font-bold italic">Bulan lalu: Rp{((stats.currentMonthIncome / (1 + stats.growth / 100)) || 0).toLocaleString()}</p>
                     </div>
-                    <button onClick={() => setSearchQuery("")} className="w-16 h-16 bg-slate-50 border border-slate-200 rounded-[30px] flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-white transition-all transform hover:rotate-90">
-                        <RefreshCw size={22} />
-                    </button>
+
+                    {/* TOTAL ORDERS */}
+                    <div className="bg-white p-8 border border-slate-200 rounded-[32px] shadow-premium group hover:border-amber-500 transition-all duration-500 text-center md:text-left">
+                        <div className="w-12 h-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-4 md:mb-4 mx-auto md:mx-0 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                            <ShoppingCart size={24} />
+                        </div>
+                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.2em] mb-1">Total Pesanan</p>
+                        <h4 className="text-2xl font-black text-slate-900 tracking-tight">{stats.totalOrders}</h4>
+                        <p className="text-[10px] text-slate-400 mt-2 font-bold italic">Berdasarkan filter saat ini</p>
+                    </div>
+
+                    {/* TOP PRODUCT */}
+                    <div className="bg-white p-8 border border-slate-200 rounded-[32px] shadow-premium group hover:border-lime-500 transition-all duration-500">
+                        <div className="w-12 h-12 bg-lime-50 text-lime-500 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-lime-500 group-hover:text-white transition-all">
+                            <Award size={24} />
+                        </div>
+                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.2em] mb-1">Produk Terlaris</p>
+                        <h4 className="text-lg font-black text-slate-900 tracking-tight line-clamp-1">{stats.topProduct ? stats.topProduct.name : "N/A"}</h4>
+                        <p className="text-[10px] text-slate-400 mt-2 font-bold italic">Terjual: {stats.topProduct ? stats.topProduct.qty : 0} pcs</p>
+                    </div>
+
+                    {/* WORST PRODUCT */}
+                    <div className="bg-white p-8 border border-slate-200 rounded-[32px] shadow-premium group hover:border-red-500 transition-all duration-500">
+                        <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-red-500 group-hover:text-white transition-all">
+                            <AlertCircle size={24} />
+                        </div>
+                        <p className="text-[10px] uppercase font-black text-slate-400 tracking-[0.2em] mb-1">Kurang Diminati</p>
+                        <h4 className="text-lg font-black text-slate-900 tracking-tight line-clamp-1">{stats.leastProduct ? stats.leastProduct.name : (stats.topProduct ? "Hanya 1 Produk" : "N/A")}</h4>
+                        <p className="text-[10px] text-slate-400 mt-2 font-bold italic">Terjual: {stats.leastProduct ? stats.leastProduct.qty : 0} pcs</p>
+                    </div>
+                </div>
+
+                {/* FILTERS & SEARCH */}
+                <div className="bg-white p-8 rounded-[40px] border border-slate-200 mb-10 shadow-premium">
+                    <div className="flex flex-col xl:flex-row gap-6 mb-6">
+                        {/* SEARCH */}
+                        <div className="flex-1 relative">
+                            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                            <input
+                                type="text"
+                                placeholder="Cari nama pembeli, WA, atau alamat..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-14 pr-8 py-5 bg-slate-50 border border-slate-200 rounded-[28px] outline-none focus:bg-white focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all text-sm font-bold text-slate-900 placeholder-slate-400 shadow-inner"
+                            />
+                        </div>
+
+                        {/* FILTER TYPES */}
+                        <div className="flex bg-slate-50 p-1.5 rounded-[28px] border border-slate-200">
+                            {[
+                                { id: 'all', label: 'Semua', icon: Filter },
+                                { id: 'daily', label: 'Harian', icon: Calendar },
+                                { id: 'monthly', label: 'Bulanan', icon: PieChart },
+                                { id: 'range', label: 'Rentang', icon: Calendar }
+                            ].map(btn => (
+                                <button
+                                    key={btn.id}
+                                    onClick={() => setFilterType(btn.id)}
+                                    className={`flex items-center gap-2 px-6 py-3 rounded-[22px] text-[10px] font-black uppercase tracking-widest transition-all
+                                    ${filterType === btn.id ? 'bg-white text-cyan-600 shadow-sm border border-slate-100' : 'text-slate-400 hover:text-slate-600'}`}
+                                >
+                                    <btn.icon size={14} /> {btn.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* DYNAMIC DATE INPUTS */}
+                    {filterType !== 'all' && (
+                        <div className="flex flex-wrap gap-4 p-6 bg-cyan-50/50 border border-cyan-100 rounded-[28px] animate-fade-in">
+                            {filterType === 'daily' && (
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-[10px] font-black text-cyan-700 tracking-widest ml-1">PILIH TANGGAL</label>
+                                    <input
+                                        type="date"
+                                        value={dateFilter.specificDate}
+                                        onChange={(e) => setDateFilter({ ...dateFilter, specificDate: e.target.value })}
+                                        className="px-6 py-3 bg-white border border-cyan-200 rounded-2xl text-xs font-bold outline-none focus:ring-2 focus:ring-cyan-500"
+                                    />
+                                </div>
+                            )}
+                            {filterType === 'monthly' && (
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-[10px] font-black text-cyan-700 tracking-widest ml-1">PILIH BULAN</label>
+                                    <input
+                                        type="month"
+                                        value={dateFilter.month}
+                                        onChange={(e) => setDateFilter({ ...dateFilter, month: e.target.value })}
+                                        className="px-6 py-3 bg-white border border-cyan-200 rounded-2xl text-xs font-bold outline-none focus:ring-2 focus:ring-cyan-500"
+                                    />
+                                </div>
+                            )}
+                            {filterType === 'range' && (
+                                <>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-[10px] font-black text-cyan-700 tracking-widest ml-1">DARI TANGGAL</label>
+                                        <input
+                                            type="date"
+                                            value={dateFilter.start}
+                                            onChange={(e) => setDateFilter({ ...dateFilter, start: e.target.value })}
+                                            className="px-6 py-3 bg-white border border-cyan-200 rounded-2xl text-xs font-bold outline-none focus:ring-2 focus:ring-cyan-500"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col justify-center text-cyan-300 pt-6 px-2">
+                                        <ArrowRight size={20} />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <label className="text-[10px] font-black text-cyan-700 tracking-widest ml-1">SAMPAI TANGGAL</label>
+                                        <input
+                                            type="date"
+                                            value={dateFilter.end}
+                                            onChange={(e) => setDateFilter({ ...dateFilter, end: e.target.value })}
+                                            className="px-6 py-3 bg-white border border-cyan-200 rounded-2xl text-xs font-bold outline-none focus:ring-2 focus:ring-cyan-500"
+                                        />
+                                    </div>
+                                </>
+                            )}
+                            <button
+                                onClick={() => {
+                                    setFilterType('all');
+                                    setSearchQuery("");
+                                }}
+                                className="mt-auto ml-auto px-6 py-3 bg-white text-red-500 border border-red-100 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-red-50 transition-all flex items-center gap-2"
+                            >
+                                <RefreshCw size={14} /> Reset Filter
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Table Layout */}
@@ -229,23 +438,26 @@ const LaporanPenjualan = () => {
                                             </td>
                                             <td className="p-8">
                                                 <div className="flex justify-center gap-3">
-                                                    <button onClick={() => setSelectedOrder(order)} className="w-10 h-10 bg-slate-100 text-slate-500 hover:bg-slate-200 rounded-xl flex items-center justify-center transition-all" title="Lihat Order">
+                                                    <button onClick={() => setSelectedOrder(order)} className="w-10 h-10 bg-slate-50 text-slate-400 hover:bg-cyan-50 hover:text-cyan-600 rounded-xl flex items-center justify-center transition-all border border-slate-100" title="Lihat Order">
                                                         <Eye size={16} />
                                                     </button>
-                                                    {order.nomor_wa !== "N/A" ? (
-                                                        <a href={`https://wa.me/${order.nomor_wa.replace(/^0/, '62')}`} target="_blank" rel="noreferrer" className="w-10 h-10 bg-cyan-100 text-cyan-600 hover:bg-cyan-200 rounded-xl flex items-center justify-center transition-all" title="WhatsApp">
+                                                    {order.nomor_wa !== "N/A" && (
+                                                        <a href={`https://wa.me/${order.nomor_wa.replace(/^0/, '62')}`} target="_blank" rel="noreferrer" className="w-10 h-10 bg-lime-50 text-lime-600 hover:bg-lime-500 hover:text-white rounded-xl flex items-center justify-center transition-all border border-lime-100" title="WhatsApp">
                                                             <MessageCircle size={16} />
                                                         </a>
-                                                    ) : (
-                                                        <div className="w-10 h-10 bg-slate-100 text-slate-300 rounded-xl flex items-center justify-center cursor-not-allowed" title="WhatsApp Tidak Tersedia">
-                                                            <MessageCircle size={16} />
-                                                        </div>
                                                     )}
-                                                    {order.status !== 'Selesai' && (
-                                                        <button onClick={() => handleUpdateStatus(order.id, 'Selesai')} className="w-10 h-10 bg-lime-100 text-lime-600 hover:bg-lime-200 rounded-xl flex items-center justify-center transition-all" title="Selesaikan">
+                                                    {order.status !== 'Selesai' ? (
+                                                        <button onClick={() => handleUpdateStatus(order.id, 'Selesai')} className="w-10 h-10 bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white rounded-xl flex items-center justify-center transition-all border border-amber-100" title="Selesaikan">
                                                             <CheckCircle size={16} />
                                                         </button>
+                                                    ) : (
+                                                        <div className="w-10 h-10 bg-lime-500 text-white rounded-xl flex items-center justify-center" title="Sudah Selesai">
+                                                            <CheckCircle size={16} />
+                                                        </div>
                                                     )}
+                                                    <button onClick={() => handleDelete(order.id)} className="w-10 h-10 bg-white text-slate-300 hover:bg-red-50 hover:text-red-500 rounded-xl flex items-center justify-center transition-all border border-slate-100" title="Hapus Permanen">
+                                                        <Trash2 size={16} />
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
