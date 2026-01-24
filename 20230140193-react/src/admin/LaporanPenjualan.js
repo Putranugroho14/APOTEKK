@@ -27,6 +27,14 @@ const LaporanPenjualan = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const navigate = useNavigate();
 
+    const parseItems = (jsonString) => {
+        try {
+            return JSON.parse(jsonString);
+        } catch (e) {
+            return [];
+        }
+    };
+
 
 
     useEffect(() => {
@@ -175,13 +183,7 @@ const LaporanPenjualan = () => {
         </button>
     );
 
-    const parseItems = (jsonString) => {
-        try {
-            return JSON.parse(jsonString);
-        } catch (e) {
-            return [];
-        }
-    };
+
 
     return (
         <div className="flex min-h-screen bg-mesh font-sans text-slate-900 relative overflow-hidden">
