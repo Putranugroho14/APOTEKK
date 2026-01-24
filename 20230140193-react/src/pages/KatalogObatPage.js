@@ -236,11 +236,16 @@ const KatalogObatPage = () => {
           <div className="w-full max-w-md bg-white h-screen flex flex-col shadow-2xl animate-slide-in-right overflow-hidden" onClick={e => e.stopPropagation()}>
 
             {/* HEADER */}
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center gap-4">
-              <button onClick={() => setShowCart(false)} className="p-2 hover:bg-gray-100 rounded-full transition">
-                <ArrowLeft size={20} className="text-gray-700" />
-              </button>
-              <h2 className="text-lg font-bold text-gray-800">Keranjang Saya</h2>
+            <div className="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <button onClick={() => setShowCart(false)} className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-500 hover:bg-cyan-50 hover:text-cyan-600 rounded-xl transition-all border border-slate-100">
+                  <ArrowLeft size={18} />
+                </button>
+                <h2 className="text-xl font-black text-slate-900 tracking-tight">Keranjang <span className="text-cyan-600">Saya</span></h2>
+              </div>
+              <div className="bg-cyan-50 text-cyan-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-cyan-100">
+                {getTotalItems()} ITEMS
+              </div>
             </div>
 
             {/* SCROLLABLE CONTENT */}
@@ -253,44 +258,45 @@ const KatalogObatPage = () => {
                 </div>
               ) : (
                 <>
-                  {/* PRODUCT LIST */}
-                  <div className="p-4 space-y-4">
+                  <div className="p-6 space-y-5">
                     {cart.map(item => (
-                      <div key={item.id} className="flex gap-3 bg-white border border-gray-200 rounded-lg p-3">
-                        <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      <div key={item.id} className="flex gap-4 bg-white border border-slate-100 rounded-[24px] p-4 shadow-sm hover:shadow-md transition-all group">
+                        <div className="w-20 h-20 bg-slate-50 rounded-2xl overflow-hidden flex-shrink-0 border border-slate-100 flex items-center justify-center p-2">
                           <img
                             src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=200"}
                             alt={item.nama_obat}
-                            className="w-full h-full object-cover"
+                            className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform"
                           />
                         </div>
 
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-sm text-gray-800 line-clamp-2 mb-1">{item.nama_obat}</h3>
-                          <p className="text-sm font-bold text-gray-900">Rp {item.harga.toLocaleString()}</p>
+                        <div className="flex-1 min-w-0 flex flex-col justify-center">
+                          <h3 className="font-black text-sm text-slate-900 line-clamp-1 mb-1 tracking-tight">{item.nama_obat}</h3>
+                          <p className="text-sm font-black text-cyan-600 mb-3">Rp {item.harga.toLocaleString()}</p>
 
-                          <div className="flex items-center gap-2 mt-2">
-                            <button
-                              onClick={() => updateQty(item.id, item.qty - 1)}
-                              className="w-7 h-7 flex items-center justify-center bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition"
-                            >
-                              <Minus size={14} />
-                            </button>
-                            <span className="w-8 text-center font-semibold text-sm">{item.qty}</span>
-                            <button
-                              onClick={() => updateQty(item.id, item.qty + 1)}
-                              className="w-7 h-7 flex items-center justify-center bg-amber-100 hover:bg-amber-200 text-amber-700 rounded transition"
-                            >
-                              <Plus size={14} />
-                            </button>
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1">
+                              <button
+                                onClick={() => updateQty(item.id, item.qty - 1)}
+                                className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-cyan-600 transition"
+                              >
+                                <Minus size={12} />
+                              </button>
+                              <span className="w-8 text-center font-black text-xs text-slate-800">{item.qty}</span>
+                              <button
+                                onClick={() => updateQty(item.id, item.qty + 1)}
+                                className="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-cyan-600 transition"
+                              >
+                                <Plus size={12} />
+                              </button>
+                            </div>
                           </div>
                         </div>
 
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="text-gray-400 hover:text-red-500 transition self-start"
+                          className="w-10 h-10 flex items-center justify-center bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-500 rounded-xl transition self-center"
                         >
-                          <Trash2 size={18} />
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     ))}
@@ -299,22 +305,22 @@ const KatalogObatPage = () => {
                   {/* CHECKOUT FORM */}
                   <div className="px-4 pb-6 space-y-4">
                     {/* Address Section */}
-                    <div className="bg-slate-50 border border-slate-100 rounded-[20px] p-5 space-y-5 shadow-sm">
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600">
-                          <Package size={16} />
+                    <div className="bg-slate-50 border border-slate-100 rounded-[32px] p-6 space-y-6 shadow-sm">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-white shadow-sm border border-slate-100 rounded-xl flex items-center justify-center text-cyan-600">
+                          <Package size={18} />
                         </div>
-                        <h3 className="font-bold text-sm text-slate-800">Detail Pengiriman</h3>
+                        <h3 className="font-black text-sm text-slate-800 uppercase tracking-widest">Detail Pengiriman</h3>
                       </div>
 
                       <div className="space-y-4">
                         <div className="relative">
                           <label className="block text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5 ml-1">Nama Penerima</label>
                           <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                             <input
                               type="text"
-                              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 shadow-sm"
+                              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-sm font-bold text-slate-700 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-300 shadow-sm"
                               placeholder="Ketik nama lengkap..."
                               value={customerName}
                               onChange={(e) => setCustomerName(e.target.value)}
@@ -325,9 +331,9 @@ const KatalogObatPage = () => {
                         <div className="relative">
                           <label className="block text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1.5 ml-1">Alamat Tujuan</label>
                           <div className="relative">
-                            <MapPin className="absolute left-3 top-3 text-slate-400" size={16} />
+                            <MapPin className="absolute left-4 top-4 text-slate-400" size={16} />
                             <textarea
-                              className="w-full pl-10 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 resize-none shadow-sm"
+                              className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-sm font-bold text-slate-700 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-300 resize-none shadow-sm"
                               placeholder="Ketik alamat lengkap pengiriman..."
                               rows="3"
                               value={address}
@@ -351,9 +357,9 @@ const KatalogObatPage = () => {
                     <span>Subtotal ({getTotalItems()} items)</span>
                     <span className="font-semibold">Rp {getTotalPrice().toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-base text-gray-900 pt-2 border-t border-gray-200">
+                  <div className="flex justify-between font-black text-lg text-slate-900 pt-4 border-t border-slate-100">
                     <span>TOTAL</span>
-                    <span className="text-amber-600">Rp {getTotalPrice().toLocaleString()}</span>
+                    <span className="text-cyan-600">Rp {getTotalPrice().toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -397,12 +403,12 @@ const KatalogObatPage = () => {
                     }
                   }}
                   disabled={!address.trim() || !customerName.trim()}
-                  className={`w-full py-3.5 rounded-lg font-bold text-sm transition-all ${(!address.trim() || !customerName.trim())
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-500/30 active:scale-95'
+                  className={`w-full py-5 rounded-[24px] font-black text-xs uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 ${(!address.trim() || !customerName.trim())
+                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
+                    : 'premium-gradient text-white shadow-xl shadow-cyan-900/10 hover:-translate-y-1 active:scale-95'
                     }`}
                 >
-                  Pesan Sekarang
+                  Confirm Order <ArrowRight size={16} />
                 </button>
               </div>
             )}
