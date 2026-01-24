@@ -38,7 +38,10 @@ const LaporanPenjualan = () => {
             setPenjualans(res.data.data);
             setFilteredPenjualans(res.data.data);
         } catch (err) {
-            console.error(err);
+            console.error("Fetch Error Detail:", err.response?.data || err.message);
+            // Simpan error ke state atau tampilkan alert agar user tahu penyebabnya
+            const errMsg = err.response?.data?.error || err.response?.data?.message || err.message;
+            alert(`Gagal mengambil data: ${errMsg}`);
         } finally {
             setLoading(false);
         }
