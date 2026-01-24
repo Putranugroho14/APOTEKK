@@ -656,73 +656,70 @@ const PublicPage = () => {
                 )
             }
 
-            {/* CART MODAL - MODERN E-COMMERCE STYLE */}
+            {/* CART MODAL - PREMIUM COMPACT STYLE (SYNCED WITH CATALOG) */}
             {showCart && (
-                <div className="fixed inset-0 z-[100] flex justify-end bg-black/40 animate-fade-in" onClick={() => setShowCart(false)}>
-                    <div className="w-full max-w-lg bg-white h-screen flex flex-col shadow-2xl animate-slide-in-right overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.2)] md:rounded-l-[40px]" onClick={e => e.stopPropagation()}>
+                <div className="fixed inset-0 z-[150] flex justify-end bg-black/40 backdrop-blur-sm animate-fade-in" onClick={() => setShowCart(false)}>
+                    <div className="w-full max-w-lg bg-white h-screen flex flex-col shadow-2xl animate-slide-in-right overflow-hidden md:rounded-l-[40px]" onClick={e => e.stopPropagation()}>
 
                         {/* HEADER */}
-                        <div className="px-8 py-8 border-b border-slate-50 flex items-center justify-between bg-white">
-                            <div className="flex items-center gap-5">
-                                <button onClick={() => setShowCart(false)} className="w-12 h-12 flex items-center justify-center bg-slate-50 text-slate-500 hover:bg-cyan-50 hover:text-cyan-600 rounded-2xl transition-all border border-slate-100 shadow-sm">
-                                    <ArrowLeft size={20} />
+                        <div className="px-6 py-6 border-b border-slate-100 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <button onClick={() => setShowCart(false)} className="w-10 h-10 flex items-center justify-center bg-slate-50 text-slate-500 hover:bg-cyan-50 hover:text-slate-900 rounded-xl transition-all border border-slate-100">
+                                    <ArrowLeft size={18} />
                                 </button>
-                                <div>
-                                    <h2 className="text-2xl font-black text-slate-900 tracking-tight">Keranjang <span className="text-slate-900">Saya</span></h2>
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">{getTotalItems()} ITEMS TERPILIH</p>
-                                </div>
+                                <h2 className="text-xl font-black text-slate-900 tracking-tight">Keranjang <span className="text-slate-900">Saya</span></h2>
+                            </div>
+                            <div className="bg-cyan-50 text-slate-900 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-cyan-100">
+                                {getTotalItems()} ITEMS
                             </div>
                         </div>
 
                         {/* SCROLLABLE CONTENT */}
-                        <div className="flex-1 overflow-y-auto bg-slate-50/30 custom-scrollbar p-6 md:p-10">
+                        <div className="flex-1 overflow-y-auto bg-white custom-scrollbar">
                             {cart.length === 0 ? (
-                                <div className="h-full flex flex-col items-center justify-center text-center p-8">
-                                    <div className="w-24 h-24 bg-white rounded-[40px] flex items-center justify-center mb-8 text-slate-200 shadow-xl border border-slate-50">
-                                        <ShoppingBag size={40} />
-                                    </div>
-                                    <p className="text-slate-500 font-black text-xl mb-2">Keranjang Kosong</p>
-                                    <p className="text-slate-400 text-sm font-medium mb-10">Sepertinya Anda belum memilih produk kesehatan apapun.</p>
-                                    <button onClick={() => setShowCart(false)} className="px-10 py-5 bg-slate-900 text-white font-black rounded-2xl text-[10px] uppercase tracking-[0.2em] shadow-2xl hover:bg-cyan-600 transition-all">Mulai Belanja</button>
+                                <div className="h-full flex flex-col items-center justify-center p-8 text-center">
+                                    <ShoppingBag size={64} className="text-gray-300 mb-4" />
+                                    <p className="text-gray-500 font-medium">Keranjang masih kosong</p>
+                                    <p className="text-gray-400 text-sm mt-2">Mulai belanja sekarang!</p>
                                 </div>
                             ) : (
-                                <div className="space-y-6">
-                                    {/* PRODUCT LIST */}
-                                    <div className="space-y-4">
+                                <>
+                                    <div className="p-6 space-y-5">
                                         {cart.map(item => (
-                                            <div key={item.id} className="flex gap-5 bg-white border border-slate-100 rounded-[32px] p-4 md:p-6 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
-                                                <div className="w-20 h-20 md:w-28 md:h-28 bg-slate-50 rounded-[24px] overflow-hidden flex-shrink-0 border border-slate-100 flex items-center justify-center p-3">
+                                            <div key={item.id} className="flex gap-4 bg-white border border-slate-100 rounded-[24px] p-4 shadow-sm hover:shadow-md hover:border-amber-200 transition-all group overflow-hidden">
+                                                <div className="w-20 h-20 bg-slate-50 rounded-2xl overflow-hidden flex-shrink-0 border border-slate-100 flex items-center justify-center p-2">
                                                     <img
                                                         src={item.gambar_url || "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500"}
                                                         alt={item.nama_obat}
-                                                        className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                                                        className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-700"
                                                     />
                                                 </div>
 
                                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                    <h3 className="font-black text-sm md:text-base text-slate-900 line-clamp-1 mb-1 md:mb-2 tracking-tight">{item.nama_obat}</h3>
-                                                    <p className="text-base md:text-xl font-black text-slate-900 mb-4 tracking-tighter">Rp {item.harga.toLocaleString()}</p>
-
-                                                    <div className="flex items-center bg-slate-50 border border-slate-100 rounded-xl md:rounded-2xl p-1 md:p-1.5 w-fit shadow-inner">
-                                                        <button
-                                                            onClick={() => updateQty(item.id, item.qty - 1)}
-                                                            className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-slate-400 hover:text-amber-600 hover:bg-white rounded-lg md:rounded-xl transition-all shadow-sm active:scale-90"
-                                                        >
-                                                            <Minus size={14} />
-                                                        </button>
-                                                        <span className="w-10 md:w-14 text-center font-black text-sm md:text-lg text-slate-800">{item.qty}</span>
-                                                        <button
-                                                            onClick={() => updateQty(item.id, item.qty + 1)}
-                                                            className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-slate-400 hover:text-amber-600 hover:bg-white rounded-lg md:rounded-xl transition-all shadow-sm active:scale-90"
-                                                        >
-                                                            <Plus size={14} />
-                                                        </button>
+                                                    <h3 className="font-black text-sm text-slate-900 line-clamp-1 mb-1 tracking-tight">{item.nama_obat}</h3>
+                                                    <div className="flex items-center justify-between mt-1">
+                                                        <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl p-1">
+                                                            <button
+                                                                onClick={() => updateQty(item.id, item.qty - 1)}
+                                                                className="w-7 h-7 flex items-center justify-center text-slate-400 hover:bg-amber-100 hover:text-amber-600 rounded-lg transition-all"
+                                                            >
+                                                                <Minus size={12} />
+                                                            </button>
+                                                            <span className="w-8 text-center font-black text-[10px] text-slate-800">{item.qty}</span>
+                                                            <button
+                                                                onClick={() => updateQty(item.id, item.qty + 1)}
+                                                                className="w-7 h-7 flex items-center justify-center text-slate-400 hover:bg-amber-100 hover:text-amber-600 rounded-lg transition-all"
+                                                            >
+                                                                <Plus size={12} />
+                                                            </button>
+                                                        </div>
+                                                        <p className="font-black text-sm text-slate-900 tracking-tight">Rp {(item.harga * item.qty).toLocaleString()}</p>
                                                     </div>
                                                 </div>
 
                                                 <button
                                                     onClick={() => removeFromCart(item.id)}
-                                                    className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-white text-slate-300 hover:bg-red-50 hover:text-red-500 border border-slate-100 rounded-xl transition-all self-center shadow-sm"
+                                                    className="w-10 h-10 flex items-center justify-center bg-white text-slate-300 hover:bg-red-50 hover:text-red-500 border border-slate-100 rounded-xl transition-all self-center shadow-sm"
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
@@ -731,58 +728,61 @@ const PublicPage = () => {
                                     </div>
 
                                     {/* CHECKOUT FORM */}
-                                    <div className="bg-slate-50 border border-slate-200/60 rounded-[40px] p-8 space-y-8 shadow-inner mt-10">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 bg-amber-50 shadow-xl border border-amber-100 rounded-2xl flex items-center justify-center text-amber-600">
-                                                <Package size={22} />
-                                            </div>
-                                            <h3 className="font-black text-base text-slate-800 uppercase tracking-[0.2em]">Detail Pengiriman</h3>
-                                        </div>
-
-                                        <div className="space-y-6">
-                                            <div className="relative">
-                                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-3 ml-2">Nama Lengkap Penerima</label>
-                                                <div className="relative">
-                                                    <User className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                                                    <input
-                                                        type="text"
-                                                        className="w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-[28px] text-sm font-bold text-slate-900 focus:border-amber-500 focus:ring-8 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 shadow-sm"
-                                                        placeholder="Siapa penerima pesanannya?"
-                                                        value={customerName}
-                                                        onChange={(e) => setCustomerName(e.target.value)}
-                                                    />
+                                    <div className="px-4 pb-6 space-y-4">
+                                        <div className="bg-slate-50 border border-slate-100 rounded-[32px] p-6 space-y-6 shadow-sm">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-10 h-10 bg-amber-100 shadow-sm border border-amber-200 rounded-xl flex items-center justify-center text-amber-600">
+                                                    <Package size={18} />
                                                 </div>
+                                                <h3 className="font-black text-[10px] text-slate-800 uppercase tracking-[0.2em]">Detail Pengiriman</h3>
                                             </div>
 
-                                            <div className="relative">
-                                                <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-3 ml-2">Alamat Lengkap Tujuan</label>
+                                            <div className="space-y-4">
                                                 <div className="relative">
-                                                    <MapPin className="absolute left-5 top-6 text-slate-400" size={18} />
-                                                    <textarea
-                                                        className="w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-[28px] text-sm font-bold text-slate-900 focus:border-amber-500 focus:ring-8 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 shadow-inner resize-none min-h-[140px]"
-                                                        placeholder="Tuliskan alamat pengiriman lengkap..."
-                                                        value={address}
-                                                        onChange={(e) => setAddress(e.target.value)}
-                                                    />
+                                                    <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">NAMA PENERIMA</label>
+                                                    <div className="relative group">
+                                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-amber-500 transition-colors" size={16} />
+                                                        <input
+                                                            type="text"
+                                                            className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-xs font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 shadow-inner"
+                                                            placeholder="Siapa penerimanya?"
+                                                            value={customerName}
+                                                            onChange={(e) => setCustomerName(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="relative">
+                                                    <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1.5 ml-1">ALAMAT TUJUAN</label>
+                                                    <div className="relative group">
+                                                        <MapPin className="absolute left-4 top-4 text-slate-300 group-focus-within:text-amber-500 transition-colors" size={16} />
+                                                        <textarea
+                                                            className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-[20px] text-xs font-bold text-slate-700 focus:border-amber-500 focus:ring-4 focus:ring-amber-500/5 outline-none transition-all placeholder:text-slate-300 resize-none shadow-inner"
+                                                            placeholder="Ke mana pesanannya harus dikirim?"
+                                                            rows="3"
+                                                            value={address}
+                                                            onChange={(e) => setAddress(e.target.value)}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </>
                             )}
                         </div>
 
                         {/* STICKY BOTTOM - SUMMARY & CHECKOUT */}
                         {cart.length > 0 && (
-                            <div className="p-8 md:p-12 bg-white border-t border-slate-100 flex flex-col gap-8 shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.05)] md:rounded-tl-[60px]">
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center px-2">
-                                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Subtotal Pesanan</p>
-                                        <p className="font-bold text-slate-600">Rp {getTotalPrice().toLocaleString()}</p>
+                            <div className="border-t border-slate-100 bg-white p-6 space-y-4">
+                                <div className="bg-slate-50 p-6 rounded-[24px] border border-slate-100 space-y-2">
+                                    <div className="flex justify-between text-slate-400 font-black text-[10px] uppercase tracking-widest">
+                                        <span>Subtotal</span>
+                                        <span>Rp {getTotalPrice().toLocaleString()}</span>
                                     </div>
-                                    <div className="flex justify-between items-center bg-slate-50 px-6 py-5 rounded-[28px] border border-slate-100">
-                                        <p className="text-[11px] font-black text-slate-900 uppercase tracking-[0.3em]">Total Tagihan</p>
-                                        <p className="text-3xl md:text-4xl font-black text-amber-600 tracking-tighter leading-none">Rp{getTotalPrice().toLocaleString()}</p>
+                                    <div className="flex justify-between font-black text-lg text-slate-900 pt-3 border-t border-slate-200">
+                                        <span className="text-xs uppercase tracking-widest self-center">Total</span>
+                                        <span className="text-2xl text-amber-600 font-black tracking-tighter">Rp {getTotalPrice().toLocaleString()}</span>
                                     </div>
                                 </div>
 
@@ -824,15 +824,14 @@ const PublicPage = () => {
                                         }
                                     }}
                                     disabled={!address.trim() || !customerName.trim()}
-                                    className={`w-full py-6 md:py-8 rounded-[32px] font-black text-xs md:text-sm uppercase tracking-[0.4em] transition-all flex items-center justify-center gap-5 shadow-2xl relative overflow-hidden group/btn ${(!address.trim() || !customerName.trim())
-                                        ? 'bg-slate-100 text-slate-400 cursor-not-allowed grayscale'
-                                        : 'premium-gradient text-white shadow-amber-900/10 hover:scale-[1.02] active:scale-[0.98]'
+                                    className={`w-full py-5 rounded-[24px] font-black text-[10px] uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 ${(!address.trim() || !customerName.trim())
+                                        ? 'bg-slate-100 text-slate-300 cursor-not-allowed border border-slate-200'
+                                        : 'premium-gradient text-white shadow-xl shadow-cyan-200/50 hover:scale-[1.02] active:scale-[0.98]'
                                         }`}
                                 >
-                                    <span>Pesan Sekarang</span>
-                                    <ShoppingCart size={20} className="group-hover/btn:scale-110 transition-transform" />
+                                    <ShoppingCart size={16} /> Pesan Sekarang
                                 </button>
-                                <p className="text-center text-[8px] font-black text-gray-300 uppercase tracking-[0.3em]">Proses Cepat • Aman • Terpercaya</p>
+                                <p className="text-center text-[8px] text-slate-400 font-black uppercase tracking-[0.2em]">AMAN • TERPERCAYA • CEPAT</p>
                             </div>
                         )}
                     </div>
