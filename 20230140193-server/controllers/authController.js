@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
+// JWT_SECRET will be read inside functions to ensure process.env is ready
 
 exports.register = async (req, res) => {
   try {
@@ -19,7 +19,7 @@ exports.register = async (req, res) => {
 
     // Set role secara eksplisit ke 'admin'
     const finalRole = 'admin';
-
+    const JWT_SECRET = process.env.JWT_SECRET;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       nama,           // 💡 Baru: Menyimpan nama
@@ -75,6 +75,7 @@ exports.login = async (req, res) => {
       role: user.role
     };
 
+    const JWT_SECRET = process.env.JWT_SECRET;
     const token = jwt.sign(payload, JWT_SECRET, {
       expiresIn: '1h'
     });
